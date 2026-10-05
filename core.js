@@ -1,3 +1,4 @@
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=2';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -24,6 +25,7 @@ export function normalize(raw,data){
   const a=raw.artifact||{};s.artifact.rarity=data.personalArtifact.rarities.some(r=>r.id===a.rarity)?a.rarity:'Common';
   s.artifact.gamepass=a.gamepass===true;s.artifact.voidSlots=Math.floor(number(a.voidSlots??0,0,2));s.artifact.strength=number(a.strength??0,0,10);s.artifact.quality=number(a.quality??.9,0,1);
   s.artifact.slots=Array.isArray(a.slots)?a.slots.slice(0,11).filter(x=>data.personalArtifact.stats.some(d=>d.id===x?.id)).map(x=>({id:x.id,value:number(x.value,0,1e6),locked:x.locked===true})):[];
+  if(raw.build&&typeof raw.build==='object'&&!Array.isArray(raw.build)){s.build=normalizeBuild(raw.build,data);s.version=2;s.artifact.gamepass=s.build.passes.ArtifactSlots;s.artifact.voidSlots=s.build.void.PASlots||0}
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}
@@ -31,12 +33,13 @@ export function artifactSlots(s,data){const n=data.personalArtifact.slotUnlockLe
 export function scaledMax(def,level){const f=10**def.decimals;return Math.floor((def.min+(def.max-def.min)*level/100)*f+.5)/f}
 export function artifactBonuses(s,slots,data){
   const flat={},mult={},seen={},rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.statMultiplier||1;
-  for(const slot of [...slots].sort((a,b)=>(a.position??slots.indexOf(a))-(b.position??slots.indexOf(b)))){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1),scale=(copy===1?1:copy===2?.5:0)*rarity*(1+s.artifact.strength);
+  for(const slot of [...slots].sort((a,b)=>(a.position??slots.indexOf(a))-(b.position??slots.indexOf(b)))){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1),scale=(copy===1?1:copy===2?.5:0)*rarity*(1+s.artifact.strength+.05*(s.build?.void.VoidArtifactPower||0));
     if(def.kind==='mult')mult[slot.id.slice(0,-4)]=(mult[slot.id.slice(0,-4)]||1)*(1+(slot.value-1)*scale);
     else flat[slot.id]=(flat[slot.id]||0)+slot.value*scale;
   }return{flat,mult};
 }
 export function effective(s,data,points=s.points,slots=s.artifact.slots){
+  if(s.build)return calculateBuild(s,data,points,artifactBonuses(s,slots,data)).stats;
   const old=artifactBonuses(s,s.artifact.slots,data),next=artifactBonuses(s,slots,data),stats={};
   for(const k of LUCKS){const point=k==='Luck'?'Luck':k.replace('Luck',''),gain=(data.pointGains[point]||0)*(s.pointScale[point]??1);const before=s.stats[k]/(old.mult[k]||1)-(old.flat[k]||0)-gain*(s.points[point]||0);stats[k]=Math.max(.0001,(before+gain*(points[point]||0)+(next.flat[k]||0))*(next.mult[k]||1))}
   stats.RollInterval=Math.max(data.minimumInterval,s.stats.RollInterval+(old.flat.RollSpeed||0)-(next.flat.RollSpeed||0));
@@ -55,8 +58,10 @@ export function cardDistribution(s,data,luck){
 }
 export function borderProbabilities(s,stats){return Object.fromEntries(BORDERS.map(k=>{let p=k==='Void'?1/Math.max(1,Math.ceil(s.odds[k]/Math.max(.0001,stats.VoidLuck))):Math.min(1,stats[k+'Luck']/s.odds[k]);if((k==='Awakened'||k==='Fabled'||k==='Corrupted')&&!s.unlocks[k])p=0;return[k,p]}))}
 function matchesCard(card,s){return s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity}
-export function fastProbability(s,data,stats){const base=cardDistribution(s,data,stats.Luck).reduce((n,o)=>n+(matchesCard(o.card,s)?o.p:0),0),borders=borderProbabilities(s,stats);return base*s.goal.borders.reduce((n,k)=>n*borders[k],1)}
-export function targetProbability(s,data,stats){
+function baseProbability(s,data,stats){return luckVariants(stats).reduce((n,v)=>n+v.weight*cardDistribution(s,data,stats.Luck*v.mult).reduce((p,o)=>p+(matchesCard(o.card,s)?o.p:0),0),0)}
+export function fastProbability(s,data,stats){const base=baseProbability(s,data,stats),borders=borderProbabilities(s,stats);return base*s.goal.borders.reduce((n,k)=>n*borders[k],1)}
+export function targetProbability(s,data,stats){const variants=luckVariants(stats);let plain=0,best=0;for(const v of variants){const result=singleTargetProbability(s,data,{...stats,Luck:stats.Luck*v.mult,periodic:[]});plain+=v.weight*result.plain;best+=v.weight*result.best}return{plain,best,p:(1-stats.LuckyHandChance)*plain+stats.LuckyHandChance*best}}
+function singleTargetProbability(s,data,stats){
   const plain=fastProbability(s,data,stats),hand=stats.LuckyHandChance;if(!hand)return{plain,best:plain,p:plain};
   const bp=borderProbabilities(s,stats),variants=[];
   for(const outcome of cardDistribution(s,data,stats.Luck))for(let mask=0;mask<32;mask++){let p=outcome.p,rarity=outcome.card.rarityValue,match=matchesCard(outcome.card,s);
@@ -70,17 +75,17 @@ export function targetProbability(s,data,stats){
 export function batchDistribution(stats){let dist=[{n:1,p:1}];for(const [key,extra] of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]]){const chance=stats[key];dist=dist.flatMap(o=>[{n:o.n,p:o.p*(1-chance)},{n:o.n+extra,p:o.p*chance}]).filter(o=>o.p>0)}return dist}
 export function evaluate(s,data,points=s.points,slots=s.artifact.slots){
   const stats=effective(s,data,points,slots),target=targetProbability(s,data,stats),batches=batchDistribution(stats),mean=batches.reduce((n,b)=>n+b.n*b.p,0);
-  const batchChance=p=>batches.reduce((n,b)=>n+b.p*(-Math.expm1(b.n*Math.log1p(-p))),0),cycleP=(1-stats.LuckyHandChance)*batchChance(target.plain)+stats.LuckyHandChance*batchChance(target.best);
+  const batchChance=p=>batches.reduce((n,b)=>n+b.p*(-Math.expm1(b.n*Math.log1p(-p))),0),cycleP=luckVariants(stats).reduce((n,v)=>{const t=targetProbability(s,data,{...stats,Luck:stats.Luck*v.mult,periodic:[]});return n+v.weight*((1-stats.LuckyHandChance)*batchChance(t.plain)+stats.LuckyHandChance*batchChance(t.best))},0);
   const hours=3600/stats.RollInterval,rate=mean*hours*target.p,cycles=Math.floor(s.minutes*60/stats.RollInterval),chance=cycleP>=1?1:-Math.expm1(cycles*Math.log1p(-cycleP));
   return{stats,probability:target.p,cycleP,cardsPerHour:mean*hours,hitsPerHour:rate,averageSeconds:cycleP>0?stats.RollInterval/cycleP:Infinity,averageCards:target.p>0?1/target.p:Infinity,chance,medianSeconds:cycleP>0?(cycleP>=1?stats.RollInterval:Math.ceil(Math.log(.5)/Math.log1p(-cycleP))*stats.RollInterval):Infinity,p90Seconds:cycleP>0?(cycleP>=1?stats.RollInterval:Math.ceil(Math.log(.1)/Math.log1p(-cycleP))*stats.RollInterval):Infinity};
 }
-export function profileWarnings(s,data){const warnings=[];const budget=Math.floor(s.rolls/data.rollsPerPoint);if(!validPoints(s.points,budget,data))warnings.push('Your current allocation exceeds earned points or its unlocked cap. Correct it before optimizing.');
-  const old=artifactBonuses(s,s.artifact.slots,data);for(const k of LUCKS){const point=k==='Luck'?'Luck':k.replace('Luck',''),before=s.stats[k]/(old.mult[k]||1)-(old.flat[k]||0)-(data.pointGains[point]||0)*(s.pointScale[point]??1)*(s.points[point]||0);if(before<0)warnings.push(`${k}: current points/artifact contribute more than your displayed total. Check the total, raw artifact values, or point scaling.`)}
+export function profileWarnings(s,data){const warnings=buildWarnings(s,data);const budget=Math.floor(s.rolls/data.rollsPerPoint);if(!validPoints(s.points,budget,data))warnings.push('Your current allocation exceeds earned points or its unlocked cap. Correct it before optimizing.');
+  const old=artifactBonuses(s,s.artifact.slots,data);if(!s.build)for(const k of LUCKS){const point=k==='Luck'?'Luck':k.replace('Luck',''),before=s.stats[k]/(old.mult[k]||1)-(old.flat[k]||0)-(data.pointGains[point]||0)*(s.pointScale[point]??1)*(s.points[point]||0);if(before<0)warnings.push(`${k}: current points/artifact contribute more than your displayed total. Check the total, raw artifact values, or point scaling.`)}
   if(s.artifact.slots.length>artifactSlots(s,data))warnings.push('Your artifact has more stats than its unlocked slots.');const counts={};for(const slot of s.artifact.slots){counts[slot.id]=(counts[slot.id]||0)+1;const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(slot.value<def.min||slot.value>scaledMax(def,artifactLevel(s,data)))warnings.push(`${slot.id}: value is outside the artifact level range.`)}if(Object.values(counts).some(n=>n>2))warnings.push('Artifacts allow at most two copies of the same stat.');return[...new Set(warnings)]}
 export function optimizePoints(s,data,progress=()=>{}){
   if(profileWarnings(s,data).length)throw Error(profileWarnings(s,data).join(' '));
   const budget=Math.min(sum(data.pointCaps.at(-1)),Math.floor(s.rolls/data.rollsPerPoint)),zero=Object.fromEntries(POINTS.map(k=>[k,0])),start=effective(s,data,zero),artifact=artifactBonuses(s,s.artifact.slots,data),curves={},required=new Set(s.goal.borders);
-  for(const key of POINTS){const max=data.pointCaps.at(-1)[key],stat=key==='Luck'?key:key+'Luck',gain=data.pointGains[key]*s.pointScale[key]*(artifact.mult[stat]||1);curves[key]=Array.from({length:max+1},(_,i)=>{const stats={...start,[stat]:start[stat]+gain*i};if(key==='Luck')return cardDistribution(s,data,stats.Luck).reduce((n,o)=>n+(matchesCard(o.card,s)?o.p:0),0);return required.has(key)?borderProbabilities(s,stats)[key]:1})}
+  for(const key of POINTS){const max=data.pointCaps.at(-1)[key],stat=key==='Luck'?key:key+'Luck',gain=s.build?effective(s,data,{...zero,[key]:1})[stat]-start[stat]:data.pointGains[key]*s.pointScale[key]*(artifact.mult[stat]||1);curves[key]=Array.from({length:max+1},(_,i)=>{const stats={...start,[stat]:start[stat]+gain*i};if(key==='Luck')return baseProbability(s,data,stats);return required.has(key)?borderProbabilities(s,stats)[key]:1})}
   let best=null,checked=0;const shortlist=[];
   for(let tier=0;tier<data.pointCaps.length;tier++){const upper=data.pointCaps[tier],lower=tier?data.pointCaps[tier-1]:zero;if(sum(lower)>budget)continue;
     for(let l=lower.Luck;l<=Math.min(upper.Luck,budget);l++)for(let sh=lower.Shiny;sh<=Math.min(upper.Shiny,budget-l);sh++)for(let aw=lower.Awakened;aw<=Math.min(upper.Awakened,budget-l-sh);aw++){
