@@ -36,15 +36,18 @@ export function skillSelection(b,id,on,data){
   const budget=skillBudget(b,data);if(on&&budget!=null&&skillCost(ids,data)>budget)return{error:'Not enough skill points for this node and its prerequisites.'};return{ids};
 }
 export function shopCap(b,d,shop){return d.maxLevel}
+export function corruptedCost(d,level){return level>=d.maxLevel?null:d.knownNextCosts[level]??Math.round(d.costFormula.base*d.costFormula.growth**level)}
+export function corruptedRefund(d,level){let total=0;for(let i=0;i<level;i++)total+=corruptedCost(d,i);return total}
+export function corruptedRemainingCost(b,data){return data.corruptedUpgrades.reduce((total,d)=>total+corruptedRefund(d,d.maxLevel)-corruptedRefund(d,b.corrupted[d.id]||0),0)}
+export function buyAllCorrupted(b,data){const cost=corruptedRemainingCost(b,data);if((b.currencies.corrupted||0)<cost)return{error:'Not enough Corrupted Coins.'};return{levels:Object.fromEntries(data.corruptedUpgrades.map(d=>[d.id,d.maxLevel])),balance:b.currencies.corrupted-cost}}
 export function potionGroup(id,data){const d=data.potions[id];return d&&['ShinyLuck','AwakenedLuck'].includes(d.StatCategory)&&id.endsWith('Mythic')?d.StatCategory+'Mythic':d?.StatCategory}
 export function shopAction(b,shop,id,direction,data){
   const defs=shop==='tower'?data.towerShop:shop==='corrupted'?data.corruptedUpgrades:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
-  const level=b[shop][id]||0,cost=shop==='corrupted'?d.knownNextCosts[level]:d.cost;
-  if(shop==='corrupted'&&(direction<0||cost==null))return{error:'This level’s purchase/refund price is not provided.'};
+  const level=b[shop][id]||0,cost=shop==='corrupted'?(direction<0?corruptedRefund(d,level):corruptedCost(d,level)):d.cost;
   if(direction<0&&shop==='void')return{error:'Void upgrades cannot be refunded.'};
   if(direction>0){if(level>=shopCap(b,d,shop))return{error:'Upgrade is at its cap.'};if((b.currencies?.[shop]||0)<cost)return{error:'Not enough currency.'}}
   else if(level<=0)return{error:'No upgrade to refund.'};
-  return{level:level+direction,balance:(b.currencies?.[shop]||0)-direction*cost};
+  return{level:shop==='corrupted'&&direction<0?0:level+direction,balance:(b.currencies?.[shop]||0)-direction*cost};
 }
 export function buildWarnings(s,data){const b=s.build;if(!b)return[];const w=[],owned=new Set(b.skills),groups={};for(const node of data.skillNodes){if(!owned.has(node.id))continue;if(node.requires.some(r=>!owned.has(r)))w.push(`${node.name}: prerequisite missing.`);if(node.limitGroup)groups[node.limitGroup]=(groups[node.limitGroup]||0)+1}for(const [g,count]of Object.entries(groups))if(count>(g==='star1'?2:1))w.push('Constellations allow 2 Normal, 1 Greater, and 1 Ascendant stars.');
   if(skillCost(b.skills,data)>skillBudget(b,data))w.push('Selected skills exceed your Index skill-point budget. Enter your Card Index or remove nodes.');

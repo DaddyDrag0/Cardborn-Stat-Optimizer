@@ -27,9 +27,9 @@ test('PA level 57 follows rolls; caps and fixed slots follow level, rarity, pass
 test('Tower and Void purchases enforce balances/caps, refunds return gold and Void has no refunds',()=>{
   const s=setup();s.build.currencies.tower=3;assert.ok(shopAction(s.build,'tower','Luck',1,data).error);
   s.build.currencies.tower=4;const buy=shopAction(s.build,'tower','Luck',1,data);assert.deepEqual(buy,{level:1,balance:0});s.build.tower.Luck=buy.level;s.build.currencies.tower=buy.balance;assert.deepEqual(shopAction(s.build,'tower','Luck',-1,data),{level:0,balance:4});
-  s.build.tower.Luck=20;assert.ok(shopAction(s.build,'tower','Luck',1,data).error);assert.equal(shopCap(s.build,data.towerShop.find(d=>d.id==='ShinyLuck'),'tower'),25);
+  s.build.tower.Luck=25;assert.ok(shopAction(s.build,'tower','Luck',1,data).error);assert.equal(shopCap(s.build,data.towerShop.find(d=>d.id==='ShinyLuck'),'tower'),25);
   s.build.void.PASlots=2;s.build.currencies.void=1000;assert.ok(shopAction(s.build,'void','PASlots',1,data).error);assert.ok(shopAction(s.build,'void','PASlots',-1,data).error);
-  s.build.tower.DoubleRollChance=110;s.build.void.VoidLuckPct=999;const n=normalize(s,data);assert.equal(n.build.tower.DoubleRollChance,10);assert.equal(n.build.void.VoidLuckPct,10);
+  s.build.tower.DoubleRollChance=110;s.build.void.VoidLuckPct=999;const n=normalize(s,data);assert.equal(n.build.tower.DoubleRollChance,15);assert.equal(n.build.void.VoidLuckPct,10);
 });
 test('All eight form sets are exported with screenshot bonuses and add independently',()=>{
   assert.equal(data.indexSets.length,27);const s=setup();s.build.under10M=false;s.build.sets=['StarterWorld','StarterWorld_Awakened','VoidWorld_Shiny'];const r=effective(s,data);close(r.Luck,1+2+17+6);close(r.AwakenedLuck,4.3);close(r.VoidLuck,1.5);

@@ -5096,9 +5096,10 @@
       "id": "Luck",
       "name": "Luck",
       "desc": "+2 Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 4,
-      "gain": 2
+      "gain": 2,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "ShinyLuck",
@@ -5107,15 +5108,16 @@
       "maxLevel": 25,
       "cost": 4,
       "gain": 0.1,
-      "capSource": "Player screenshot"
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "AwakenedLuck",
       "name": "Awakened Luck",
       "desc": "+0.3 Awakened Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 5,
-      "gain": 0.4
+      "gain": 0.4,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "FabledLuck",
@@ -5124,47 +5126,52 @@
       "maxLevel": 25,
       "cost": 6,
       "gain": 0.2,
-      "capSource": "Player screenshot"
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "CorruptedLuck",
       "name": "Corrupted Luck",
       "desc": "+0.2 Corrupted Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 8,
-      "gain": 0.2
+      "gain": 0.2,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "VoidLuck",
       "name": "Void Luck",
       "desc": "+0.5 Void Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 8,
-      "gain": 0.5
+      "gain": 0.5,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "DoubleRollChance",
       "name": "Double Roll Chance",
       "desc": "+2% chance per roll to receive 2 cards(Increases roll count by 1)",
-      "maxLevel": 10,
+      "maxLevel": 15,
       "cost": 5,
-      "gain": 0.02
+      "gain": 0.02,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "RollTwiceChance",
       "name": "Roll Twice Chance",
       "desc": "+1% chance to roll an additional time!(Increases roll count by 2)",
-      "maxLevel": 10,
+      "maxLevel": 15,
       "cost": 5,
-      "gain": 0.01
+      "gain": 0.01,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "LuckyHandChance",
       "name": "Lucky Hand Chance",
       "desc": "+2% chance for Lucky Hand effect (no relic needed)",
-      "maxLevel": 10,
+      "maxLevel": 15,
       "cost": 6,
-      "gain": 0.02
+      "gain": 0.02,
+      "capSource": "Player gameplay correction"
     },
     {
       "id": "ThirdRelicSlot",
@@ -5173,7 +5180,8 @@
       "maxLevel": 1,
       "cost": 25,
       "noExtraLevels": true,
-      "gain": 1
+      "gain": 1,
+      "capSource": "Player gameplay correction"
     }
   ],
   "voidShop": [
@@ -5471,7 +5479,20 @@
       "gain": 8,
       "maxLevel": 10,
       "knownNextCosts": {
-        "5": 447
+        "0": 50,
+        "1": 78,
+        "2": 120,
+        "3": 186,
+        "4": 289,
+        "5": 447,
+        "6": 693,
+        "7": 1075,
+        "8": 1666
+      },
+      "costFormula": {
+        "base": 50,
+        "growth": 1.55,
+        "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
       }
     },
     {
@@ -5480,7 +5501,22 @@
       "stat": "AwakenedLuck",
       "gain": 3,
       "maxLevel": 10,
-      "knownNextCosts": {}
+      "knownNextCosts": {
+        "0": 40,
+        "1": 62,
+        "2": 96,
+        "3": 149,
+        "4": 231,
+        "5": 358,
+        "6": 555,
+        "7": 860,
+        "8": 1333
+      },
+      "costFormula": {
+        "base": 40,
+        "growth": 1.55,
+        "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
+      }
     },
     {
       "id": "CorruptedCalling",
@@ -5489,7 +5525,20 @@
       "gain": 1,
       "maxLevel": 10,
       "knownNextCosts": {
-        "7": 2830
+        "0": 85,
+        "1": 140,
+        "2": 231,
+        "3": 382,
+        "4": 630,
+        "5": 1040,
+        "6": 1715,
+        "7": 2830,
+        "8": 4670
+      },
+      "costFormula": {
+        "base": 85,
+        "growth": 1.65,
+        "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
       }
     },
     {
@@ -5499,7 +5548,20 @@
       "gain": 0.01,
       "maxLevel": 10,
       "knownNextCosts": {
-        "7": 1290
+        "0": 60,
+        "1": 93,
+        "2": 144,
+        "3": 223,
+        "4": 346,
+        "5": 537,
+        "6": 832,
+        "7": 1290,
+        "8": 1999
+      },
+      "costFormula": {
+        "base": 60,
+        "growth": 1.55,
+        "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
       }
     },
     {
@@ -5509,7 +5571,17 @@
       "gain": 0.005,
       "maxLevel": 6,
       "knownNextCosts": {
+        "0": 125,
+        "1": 219,
+        "2": 383,
+        "3": 670,
+        "4": 1172,
         "5": 2052
+      },
+      "costFormula": {
+        "base": 125,
+        "growth": 1.75,
+        "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
       }
     }
   ]

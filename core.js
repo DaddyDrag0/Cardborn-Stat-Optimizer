@@ -1,4 +1,4 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=5';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=6.1';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];

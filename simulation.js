@@ -1,4 +1,4 @@
-import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=6';
+import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=6.1';
 
 // Count sampling adapted from Hit Calculator's roll-sim-worker-v39.js.
 // https://github.com/DaddyDrag0/HitCalculator/blob/main/roll-sim-worker-v39.js
