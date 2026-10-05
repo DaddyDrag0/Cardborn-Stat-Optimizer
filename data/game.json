@@ -2253,6 +2253,165 @@
         "Luck": 2.5,
         "CorruptedLuck": 0.15
       }
+    },
+    {
+      "id": "StarterWorld_Shiny",
+      "name": "Shiny Base Set",
+      "kind": "World",
+      "form": "Shiny",
+      "match": {
+        "badge": false
+      },
+      "bonus": {
+        "Luck": 6,
+        "ShinyLuck": 0.3
+      }
+    },
+    {
+      "id": "StarterWorld_Awakened",
+      "name": "Awakened Base Set",
+      "kind": "World",
+      "form": "Awakened",
+      "match": {
+        "badge": false
+      },
+      "bonus": {
+        "Luck": 17,
+        "AwakenedLuck": 3.3
+      }
+    },
+    {
+      "id": "CrystalWorld_Shiny",
+      "name": "Shiny Crystal World",
+      "kind": "World",
+      "form": "Shiny",
+      "match": {
+        "badge": "CrystalBadge"
+      },
+      "bonus": {
+        "Luck": 8,
+        "ShinyLuck": 0.25
+      }
+    },
+    {
+      "id": "EndWorld_Awakened",
+      "name": "Awakened End World",
+      "kind": "World",
+      "form": "Awakened",
+      "match": {
+        "badge": "EndBadge"
+      },
+      "bonus": {
+        "Luck": 4,
+        "AwakenedLuck": 0.4
+      }
+    },
+    {
+      "id": "SnowWorld_Fabled",
+      "name": "Fabled Snow World",
+      "kind": "World",
+      "form": "Fabled",
+      "match": {
+        "badge": "SnowBadge"
+      },
+      "bonus": {
+        "Luck": 5,
+        "FabledLuck": 0.5
+      }
+    },
+    {
+      "id": "CorruptedWorld_Corrupted",
+      "name": "Fully Corrupted World",
+      "kind": "World",
+      "form": "Corrupted",
+      "match": {
+        "badge": "CorruptedWorldBadge"
+      },
+      "bonus": {
+        "Luck": 6,
+        "CorruptedLuck": 1
+      }
+    },
+    {
+      "id": "VoidWorld_Shiny",
+      "name": "Shiny Void World",
+      "kind": "World",
+      "form": "Shiny",
+      "match": {
+        "badge": "VoidWorldBadge"
+      },
+      "bonus": {
+        "Luck": 6,
+        "ShinyLuck": 0.5,
+        "VoidLuck": 0.5
+      }
+    },
+    {
+      "id": "VoidWorld_Void",
+      "name": "True Void World",
+      "kind": "World",
+      "form": "Void",
+      "match": {
+        "badge": "VoidWorldBadge"
+      },
+      "bonus": {
+        "Luck": 12,
+        "VoidLuck": 2
+      }
+    }
+  ],
+  "indexSkillPoints": {
+    "every": 20,
+    "amount": 2
+  },
+  "skillBranches": [
+    {
+      "key": "Fortune",
+      "name": "Fortune",
+      "dir": [
+        -0.98,
+        -0.2
+      ]
+    },
+    {
+      "key": "Velocity",
+      "name": "Velocity",
+      "dir": [
+        -0.7,
+        -0.71
+      ]
+    },
+    {
+      "key": "Radiance",
+      "name": "Radiance",
+      "dir": [
+        -0.24,
+        -0.97
+      ]
+    },
+    {
+      "key": "Mythos",
+      "name": "Mythos",
+      "dir": [
+        0.24,
+        -0.97
+      ]
+    },
+    {
+      "key": "Corrupted",
+      "name": "Corrupted",
+      "dir": [
+        0.7,
+        -0.71
+      ]
+    },
+    {
+      "key": "Alchemy",
+      "name": "Alchemy",
+      "dir": [
+        0.98,
+        -0.2
+      ]
     }
   ],
   "grandmastery": [

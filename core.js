@@ -1,4 +1,4 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=3';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=4';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -26,6 +26,8 @@ export function normalize(raw,data){
   s.artifact.gamepass=a.gamepass===true;s.artifact.voidSlots=Math.floor(number(a.voidSlots??0,0,2));s.artifact.strength=number(a.strength??0,0,10);s.artifact.quality=number(a.quality??.9,0,1);
   s.artifact.slots=Array.isArray(a.slots)?a.slots.slice(0,11).filter(x=>data.personalArtifact.stats.some(d=>d.id===x?.id)).map(x=>({id:x.id,value:number(x.value,0,1e6),locked:x.locked===true})):[];
   if(raw.build&&typeof raw.build==='object'&&!Array.isArray(raw.build)){s.build=normalizeBuild(raw.build,data);s.version=2;s.artifact.gamepass=s.build.passes.ArtifactSlots;s.artifact.voidSlots=s.build.void.PASlots||0}
+  s.fabledMax=number(raw.fabledMax??1e30,0,1e30);
+  if(s.build){s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}
@@ -58,14 +60,15 @@ export function cardDistribution(s,data,luck){
 }
 export function borderProbabilities(s,stats){return Object.fromEntries(BORDERS.map(k=>{let p=k==='Void'?1/Math.max(1,Math.ceil(s.odds[k]/Math.max(.0001,stats.VoidLuck))):Math.min(1,stats[k+'Luck']/s.odds[k]);if((k==='Awakened'||k==='Fabled'||k==='Corrupted')&&!s.unlocks[k])p=0;return[k,p]}))}
 function matchesCard(card,s){return s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity}
-function baseProbability(s,data,stats){return luckVariants(stats).reduce((n,v)=>n+v.weight*cardDistribution(s,data,stats.Luck*v.mult).reduce((p,o)=>p+(matchesCard(o.card,s)?o.p:0),0),0)}
-export function fastProbability(s,data,stats){const base=baseProbability(s,data,stats),borders=borderProbabilities(s,stats);return base*s.goal.borders.reduce((n,k)=>n*borders[k],1)}
+function baseProbability(s,data,stats){return luckVariants(stats).reduce((n,v)=>n+v.weight*cardDistribution(s,data,stats.Luck*v.mult).reduce((p,o)=>p+(matchesCard(o.card,s)&&(!s.goal.borders.includes('Fabled')||o.card.rarityValue<=(s.fabledMax??1e30))?o.p:0),0),0)}
+export function fastProbability(s,data,stats){const borders=borderProbabilities(s,stats),base=baseProbability(s,data,stats);
+  return base*s.goal.borders.reduce((n,k)=>n*borders[k],1)}
 export function targetProbability(s,data,stats){const variants=luckVariants(stats);let plain=0,best=0;for(const v of variants){const result=singleTargetProbability(s,data,{...stats,Luck:stats.Luck*v.mult,periodic:[]});plain+=v.weight*result.plain;best+=v.weight*result.best}return{plain,best,p:(1-stats.LuckyHandChance)*plain+stats.LuckyHandChance*best}}
 function singleTargetProbability(s,data,stats){
   const plain=fastProbability(s,data,stats),hand=stats.LuckyHandChance;if(!hand)return{plain,best:plain,p:plain};
   const bp=borderProbabilities(s,stats),variants=[];
-  for(const outcome of cardDistribution(s,data,stats.Luck))for(let mask=0;mask<32;mask++){let p=outcome.p,rarity=outcome.card.rarityValue,match=matchesCard(outcome.card,s);
-    for(let j=0;j<BORDERS.length;j++){const k=BORDERS[j],on=!!(mask&(1<<j));p*=on?bp[k]:1-bp[k];if(on)rarity*=data.borderRarity[k];if(!on&&s.goal.borders.includes(k))match=false}
+  for(const outcome of cardDistribution(s,data,stats.Luck))for(let mask=0;mask<32;mask++){const cardBp={...bp,Fabled:outcome.card.rarityValue<=(s.fabledMax??1e30)?bp.Fabled:0};let p=outcome.p,rarity=outcome.card.rarityValue,match=matchesCard(outcome.card,s);
+    for(let j=0;j<BORDERS.length;j++){const k=BORDERS[j],on=!!(mask&(1<<j));p*=on?cardBp[k]:1-cardBp[k];if(on)rarity*=data.borderRarity[k];if(!on&&s.goal.borders.includes(k))match=false}
     if(p<=0)continue;const boost=outcome.card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost),score=hp+2*Math.floor(hp/2);variants.push({p,rarity,score,match});
   }
   variants.sort((a,b)=>a.score-b.score||a.rarity-b.rarity);let below=0,best=0;
@@ -73,6 +76,12 @@ function singleTargetProbability(s,data,stats){
   return{plain,best,p:(1-hand)*plain+hand*best};
 }
 export function batchDistribution(stats){let dist=[{n:1,p:1}];for(const [key,extra] of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]]){const chance=stats[key];dist=dist.flatMap(o=>[{n:o.n,p:o.p*(1-chance)},{n:o.n+extra,p:o.p*chance}]).filter(o=>o.p>0)}return dist}
+export function simulateRolls(s,data,count=1000,seed=1){
+  count=Math.floor(number(count,1,50000));seed=Math.floor(number(seed,1,4294967295));let state=seed,hits=0,cards=0;const rng=()=>((state=(Math.imul(state,1664525)+1013904223)>>>0)/4294967296),stats=effective(s,data),cache=new Map(),best=[];
+  function draw(mult){let pool=cache.get(mult);if(!pool){let total=0;pool=cardDistribution(s,data,stats.Luck*mult).map(o=>({...o,cdf:(total+=o.p)}));cache.set(mult,pool)}const r=rng();let lo=0,hi=pool.length-1;while(lo<hi){const mid=(lo+hi)>>1;if(r<=pool[mid].cdf)hi=mid;else lo=mid+1}const card=pool[lo].card,bp=borderProbabilities(s,stats),borders=[];let rarity=card.rarityValue;for(const b of BORDERS)if((b!=='Fabled'||card.rarityValue<=(s.fabledMax??1e30))&&rng()<bp[b]){borders.push(b);rarity*=data.borderRarity[b]}const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);return{name:card.name,rarity,borders,score:hp+2*Math.floor(hp/2),hit:matchesCard(card,s)&&s.goal.borders.every(b=>borders.includes(b))}}
+  for(let i=1;i<=count;i++){const mult=(stats.periodic||[]).reduce((m,p)=>m*(i%p.every===0?p.mult:1),1),hand=rng()<stats.LuckyHandChance;let batch=1;for(const[k,n]of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]])if(rng()<stats[k])batch+=n;for(let j=0;j<batch;j++){let roll=draw(mult);if(hand){const other=draw(mult);if(other.score>roll.score||other.score===roll.score&&other.rarity>roll.rarity)roll=other}cards++;if(roll.hit)hits++;if(best.length<10||roll.rarity>best.at(-1).rarity){best.push(roll);best.sort((a,b)=>b.rarity-a.rarity);best.length=Math.min(best.length,10)}}}
+  return{cycles:count,cards,hits,seed,seconds:count*stats.RollInterval,best};
+}
 export function evaluate(s,data,points=s.points,slots=s.artifact.slots){
   const stats=effective(s,data,points,slots),target=targetProbability(s,data,stats),batches=batchDistribution(stats),mean=batches.reduce((n,b)=>n+b.n*b.p,0);
   const batchChance=p=>batches.reduce((n,b)=>n+b.p*(-Math.expm1(b.n*Math.log1p(-p))),0),cycleP=luckVariants(stats).reduce((n,v)=>{const t=targetProbability(s,data,{...stats,Luck:stats.Luck*v.mult,periodic:[]});return n+v.weight*((1-stats.LuckyHandChance)*batchChance(t.plain)+stats.LuckyHandChance*batchChance(t.best))},0);
@@ -81,7 +90,7 @@ export function evaluate(s,data,points=s.points,slots=s.artifact.slots){
 }
 export function profileWarnings(s,data){const warnings=buildWarnings(s,data);const budget=Math.floor(s.rolls/data.rollsPerPoint);if(!validPoints(s.points,budget,data))warnings.push('Your current allocation exceeds earned points or its unlocked cap. Correct it before optimizing.');
   const old=artifactBonuses(s,s.artifact.slots,data);if(!s.build)for(const k of LUCKS){const point=k==='Luck'?'Luck':k.replace('Luck',''),before=s.stats[k]/(old.mult[k]||1)-(old.flat[k]||0)-(data.pointGains[point]||0)*(s.pointScale[point]??1)*(s.points[point]||0);if(before<0)warnings.push(`${k}: current points/artifact contribute more than your displayed total. Check the total, raw artifact values, or point scaling.`)}
-  if(s.artifact.slots.length>artifactSlots(s,data))warnings.push('Your artifact has more stats than its unlocked slots.');const counts={};for(const slot of s.artifact.slots){counts[slot.id]=(counts[slot.id]||0)+1;const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(slot.value<def.min||slot.value>scaledMax(def,artifactLevel(s,data)))warnings.push(`${slot.id}: value is outside the artifact level range.`)}if(Object.values(counts).some(n=>n>2))warnings.push('Artifacts allow at most two copies of the same stat.');return[...new Set(warnings)]}
+  if(s.artifact.slots.length>artifactSlots(s,data))warnings.push('Your artifact has more stats than its unlocked slots.');const counts={};for(const slot of s.artifact.slots){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;counts[slot.id]=(counts[slot.id]||0)+1;if(slot.value<def.min||slot.value>scaledMax(def,artifactLevel(s,data)))warnings.push(`${slot.id}: value is outside the artifact level range.`)}if(Object.values(counts).some(n=>n>2))warnings.push('Artifacts allow at most two copies of the same stat.');return[...new Set(warnings)]}
 export function optimizePoints(s,data,progress=()=>{}){
   if(profileWarnings(s,data).length)throw Error(profileWarnings(s,data).join(' '));
   const budget=Math.min(sum(data.pointCaps.at(-1)),Math.floor(s.rolls/data.rollsPerPoint)),zero=Object.fromEntries(POINTS.map(k=>[k,0])),start=effective(s,data,zero),artifact=artifactBonuses(s,s.artifact.slots,data),curves={},required=new Set(s.goal.borders);
@@ -102,8 +111,8 @@ export function optimizePoints(s,data,progress=()=>{}){
 }
 export function optimizeArtifact(s,data,progress=()=>{}){
   const warnings=profileWarnings(s,data);if(warnings.length)throw Error(warnings.join(' '));const slots=artifactSlots(s,data);if(!slots)throw Error('Earn enough rolls to unlock your first artifact slot.');
-  const level=artifactLevel(s,data),locked=s.artifact.slots.map((x,i)=>({...x,position:i})).filter(x=>x.locked),rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity),lockLimit=(s.artifact.gamepass?4:2)+(rarity.bonusLocks||0);
-  if(locked.length>lockLimit)throw Error(`The exported rules confirm ${lockLimit} artifact locks for this setup. Void Shop extra locks need confirmation.`);
+  const level=artifactLevel(s,data),locked=s.artifact.slots.map((x,i)=>({...x,position:i})).filter(x=>x.locked&&x.id),rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity),lockLimit=(s.artifact.gamepass?4:2)+(rarity.bonusLocks||0)+s.artifact.voidSlots;
+  if(locked.length>lockLimit)throw Error(`This setup supports ${lockLimit} artifact locks.`);
   const defs=data.personalArtifact.stats.filter(d=>d.id!=='PotionDurationMult'),signature=rows=>rows.map(x=>x.id+':'+x.value).sort().join('|');
   let beam=[{slots:locked,result:evaluate(s,data,s.points,locked)}],checked=0;
   for(let step=locked.length;step<slots;step++){const next=[],seen=new Set();for(const item of beam)for(const def of defs){if(item.slots.filter(x=>x.id===def.id).length>=2)continue;const position=Array.from({length:slots},(_,i)=>i).find(i=>!item.slots.some(x=>x.position===i)),f=10**def.decimals,value=Math.floor((def.min+(scaledMax(def,level)-def.min)*s.artifact.quality)*f+.5)/f,rows=[...item.slots,{id:def.id,value,locked:false,position}].sort((a,b)=>a.position-b.position),key=signature(rows);if(seen.has(key))continue;seen.add(key);next.push({slots:rows,result:evaluate(s,data,s.points,rows)});checked++}next.sort((a,b)=>b.result.hitsPerHour-a.result.hitsPerHour);beam=next.slice(0,12);progress((step+1)/slots)}
