@@ -1,10 +1,14 @@
 # Mechanics and assumptions
 
-## Build calculator v2
+## Build calculator v3
 
 Setup derives stats from investments/equipment rather than taking final totals as inputs. It includes all 102 generated skill-tree nodes (72 regular, 2 Grandmastery, 7 Transcendence, 21 Constellations), 13 crafted artifacts, 16 relics/six border tiers, 24 potion definitions, 19 Index Sets, passes, and Tower/Void upgrades. Skill prerequisites/costs reproduce the definition module's generated IDs, including legacy IDs retained in Mythos and Corrupted paths. The two path capstones are required for each mastery; Constellation limits are 2/1/1.
 
 The model adds base, points, pass flats, equipment, tree flats, sets, shops, manual source bonuses, potion flats, and weather flat Luck. Artifact multipliers, summed tree percentages, pass percentages, individual potion percentages, weather, under-10M Luck, and Void attunement then apply. The default keeps groups separate. An alternative combines artifact bonus-above-one with summed tree percentages. Server aggregation is absent, so neither order is claimed confirmed. SkillTree.ComputeBonuses confirms sums within the tree, not its position in the final calculation.
+
+CraftingClient defines 16 crafted tiers with bonuses 0/60/110/175/230/350/500/750/800/900/1000/1200/1400/1600/2000/2500%. Its tier preview explicitly excludes RollSpeed. Artifact Index bonus is `floor(points / 2) × 10%`; 49 points gives +240%, with 1 point until the next bonus. This is distinct from completed card Index Sets. Enter the total shown in the crafting menu; the client counts each artifact's recorded tier as 1–16 points.
+
+The screenshot confirms Frozen Crown Fabled Corrupted (+1000%) previews Luck 660, Shiny 11, Awakened 15.4, Corrupted 13.2, Void 9.9 and RollSpeed 0.3. This preview excludes Index/resonance. **Assumption:** equipped crafted luck boosts use `base × (1 + tier%) × (1 + Index%) × resonance`. Index leaves speed unchanged by default. Model settings can instead add tier/Index percentages or apply Index to speed. The client only displays the Index bonus; its server application is absent, so screenshot agreement does not confirm stacking. The breakdown shows the equipped artifact's modeled contribution before global multipliers.
 
 Base defaults follow shop text: Luck/Shiny/Awakened/Corrupted 1; Fabled 2. Void 1 is assumed. A base interval of 1 second follows the client `1 - RollSpeed` cooldown. The update's minimum is 0.2s. Final speed potion percentages are modeled on the accumulated cooldown reduction, not on interval; this needs server confirmation.
 

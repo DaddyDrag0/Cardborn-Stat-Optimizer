@@ -4,7 +4,9 @@ A simple browser calculator for Cardborn RNG. Enter your build, see calculated c
 
 ## Use
 
-Start in **Setup**. Enter lifetime rolls and allocated points, gamepasses, skill-tree nodes, crafted artifact, relics/borders, Personal Artifact values, Tower/Void Shop levels, completed Index Sets, active potions, weather, and unlocks. Totals are calculated and read-only. The under-10M 1.25× Luck boost automatically applies below its threshold, unless disabled.
+Start in **Setup**. Enter lifetime rolls and allocated points, gamepasses, skill-tree nodes, crafted artifact/tier and Artifact Index points, relics/borders, Personal Artifact values, Tower/Void Shop levels, completed Index Sets, active potions, weather, and unlocks. Totals are calculated and read-only. The under-10M 1.25× Luck boost automatically applies below its threshold, unless disabled.
+
+Crafted tiers include all 16 combinations. Artifact Index is separate from card Index Sets: every 2 points adds 10% strength (49 points = +240%). The crafting tier preview matches the game and leaves Roll Speed unchanged. Index stacking with tiers remains configurable and unconfirmed; the default multiplies their luck boosts. Existing saved profiles keep their setup and default to Normal/0 Index points until filled in.
 
 - Setup: 102 skill nodes including both paths, masteries, Grandmastery, Transcendence and Constellations; 13 crafted artifacts; 16 relics with six border tiers; 24 potion definitions; 19 Index Sets; and all Tower/Void Shop levels. Selecting a skill includes prerequisites, and removing it removes dependent nodes.
 - Hit Calculator: choose a minimum **base** rarity or exact card and required borders; see odds, hit rates, waiting times, and session chances.

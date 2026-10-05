@@ -2,11 +2,14 @@
 export const BUILD_STATS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck','RollSpeed','DoubleRollChance','RollTwiceChance','TripleRollChance','LuckyHandChance','PotionPowerMult','PotionDurationMult'];
 const LUCKS=BUILD_STATS.slice(0,6),CHANCES=BUILD_STATS.slice(7,11);
 const n=(v,lo=0,hi=1e9)=>Math.max(lo,Math.min(hi,Number.isFinite(Number(v))?Number(v):lo));
-export function buildDefaults(){return{skills:[],sets:[],crafted:'',relics:[],potions:[],passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
+export function buildDefaults(){return{skills:[],sets:[],crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
 export function normalizeBuild(raw,data){
   const b=buildDefaults(),known=(values,ids)=>Array.isArray(values)?[...new Set(values.filter(x=>ids.includes(x)))]:[];
   b.skills=known(raw.skills,(data.skillNodes||[]).map(x=>x.id));b.sets=known(raw.sets,data.indexSets.map(x=>x.id));
   b.crafted=Object.hasOwn(data.craftedArtifacts||{},raw.crafted)?raw.crafted:'';
+  b.craftedTier=data.craftedTiers.some(t=>t.id===raw.craftedTier)?raw.craftedTier:'Normal';
+  b.craftedIndexPoints=Math.floor(n(raw.craftedIndexPoints??0,0,Object.keys(data.craftedArtifacts).length*data.craftedTiers.length));
+  b.craftedIndexOrder=raw.craftedIndexOrder==='combined'?'combined':'separate';b.craftedIndexSpeed=raw.craftedIndexSpeed===true;
   b.relics=Array.isArray(raw.relics)?raw.relics.slice(0,3).filter(x=>Object.hasOwn(data.relics||{},x?.id)).map(x=>({id:x.id,border:Math.floor(n(x.border,1,6))})):[];
   b.potions=known(raw.potions,Object.keys(data.potions||{}));
   for(const p of data.gamepasses||[])b.passes[p.passKey]=raw.passes?.[p.passKey]===true;
@@ -26,12 +29,23 @@ export function buildWarnings(s,data){const b=s.build;if(!b)return[];const w=[],
   if(b.towerAwakenedGain!==.4&&b.towerAwakenedGain!==.3)w.push('Tower Awakened gain is a custom model value.');return[...new Set(w)];
 }
 function merge(target,values,scale=1){for(const[k,v]of Object.entries(values||{}))if(typeof v==='number')target[k]=(target[k]||0)+v*scale}
+export function craftedBonuses(b,data){
+  const tier=data.craftedTiers.find(t=>t.id===b.craftedTier)||data.craftedTiers[0],tierMult=1+tier.boost/100,indexPercent=Math.floor((b.craftedIndexPoints||0)/2)*10,indexMult=1+indexPercent/100,resonance=1+.05*(b.void.VoidArtifactPower||0),preview={},flat={};
+  for(const[k,v]of Object.entries(data.craftedArtifacts[b.crafted]?.Boosts||{})){
+    // The client's tier preview explicitly excludes RollSpeed. Index stacking and
+    // resonance scope are modeled because their server calculation is absent.
+    preview[k]=v*(k==='RollSpeed'?1:tierMult);
+    const scale=k==='RollSpeed'?(b.craftedIndexSpeed?indexMult:1):b.craftedIndexOrder==='combined'?tierMult+indexMult-1:tierMult*indexMult;
+    flat[k]=v*scale*resonance;
+  }
+  return{tier,tierMult,indexPercent,indexMult,pointsToNext:(b.craftedIndexPoints||0)%2?1:2,resonance,preview,flat};
+}
 export function calculateBuild(s,data,points,pa){
   const b=s.build,rows=[],flat={},percent={},finalMult={},periodic=[];
   function row(name,f={},p={},m={}){rows.push({name,flat:f,percent:p,mult:m});merge(flat,f);merge(percent,p);for(const[k,v]of Object.entries(m))finalMult[k]=(finalMult[k]||1)*v}
   row('Starting stats',b.base);row('Stat points',Object.fromEntries(Object.entries(points).map(([k,v])=>[k==='Luck'?k:k+'Luck',v*data.pointGains[k]*(s.pointScale[k]??1)])));
   const passFlat={},passMult={};for(const[k,on]of Object.entries(b.passes)){if(!on)continue;if(k==='Luck')passFlat.Luck=5;else if(k==='Fabled')passFlat.FabledLuck=1;else if(['Shiny','Awakened','Corrupted'].includes(k)){passFlat[k+'Luck']=.5;passMult[k+'Luck']=1.1}}row('Gamepasses',passFlat,{},passMult);
-  const resonance=1+.05*(b.void.VoidArtifactPower||0);row('Crafted artifact',Object.fromEntries(Object.entries(data.craftedArtifacts[b.crafted]?.Boosts||{}).map(([k,v])=>[k,v*resonance])));
+  row('Crafted artifact',craftedBonuses(b,data).flat);
   row('Personal Artifact',pa.flat,{},pa.mult);
   const treeFlat={},treePct={};for(const node of data.skillNodes)if(b.skills.includes(node.id)){merge(treeFlat,node.bonus);merge(treePct,node.percent)}row('Skill tree',treeFlat,treePct);
   const relicFlat={};let raidMult=1;for(const relic of b.relics){const def=data.relics[relic.id],scale=(def.BorderScale||[1,1.4,1.9,2.5,3.2,4])[relic.border-1];merge(relicFlat,def.Boosts,scale);if(relic.id==='RelicOfTheLuckyHand')relicFlat.LuckyHandChance=(relicFlat.LuckyHandChance||0)+Math.min(.6,.1*scale);if(relic.id==='RaidersSword')raidMult*=2*scale;if(['RelicOfBonus','WeightedDice'].includes(relic.id))periodic.push({every:Math.max(relic.id==='WeightedDice'?10:5,Math.floor((relic.id==='WeightedDice'?50:25)/scale+.5)),mult:relic.id==='WeightedDice'?4:2})}row('Relics',relicFlat);

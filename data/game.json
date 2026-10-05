@@ -4295,6 +4295,152 @@
       }
     }
   },
+  "craftedTiers": [
+    {
+      "id": "Normal",
+      "label": "Normal",
+      "boost": 0,
+      "shiny": false,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": false
+    },
+    {
+      "id": "Shiny",
+      "label": "Shiny",
+      "boost": 60,
+      "shiny": true,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": false
+    },
+    {
+      "id": "Fabled",
+      "label": "Fabled",
+      "boost": 110,
+      "shiny": false,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": false
+    },
+    {
+      "id": "Awakened",
+      "label": "Awakened",
+      "boost": 175,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": false
+    },
+    {
+      "id": "ShinyFabled",
+      "label": "Shiny Fabled",
+      "boost": 230,
+      "shiny": true,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": false
+    },
+    {
+      "id": "Corrupted",
+      "label": "Corrupted",
+      "boost": 350,
+      "shiny": false,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": true
+    },
+    {
+      "id": "ShinyCorrupted",
+      "label": "Shiny Corrupted",
+      "boost": 500,
+      "shiny": true,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": true
+    },
+    {
+      "id": "ShinyAwakened",
+      "label": "Shiny Awakened",
+      "boost": 750,
+      "shiny": true,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": false
+    },
+    {
+      "id": "AwakenedFabled",
+      "label": "Awakened Fabled",
+      "boost": 800,
+      "shiny": false,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": false
+    },
+    {
+      "id": "ShinyAwakenedFabled",
+      "label": "Shiny Awak. Fabled",
+      "boost": 900,
+      "shiny": true,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": false
+    },
+    {
+      "id": "FabledCorrupted",
+      "label": "Fabled Corrupted",
+      "boost": 1000,
+      "shiny": false,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": true
+    },
+    {
+      "id": "AwakenedCorrupted",
+      "label": "Awakened Corrupted",
+      "boost": 1200,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": true
+    },
+    {
+      "id": "ShinyFabledCorrupted",
+      "label": "Shiny Fabled Corr.",
+      "boost": 1400,
+      "shiny": true,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": true
+    },
+    {
+      "id": "ShinyAwakenedCorrupted",
+      "label": "Shiny Awak. Corr.",
+      "boost": 1600,
+      "shiny": true,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": true
+    },
+    {
+      "id": "AwakenedFabledCorrupted",
+      "label": "Awak. Fabled Corr.",
+      "boost": 2000,
+      "shiny": false,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": true
+    },
+    {
+      "id": "ShinyAwakenedFabledCorrupted",
+      "label": "Perfect Corrupted",
+      "boost": 2500,
+      "shiny": true,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": true
+    }
+  ],
   "relics": {
     "RelicOfAbundance": {
       "Name": "Relic of Abundance",
