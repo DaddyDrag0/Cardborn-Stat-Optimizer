@@ -4,7 +4,17 @@ A simple browser calculator for Cardborn RNG. Enter your build, see calculated c
 
 ## Use
 
-Start in **Setup**. Enter lifetime rolls and allocated points, gamepasses, skill-tree nodes, crafted artifact/tier and Artifact Index points, relics/borders, Personal Artifact values, Tower/Void Shop levels, completed Index Sets, active potions, weather, and unlocks. Totals are calculated and read-only. The under-10M 1.25× Luck boost automatically applies below its threshold, unless disabled.
+Start in **Setup**. Enter Card Index, lifetime rolls and allocated points, gamepasses, skill-tree nodes, crafted artifact/tier and Artifact Index points, relics/borders, Personal Artifact values, Tower/Void Shop levels, completed Index Sets, active potions and weather. Totals are calculated and read-only. The under-10M 1.25× Luck boost automatically applies below its threshold, unless disabled.
+
+v4 follows the supplied Hit Calc layout: a top stats strip and Setup / Optimizer / Roll Simulator / Builds tabs. Import/export, named browser saves and model assumptions are on Builds. The simulator samples up to 50,000 seeded roll cycles using the current target, border limits, extra rolls, Lucky Hand and periodic relics.
+
+The interactive skill tree includes prerequisites and hard Constellation limits (2 Normal / 1 Greater / 1 Ascendant). Optional Card Index sets the SP budget to `floor(Index / 20) × 2`, assuming all eligible rewards have been claimed; extra confirmed SP can be entered separately. All 27 Index Sets are included, with eight source-defined border-specific versions.
+
+PA level is `floor(100 × (rolls / 100M)^0.4)`, capped at 100. Raw stat limits interpolate from minimum to maximum by level/100. Slots are fixed automatically from levels 1/15/35/60/90, Mythic +1 or Celestial +2, the +2-slot pass and up to +2 Void slots. Lowering level/rarity/slot upgrades removes unavailable trailing slots; raw values clamp to the new level cap. Empty slots add no stats.
+
+Enter already-owned Tower/Void levels without charging them to your current balance. Buy buttons spend the entered unspent currency; Tower refunds return gold, while Void has no refund action. Tower base caps are enforced; enter the cap extension granted by owned Corrupted upgrades. Void caps use the shared catalog. All borders are assumed available; set the maximum base rarity with individual Fabled upgrades unlocked under Targets.
+
+Pending data: Corrupted permanent-upgrade names/effects/caps/cost curves, achievement bonus rewards, and new Infinite Dungeon bonus/progression formulas are not in the server-free export. These sections are visibly pending. Dungeon enable/floor/time inputs are available; the optional highest-floor preview retains labeled historical estimates. Run duration is stored and shows runs/hour, but is not used to invent an average progression bonus. Known missing-source bonuses can be entered in Other bonuses.
 
 Crafted tiers include all 16 combinations. Artifact Index is separate from card Index Sets: every 2 points adds 10% strength (49 points = +240%). The crafting tier preview matches the game and leaves Roll Speed unchanged. Index stacking with tiers remains configurable and unconfirmed; the default multiplies their luck boosts. Existing saved profiles keep their setup and default to Normal/0 Index points until filled in.
 

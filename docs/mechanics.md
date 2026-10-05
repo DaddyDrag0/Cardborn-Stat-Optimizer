@@ -1,6 +1,20 @@
 # Mechanics and assumptions
 
-## Build calculator v3
+## Build calculator v4
+
+### Progression and input constraints
+
+Card Index rewards are 2 SP per 20 entries in `IndexRewardDefinitions`; the UI reads `uniqueCount` and claimed reward tiers. Budget is `floor(Index/20)*2 + extra SP`, assuming eligible rewards claimed. Leaving Index blank keeps the budget unknown; selecting still enforces Constellation limits and prerequisites. Selecting a node rejects an unaffordable closure. Imported excess Constellations are trimmed with dependent nodes; excess SP is warned so an import does not silently remove regular skills.
+
+PA level/next-roll requirement, slot counts and scaled stat range follow `PersonalArtifactDefinitions`: exponent 0.4, max at 100M rolls, milestones 1/15/35/60/90, rarity +1/+2, pass +2 and up to +2 Void slots. Build profiles have a fixed array of available positions; empty positions carry no bonus. Out-of-range raw values clamp on normalization. Lowering slot count removes trailing positions. Void slot descriptions confirm +1 lock per level and are included in the planner lock budget.
+
+Collection sets reproduce both the 19 literal List definitions and all 8 generated FormSets, including the supplied Awakened Base Set (+17 Luck, +3.3 Awakened), Fully Corrupted World and Shiny Void World examples. Their IDs follow `base + '_' + form`; bonuses add independently when completed.
+
+Tower purchases use constant per-level costs and gold refunds from the client/shared catalog. Void purchases use constant costs and no refunds. Owned-level inputs calibrate existing investments without charging current balances; Buy/Refund actions update levels and balances together and reject insufficient funds or caps. Tower cap extensions are a separate owned input because the Corrupted upgrade catalog is missing. This removes the previous arbitrary +100 allowed levels.
+
+All build profiles assume general border gates unlocked. Individual Fabled eligibility uses a user-entered maximum base rarity, including card-specific probabilities, Lucky Hand variants, point curves, and simulation. The seeded simulator samples the same sequential card distribution, secret splits, borders, periodic relics and batch/Lucky Hand assumptions; it does not claim to reproduce Roblox's server RNG.
+
+Corrupted permanent upgrades and achievement rewards remain pending: the export only contains server-payload display code. No catalog was invented from partial screenshots. Infinite Dungeon floor/time inputs are saved; the export has no floor-stat function, so new bonuses and progression averaging remain pending. Highest-floor historical estimates are opt-in and labeled; run duration does not confirm a progression law.
 
 Setup derives stats from investments/equipment rather than taking final totals as inputs. It includes all 102 generated skill-tree nodes (72 regular, 2 Grandmastery, 7 Transcendence, 21 Constellations), 13 crafted artifacts, 16 relics/six border tiers, 24 potion definitions, 19 Index Sets, passes, and Tower/Void upgrades. Skill prerequisites/costs reproduce the definition module's generated IDs, including legacy IDs retained in Mythos and Corrupted paths. The two path capstones are required for each mastery; Constellation limits are 2/1/1.
 

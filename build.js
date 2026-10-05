@@ -6,6 +6,10 @@ export function buildDefaults(){return{skills:[],sets:[],crafted:'',craftedTier:
 export function normalizeBuild(raw,data){
   const b=buildDefaults(),known=(values,ids)=>Array.isArray(values)?[...new Set(values.filter(x=>ids.includes(x)))]:[];
   b.skills=known(raw.skills,(data.skillNodes||[]).map(x=>x.id));b.sets=known(raw.sets,data.indexSets.map(x=>x.id));
+  const groupCounts={};for(const id of [...b.skills]){const node=data.skillNodes.find(x=>x.id===id);if(node.limitGroup&&(groupCounts[node.limitGroup]=(groupCounts[node.limitGroup]||0)+1)>(node.limitGroup==='star1'?2:1))b.skills=removeSkill(b.skills,id,data)}
+  b.index=raw.index==null?null:Math.floor(n(raw.index,0,1e9));b.extraSkillPoints=Math.floor(n(raw.extraSkillPoints??0,0,1e6));
+  b.towerCapExtra=Math.floor(n(raw.towerCapExtra??0,0,1000));b.currencies=Object.fromEntries(['tower','void','corrupted'].map(k=>[k,Math.floor(n(raw.currencies?.[k]??0,0,1e15))]));
+  b.dungeonSeconds=Math.floor(n(raw.dungeonSeconds??3600,1,1e9));
   b.crafted=Object.hasOwn(data.craftedArtifacts||{},raw.crafted)?raw.crafted:'';
   b.craftedTier=data.craftedTiers.some(t=>t.id===raw.craftedTier)?raw.craftedTier:'Normal';
   b.craftedIndexPoints=Math.floor(n(raw.craftedIndexPoints??0,0,Object.keys(data.craftedArtifacts).length*data.craftedTiers.length));
@@ -13,7 +17,7 @@ export function normalizeBuild(raw,data){
   b.relics=Array.isArray(raw.relics)?raw.relics.slice(0,3).filter(x=>Object.hasOwn(data.relics||{},x?.id)).map(x=>({id:x.id,border:Math.floor(n(x.border,1,6))})):[];
   b.potions=known(raw.potions,Object.keys(data.potions||{}));
   for(const p of data.gamepasses||[])b.passes[p.passKey]=raw.passes?.[p.passKey]===true;
-  for(const d of data.towerShop||[])b.tower[d.id]=Math.floor(n(raw.tower?.[d.id]??0,0,d.noExtraLevels?d.maxLevel:d.maxLevel+100));
+  for(const d of data.towerShop||[])b.tower[d.id]=Math.floor(n(raw.tower?.[d.id]??0,0,shopCap(b,d,'tower')));
   for(const d of data.voidShop||[])b.void[d.id]=Math.floor(n(raw.void?.[d.id]??0,0,d.maxLevel));
   for(const k of LUCKS)b.base[k]=n(raw.base?.[k]??b.base[k],.0001);
   b.baseInterval=n(raw.baseInterval??1,.2,3600);b.under10M=raw.under10M!==false;b.inDungeon=raw.inDungeon===true;b.floor=Math.floor(n(raw.floor??0,0,1e6));
@@ -23,7 +27,24 @@ export function normalizeBuild(raw,data){
 }
 export function skillClosure(ids,data){const out=new Set(ids),by=new Map(data.skillNodes.map(x=>[x.id,x]));function add(id){for(const req of by.get(id)?.requires||[])if(!out.has(req)){out.add(req);add(req)}}for(const id of [...out])add(id);return[...out]}
 export function removeSkill(ids,id,data){const out=new Set(ids);out.delete(id);let changed=true;while(changed){changed=false;for(const node of data.skillNodes)if(out.has(node.id)&&node.requires.some(r=>!out.has(r))){out.delete(node.id);changed=true}}return[...out]}
+export function skillBudget(b,data){return b.index==null?null:Math.floor(b.index/data.indexSkillPoints.every)*data.indexSkillPoints.amount+(b.extraSkillPoints||0)}
+export function skillCost(ids,data){return data.skillNodes.filter(n=>ids.includes(n.id)).reduce((a,n)=>a+n.cost,0)}
+export function skillSelection(b,id,on,data){
+  const ids=on?skillClosure([...b.skills,id],data):removeSkill(b.skills,id,data);
+  for(const g of ['star1','star2','star3'])if(data.skillNodes.filter(n=>ids.includes(n.id)&&n.limitGroup===g).length>(g==='star1'?2:1))return{error:'Constellations allow only 2 Normal, 1 Greater, and 1 Ascendant stars.'};
+  const budget=skillBudget(b,data);if(on&&budget!=null&&skillCost(ids,data)>budget)return{error:'Not enough skill points for this node and its prerequisites.'};return{ids};
+}
+export function shopCap(b,d,shop){return d.maxLevel+(shop==='tower'&&!d.noExtraLevels?(b.towerCapExtra||0):0)}
+export function shopAction(b,shop,id,direction,data){
+  const defs=shop==='tower'?data.towerShop:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
+  const level=b[shop][id]||0,cost=d.cost;
+  if(direction<0&&shop==='void')return{error:'Void upgrades cannot be refunded.'};
+  if(direction>0){if(level>=shopCap(b,d,shop))return{error:'Upgrade is at its cap.'};if((b.currencies?.[shop]||0)<cost)return{error:'Not enough currency.'}}
+  else if(level<=0)return{error:'No upgrade to refund.'};
+  return{level:level+direction,balance:(b.currencies?.[shop]||0)-direction*cost};
+}
 export function buildWarnings(s,data){const b=s.build;if(!b)return[];const w=[],owned=new Set(b.skills),groups={};for(const node of data.skillNodes){if(!owned.has(node.id))continue;if(node.requires.some(r=>!owned.has(r)))w.push(`${node.name}: prerequisite missing.`);if(node.limitGroup)groups[node.limitGroup]=(groups[node.limitGroup]||0)+1}for(const [g,count]of Object.entries(groups))if(count>(g==='star1'?2:1))w.push('Constellations allow 2 Normal, 1 Greater, and 1 Ascendant stars.');
+  if(skillBudget(b,data)!=null&&skillCost(b.skills,data)>skillBudget(b,data))w.push('Selected skills exceed your Index skill-point budget. Remove nodes or check your Index / extra SP.');
   const relicSlots=1+(b.passes.TwoRelic?1:0)+(b.tower.ThirdRelicSlot||0);if(b.relics.length>relicSlots)w.push(`You equipped ${b.relics.length} relics but have ${relicSlots} slots.`);if(new Set(b.relics.map(x=>x.id)).size!==b.relics.length)w.push('Equip each relic only once.');if(b.relics.filter(x=>data.relics[x.id].Tier==='Legendary').length>2)w.push('At most two Legendary relics can be equipped.');
   const cats={};for(const id of b.potions){const category=data.potions[id].StatCategory;cats[category]=(cats[category]||0)+1}if(Object.values(cats).some(x=>x>1))w.push('Select one active potion per category. The strongest selected boost in a category is used; stacking behavior is unconfirmed.');
   if(b.towerAwakenedGain!==.4&&b.towerAwakenedGain!==.3)w.push('Tower Awakened gain is a custom model value.');return[...new Set(w)];
