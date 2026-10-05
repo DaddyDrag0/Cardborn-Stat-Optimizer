@@ -1,0 +1,2437 @@
+{
+  "source": {
+    "file": "225x Luck Cardborn RNG.rbxl",
+    "placeVersion": 3786,
+    "sha256": "ba7ad2c92039807c5e3220df79b83c717f3c399496b11aa27c751ce8040ad66d",
+    "date": "2026-10-05",
+    "serverScriptsIncluded": false
+  },
+  "cards": [
+    {
+      "name": "Vaeloryn, The Last",
+      "rarityValue": 4280000000000000,
+      "imageId": "rbxassetid://121194758569245",
+      "croppedImageId": "rbxassetid://126666282157596",
+      "badgeRequired": "VoidWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-55a8db0cababae6a1f201abccc285b05/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Orphax",
+      "rarityValue": 2840000000000000,
+      "imageId": "rbxassetid://132045862612488",
+      "croppedImageId": "rbxassetid://94610406430878",
+      "badgeRequired": "VoidWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1b16ae57ca37cdcb7bccaa4794df3ddc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Unwritten",
+      "rarityValue": 1900000000000000,
+      "imageId": "rbxassetid://90885967681611",
+      "croppedImageId": "rbxassetid://106378852385855",
+      "badgeRequired": "UnwrittenBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-c7ba59e243dcec5eee2e6afae551e8ac/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Choir of the Unmade",
+      "rarityValue": 1100000000000000,
+      "imageId": "rbxassetid://90597990927246",
+      "croppedImageId": "rbxassetid://128426907219560",
+      "badgeRequired": "VoidWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-5ec1b891f99985809df514b7a83b7ba9/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Cartographer of Nowhere",
+      "rarityValue": 766000000000000,
+      "imageId": "rbxassetid://111478018340831",
+      "croppedImageId": "rbxassetid://100013084259762",
+      "badgeRequired": "VoidWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b47ccef3e50e9b2e68f6a62c7b4bb9de/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Nullwing Harvester",
+      "rarityValue": 460000000000000,
+      "imageId": "rbxassetid://140470574161186",
+      "croppedImageId": "rbxassetid://129337532601370",
+      "badgeRequired": "VoidWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-174c333e4a180bdeb190f979615f4f85/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Vermathys, the Eternal Blight",
+      "rarityValue": 16500000000000,
+      "imageId": "rbxassetid://139846626294657",
+      "croppedImageId": "rbxassetid://110864680093194",
+      "badgeRequired": "CorruptedWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-de88a688511fb429ef7b2d02f051103a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Blight Knight",
+      "rarityValue": 10300000000000,
+      "imageId": "rbxassetid://98794486530735",
+      "croppedImageId": "rbxassetid://89607365273575",
+      "badgeRequired": "CorruptedWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8db1aeb92bad5c619f47e52d455b989d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Ruined Vessel",
+      "rarityValue": 5800000000000,
+      "imageId": "rbxassetid://121677769488341",
+      "croppedImageId": "rbxassetid://99280452554813",
+      "badgeRequired": "CorruptedWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-7918d1e647f09236d41703b92049b2bb/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Eternal Beast(Holy Beast)",
+      "rarityValue": 3000000000000,
+      "imageId": "rbxassetid://87362127558025",
+      "croppedImageId": "rbxassetid://124479722752532",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a91f165523bc3789d505148fdb14af79/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Soulbinder of Decay",
+      "rarityValue": 2300000000000,
+      "imageId": "rbxassetid://87508474619201",
+      "croppedImageId": "rbxassetid://126817120233114",
+      "badgeRequired": "CorruptedWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-4228ca1284a5a8c33c994985d00bb585/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Plaguebloom Shaman",
+      "rarityValue": 750000000000,
+      "imageId": "rbxassetid://113032298130372",
+      "croppedImageId": "rbxassetid://77655742970971",
+      "badgeRequired": "CorruptedWorldBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-152d80ed68462f347cff3f4c83e21ba7/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dream Eater(Signus)",
+      "rarityValue": 300000000000,
+      "imageId": "rbxassetid://105506640333148",
+      "croppedImageId": "rbxassetid://127444307179764",
+      "badgeRequired": "DreamBadge",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-cf105b1cb6421c9dc3351e18b59321f9/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Marching Colossus(Void Colossus)",
+      "rarityValue": 250000000000,
+      "imageId": "rbxassetid://77583202802985",
+      "croppedImageId": "rbxassetid://89509932989639",
+      "weatherLock": "IronLegion",
+      "isSecret": true,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-26c54d7044d7047acaef7260f942ea89/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Tyrant of the Frozen End",
+      "rarityValue": 225000000000,
+      "imageId": "rbxassetid://77520787487540",
+      "croppedImageId": "rbxassetid://103699194843713",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-44b4e5a0825e59737efb0a29b138fd43/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Glacial Goliath",
+      "rarityValue": 190000000000,
+      "imageId": "rbxassetid://103916385951801",
+      "croppedImageId": "rbxassetid://89823194697318",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a41f0caffcf0e96615a0bd6e06e0e7d4/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Specter(Grim Reaper)",
+      "rarityValue": 180000000000,
+      "imageId": "rbxassetid://116550515281976",
+      "croppedImageId": "rbxassetid://90494052287048",
+      "weatherLock": "ShadowedWorld",
+      "isSecret": true,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-66ca1f0861ec9bf1e2d769c2c8b1a4ad/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Whiteout Stalker",
+      "rarityValue": 94000000000,
+      "imageId": "rbxassetid://116453119092103",
+      "croppedImageId": "rbxassetid://120442111573080",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-bf573e1cd9adc612ce145c6b8fae996d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Void Angel(True Angel)",
+      "rarityValue": 50000000000,
+      "imageId": "rbxassetid://109637591881030",
+      "croppedImageId": "rbxassetid://91294150746791",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-09bf4bc57d323b049c8023636ce478a1/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Snowmaw",
+      "rarityValue": 44000000000,
+      "imageId": "rbxassetid://133080024745774",
+      "croppedImageId": "rbxassetid://82986791654492",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ce35bf54b7dd8f5222965fe1740e02ce/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Plague Sovereign",
+      "rarityValue": 35000000000,
+      "imageId": "rbxassetid://77592842608479",
+      "croppedImageId": "rbxassetid://93725989831619",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-2fa8f139ce01bba8beff50ae3b233dce/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Aurelion",
+      "rarityValue": 30000000000,
+      "imageId": "rbxassetid://75825308439756",
+      "croppedImageId": "rbxassetid://118379823843006",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-07e796c35c8a551e05806425c484092e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Blizzard Arcanist",
+      "rarityValue": 22500000000,
+      "imageId": "rbxassetid://136475992485312",
+      "croppedImageId": "rbxassetid://113576646398692",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-2c922eedcd445cf6fe7c3a993e17ffb4/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Sun Sprite(Eclipse)",
+      "rarityValue": 20000000000,
+      "imageId": "rbxassetid://106411473446510",
+      "croppedImageId": "rbxassetid://77948075023344",
+      "weatherLock": "GlaringSun",
+      "isSecret": true,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f8d683bd609a6c177ab9aaeca6a31cdd/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Crawling Chaos",
+      "rarityValue": 20000000000,
+      "imageId": "rbxassetid://108629542527678",
+      "croppedImageId": "rbxassetid://124382595927646",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-c610b63508f24224b91b80ee94ff577a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Usurper",
+      "rarityValue": 12000000000,
+      "imageId": "rbxassetid://137015130191334",
+      "croppedImageId": "rbxassetid://129508019361901",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-444e332b8642127c679b28f790f0f611/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Frosted Sentinel",
+      "rarityValue": 8500000000,
+      "imageId": "rbxassetid://125066120294133",
+      "croppedImageId": "rbxassetid://119584570550857",
+      "badgeRequired": "SnowBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-83af97eefab4e47b2e5df4b0d2ed6182/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Gnomelord Technician(Clockwork King)",
+      "rarityValue": 8000000000,
+      "imageId": "rbxassetid://124308246353894",
+      "croppedImageId": "rbxassetid://86424994346482",
+      "weatherLock": "GnomeRaid",
+      "isSecret": true,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-032dd245be24a0f7fa8fef845594c25d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Creator",
+      "rarityValue": 7000000000,
+      "imageId": "rbxassetid://113366606381437",
+      "croppedImageId": "rbxassetid://80077427894733",
+      "badgeRequired": "CreatorBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-4e503d2791d6cf7ed59c5f72869688f4/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "King of Yellow",
+      "rarityValue": 5000000000,
+      "imageId": "rbxassetid://118578475078435",
+      "croppedImageId": "rbxassetid://90120556309268",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f0c6f6659032bc830dc73502f19e5ca6/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Prism Serpent(Celestial)",
+      "rarityValue": 2000000000,
+      "imageId": "rbxassetid://77790559946148",
+      "croppedImageId": "rbxassetid://121252334240350",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-feece973c4e170af8ef8160eabc28856/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "World Eater",
+      "rarityValue": 1500000000,
+      "imageId": "rbxassetid://101345618963669",
+      "croppedImageId": "rbxassetid://98610898285893",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-9821fe6e2f4f1dcf131770f571c45736/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dragon(Loong)",
+      "rarityValue": 1000000000,
+      "imageId": "rbxassetid://125029740395283",
+      "croppedImageId": "rbxassetid://81761147935871",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-61d4a1e013aa20ba142a1b7c7e6bb58f/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Rift Dragon",
+      "rarityValue": 1000000000,
+      "imageId": "rbxassetid://103033031164092",
+      "croppedImageId": "rbxassetid://90764256122100",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-47fdc6666a770a6196e8d2b6bc80b2ca/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dread Lord",
+      "rarityValue": 1000000000,
+      "imageId": "rbxassetid://132373842266266",
+      "croppedImageId": "rbxassetid://114610622359369",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e8fbca79e12099b2655fd197bc23794c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Arcane Overlord",
+      "rarityValue": 1000000000,
+      "imageId": "rbxassetid://105162803914458",
+      "croppedImageId": "rbxassetid://102237555018262",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e5b676a7d6c6e97afa24af47c3fa6c65/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Silent King",
+      "rarityValue": 950000000,
+      "imageId": "rbxassetid://83580950049273",
+      "croppedImageId": "rbxassetid://123682317628596",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6002b9a21711152d2b9eeceb01826d8b/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Cosmic Dragon",
+      "rarityValue": 900000000,
+      "imageId": "rbxassetid://92482848907613",
+      "croppedImageId": "rbxassetid://105465010979117",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-2c443978d74aac3f1f3532103b5295ee/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Eternal Knight",
+      "rarityValue": 850000000,
+      "imageId": "rbxassetid://115055507321799",
+      "croppedImageId": "rbxassetid://126671639020362",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-7b37a85b44e5e0b95fca5e8e82290a33/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Abyssal Maw",
+      "rarityValue": 800000000,
+      "imageId": "rbxassetid://126092366883195",
+      "croppedImageId": "rbxassetid://112770211359347",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-41152d77dc2e5359e820f1103d35c549/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Titanic Beast",
+      "rarityValue": 750000000,
+      "imageId": "rbxassetid://137650972292081",
+      "croppedImageId": "rbxassetid://70672325690325",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f9ba817dd91d04b5c7575a1bacfe8b75/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Void Reaver",
+      "rarityValue": 666000000,
+      "imageId": "rbxassetid://128791337655185",
+      "croppedImageId": "rbxassetid://127730039242052",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a22794c4b6431f5e03a033f20329a96e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Forgotten Cultist",
+      "rarityValue": 625000000,
+      "imageId": "rbxassetid://135666870222011",
+      "croppedImageId": "rbxassetid://110298136991310",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-73fb7703e87f52f7f0e279a59fa45b19/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dragon King",
+      "rarityValue": 600000000,
+      "imageId": "rbxassetid://116388359396618",
+      "croppedImageId": "rbxassetid://80975939179192",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ff41101f90906436233a10bc73524662/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Mimic",
+      "rarityValue": 550000000,
+      "imageId": "rbxassetid://107115665230498",
+      "croppedImageId": "rbxassetid://133514872620372",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1f0b2e3cc1dc89d5a1c0c71117241512/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Gunshin",
+      "rarityValue": 525000000,
+      "imageId": "rbxassetid://110899560055738",
+      "croppedImageId": "rbxassetid://131822359181744",
+      "weatherLock": "WarriorsPath",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-3d5a062c0c7481a420bbd48808d9ff6e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Celestial Fury",
+      "rarityValue": 500000000,
+      "imageId": "rbxassetid://85990553609595",
+      "croppedImageId": "rbxassetid://115652602102891",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-032b703a2ae52867fc03130092793436/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Infernal Titan",
+      "rarityValue": 455000000,
+      "imageId": "rbxassetid://83900913225534",
+      "croppedImageId": "rbxassetid://136399371919607",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-0ef8f24af04c71f52493192071a1ddb4/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Eternal Beast",
+      "rarityValue": 300000000,
+      "imageId": "rbxassetid://108670304526485",
+      "croppedImageId": "rbxassetid://137577887397961",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-39b6985e5e98a4da26f04fed3efcdc03/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Fallen Knight",
+      "rarityValue": 260000000,
+      "imageId": "rbxassetid://133520643387475",
+      "croppedImageId": "rbxassetid://102851004840390",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-63092cec08c2e685f4470606609894ba/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Nihilus, the Final Horizon",
+      "rarityValue": 255000000,
+      "imageId": "rbxassetid://107025843910504",
+      "croppedImageId": "rbxassetid://70792401272164",
+      "weatherLock": "BlackHole",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-cea3481b5ddcd33cc255a57e7473718d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Supreme Archangel",
+      "rarityValue": 200000000,
+      "imageId": "rbxassetid://131217989389267",
+      "croppedImageId": "rbxassetid://124619274955590",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-36374160abef922b299f21337e44edb9/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Crumbling Warden",
+      "rarityValue": 160000000,
+      "imageId": "rbxassetid://90382080420049",
+      "croppedImageId": "rbxassetid://86591834180238",
+      "badgeRequired": "EndBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-7d3edf19390dc830d1d0a3c72c045748/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Caesar, Eternal Conqueror",
+      "rarityValue": 155000000,
+      "imageId": "rbxassetid://75732475621532",
+      "croppedImageId": "rbxassetid://131331165360263",
+      "weatherLock": "RipInTime",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-5dc599fd740331afa554c658a344c89f/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Umbral",
+      "rarityValue": 132000000,
+      "imageId": "rbxassetid://104053594836404",
+      "croppedImageId": "rbxassetid://136306039774755",
+      "weatherLock": "ShadowedWorld",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-15e3b1ccd65595436fdbfa8694277f66/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Abyss Warlord",
+      "rarityValue": 125000000,
+      "imageId": "rbxassetid://118722045273999",
+      "croppedImageId": "rbxassetid://70507236950956",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-519deeb45ef738f94dabd46b78776f0d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Chaos Emperor",
+      "rarityValue": 100000000,
+      "imageId": "rbxassetid://110091431820449",
+      "croppedImageId": "rbxassetid://109420140830654",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-49f669522ea0994eede1cee134d4407d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Grandmaster of Forms",
+      "rarityValue": 94500000,
+      "imageId": "rbxassetid://70808520061493",
+      "croppedImageId": "rbxassetid://89758355693030",
+      "weatherLock": "WarriorsPath",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b453226d76491bc56c83983b978087a6/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Archbishop of the End",
+      "rarityValue": 90000000,
+      "imageId": "rbxassetid://102700320299261",
+      "croppedImageId": "rbxassetid://115306993456123",
+      "badgeRequired": "TownBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-616f72176f3e8c927072e1809fa90ee5/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Perfected Singularity",
+      "rarityValue": 88888888,
+      "imageId": "rbxassetid://103470318987819",
+      "croppedImageId": "rbxassetid://99928131919739",
+      "weatherLock": "BlackHole",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-355b4536a640c7d1576db61c7d2bf2ee/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Behemoth",
+      "rarityValue": 80000000,
+      "imageId": "rbxassetid://140514762637125",
+      "croppedImageId": "rbxassetid://93622032116549",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-bf05386d229c45b1627509e60aab8af1/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Hollow Bellsinger",
+      "rarityValue": 78000000,
+      "imageId": "rbxassetid://119792079772332",
+      "croppedImageId": "rbxassetid://70465032538923",
+      "badgeRequired": "TownBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8382e178295c153172e33aa52c3e8815/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Marionette",
+      "rarityValue": 65000000,
+      "imageId": "rbxassetid://130664536174087",
+      "croppedImageId": "rbxassetid://107277049800216",
+      "badgeRequired": "DreamBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-dc2432fed5b3b6e02c49a2caa2511d02/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Vorrath, The Calamity",
+      "rarityValue": 63000000,
+      "imageId": "rbxassetid://94356544219607",
+      "croppedImageId": "rbxassetid://79158460220455",
+      "weatherLock": "DragonsRoost",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1c0815d64a27374a947b21f1babebdbe/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Romeo and Juliet",
+      "rarityValue": 61400000,
+      "imageId": "rbxassetid://127249068637889",
+      "croppedImageId": "rbxassetid://81878291877902",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a3813dab155d120a09ce5927a6e3efbf/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Berserker(Voidserker)",
+      "rarityValue": 60000000,
+      "imageId": "rbxassetid://119438820536227",
+      "croppedImageId": "rbxassetid://119696533997512",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b350d90fa0972989874fa874cf90fcad/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Duelist",
+      "rarityValue": 54600000,
+      "imageId": "rbxassetid://106142042025900",
+      "croppedImageId": "rbxassetid://135123223135845",
+      "weatherLock": "WarriorsPath",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a8180c00847ad2d0af53c033abd620df/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Iron Juggernaut",
+      "rarityValue": 52200000,
+      "imageId": "rbxassetid://113602968009693",
+      "croppedImageId": "rbxassetid://88094622561274",
+      "weatherLock": "IronLegion",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-824dd28a11d5dbcac6461b14240f0f72/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Celestial Entity",
+      "rarityValue": 50000000,
+      "imageId": "rbxassetid://82259926441734",
+      "croppedImageId": "rbxassetid://118642280550341",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b437fafd30a79472a971723be46e6899/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Revenant",
+      "rarityValue": 50000000,
+      "imageId": "rbxassetid://95362829769958",
+      "croppedImageId": "rbxassetid://86713969685546",
+      "weatherLock": "ShadowedWorld",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e4d9d2e05041a6e772eeebb559aa0f3d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Paradox Creator",
+      "rarityValue": 42000000,
+      "imageId": "rbxassetid://83807452105773",
+      "croppedImageId": "rbxassetid://83180138787802",
+      "weatherLock": "BlackHole",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e600458b2aa79d76171dfbcd874f96fe/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Theodora, Empress of Resolve",
+      "rarityValue": 38000000,
+      "imageId": "rbxassetid://72538850940351",
+      "croppedImageId": "rbxassetid://75771953141060",
+      "weatherLock": "RipInTime",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6f2fe313af7c17b481253ed3800faa22/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Mighty Kraken",
+      "rarityValue": 35000000,
+      "imageId": "rbxassetid://128968710543137",
+      "croppedImageId": "rbxassetid://78681609957646",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-443ec58b78a0cbcda7e3de7cd5d06485/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Lotus Swordmaiden",
+      "rarityValue": 33000000,
+      "imageId": "rbxassetid://116801744697538",
+      "croppedImageId": "rbxassetid://140402240792436",
+      "weatherLock": "WarriorsPath",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-bd1a0882341ffe4d93ed5cc298dd48e0/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dragon Broodmother",
+      "rarityValue": 32500000,
+      "imageId": "rbxassetid://97427205155013",
+      "croppedImageId": "rbxassetid://122443466244848",
+      "weatherLock": "DragonsRoost",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-152d4327821aebd377b93ece8dbd4580/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Shade",
+      "rarityValue": 30000000,
+      "imageId": "rbxassetid://112498953061035",
+      "croppedImageId": "rbxassetid://82581170382422",
+      "weatherLock": "ShadowedWorld",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e4d89c3771bcccc6d9fd8e52790d32a4/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dream Eater",
+      "rarityValue": 30000000,
+      "imageId": "rbxassetid://122492646032149",
+      "croppedImageId": "rbxassetid://76454888327066",
+      "badgeRequired": "DreamBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-3983206637d6431f1667ba9aa7f17a7f/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Blighted Blacksmith",
+      "rarityValue": 28000000,
+      "imageId": "rbxassetid://81958592842676",
+      "croppedImageId": "rbxassetid://127992556881843",
+      "badgeRequired": "TownBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8d61fbad3e3bd4aa4d44492887594d28/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Marching Colossus",
+      "rarityValue": 25000000,
+      "imageId": "rbxassetid://116851215768356",
+      "croppedImageId": "rbxassetid://84061288836497",
+      "weatherLock": "IronLegion",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-4815a89cbfefa17163c19fc162ca9624/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Patient Roller",
+      "rarityValue": 25000000,
+      "imageId": "rbxassetid://105336222393561",
+      "croppedImageId": "rbxassetid://87552956266319",
+      "badgeRequired": "RollerBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f08f99eb13ef65f274d035fae0086eef/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Flare King",
+      "rarityValue": 22500000,
+      "imageId": "rbxassetid://125506829246840",
+      "croppedImageId": "rbxassetid://125468460535373",
+      "weatherLock": "GlaringSun",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b615d39d5bede6eff40344d0cc8da4e7/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Storm King",
+      "rarityValue": 20000000,
+      "imageId": "rbxassetid://86821509760492",
+      "croppedImageId": "rbxassetid://70813110003690",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a4b2e7f109b9126287a66089105dc8f7/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Earth King",
+      "rarityValue": 20000000,
+      "imageId": "rbxassetid://83491122144542",
+      "croppedImageId": "rbxassetid://108902858825583",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-789ca27a389f73e42302caddf16da749/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Frost Warden",
+      "rarityValue": 20000000,
+      "imageId": "rbxassetid://72831941860388",
+      "croppedImageId": "rbxassetid://115422853303361",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a884b29fa3e1a04514a035db8cca3a32/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Thunder Arbiter",
+      "rarityValue": 20000000,
+      "imageId": "rbxassetid://87617843940230",
+      "croppedImageId": "rbxassetid://127993361019630",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-61dd12113e403c0c098fe38db9025426/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Specter",
+      "rarityValue": 18000000,
+      "imageId": "rbxassetid://95998002421268",
+      "croppedImageId": "rbxassetid://79294729117088",
+      "weatherLock": "ShadowedWorld",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ae04d1097391ce75e71c9dddb17353cb/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Ghastly Herald",
+      "rarityValue": 16000000,
+      "imageId": "rbxassetid://106652158324635",
+      "croppedImageId": "rbxassetid://132848468854838",
+      "badgeRequired": "TownBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-30b585a10e27cc267789e1eeb51ef55c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Heavenly Hen",
+      "rarityValue": 15000000,
+      "imageId": "rbxassetid://109905953613421",
+      "croppedImageId": "rbxassetid://100268754384842",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6f3e0e82c64036d304b251c50c5c7dbc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Grand Contraption",
+      "rarityValue": 15000000,
+      "imageId": "rbxassetid://140595846511888",
+      "croppedImageId": "rbxassetid://135907740128217",
+      "weatherLock": "GnomeRaid",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-5bdbacf69d276736003282ee53b59be0/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Paladin(Samurai)",
+      "rarityValue": 12500000,
+      "imageId": "rbxassetid://107582307437000",
+      "croppedImageId": "rbxassetid://128030846529272",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-97ffce5927a5773291bc2b852f79263d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Elder Dragon",
+      "rarityValue": 12500000,
+      "imageId": "rbxassetid://87917123989725",
+      "croppedImageId": "rbxassetid://111325296155536",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a43573fb355e315898e43e0341759dc6/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Abomination",
+      "rarityValue": 11100000,
+      "imageId": "rbxassetid://128046389043177",
+      "croppedImageId": "rbxassetid://102397065353183",
+      "weatherLock": "BlackHole",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-501948b410bb900bb869b5edf53396a8/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Goblin Gang(Undead Army)",
+      "rarityValue": 11000000,
+      "imageId": "rbxassetid://117207953120342",
+      "croppedImageId": "rbxassetid://78099391484558",
+      "badgeRequired": "GoblinBadge",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-d56b5d540905c2fdce5d67d59fc67d43/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Ice Dragon",
+      "rarityValue": 10000000,
+      "imageId": "rbxassetid://82290335075521",
+      "croppedImageId": "rbxassetid://132059143030471",
+      "weatherLock": "DragonsRoost",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-4bf37223eba582fa14a640498ae1c44b/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Demon Lord",
+      "rarityValue": 10000000,
+      "imageId": "rbxassetid://123246475259299",
+      "croppedImageId": "rbxassetid://108148975185955",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-bd98742fe29f0d0889b1fb1e06b40822/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Solar Paladin",
+      "rarityValue": 9000000,
+      "imageId": "rbxassetid://89021788677827",
+      "croppedImageId": "rbxassetid://108867711754705",
+      "weatherLock": "GlaringSun",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1cc1e9f175f25a37dbf31fa2f5d95211/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Last Mammoth",
+      "rarityValue": 8500000,
+      "imageId": "rbxassetid://112200749648279",
+      "croppedImageId": "rbxassetid://117959524596255",
+      "weatherLock": "RipInTime",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a79153af2f1e861f4dd5c8b5f5c08f57/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Hollow Archer",
+      "rarityValue": 8000000,
+      "imageId": "rbxassetid://105080285263387",
+      "croppedImageId": "rbxassetid://77411218085026",
+      "badgeRequired": "TownBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6ec7bc3ce1d8f18b40ab1f76fedc21b9/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Janus, God of Beginnings",
+      "rarityValue": 6000000,
+      "imageId": "rbxassetid://121041133314942",
+      "croppedImageId": "rbxassetid://139107733593450",
+      "weatherLock": "NewYearsFestival",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-3f5fbb60b82377089193f4a69147ba30/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Void Angel",
+      "rarityValue": 5000000,
+      "imageId": "rbxassetid://131179773283937",
+      "croppedImageId": "rbxassetid://72140943250948",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-9b31d82d0187b5ca955ef0688fd4373d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Iron Protector",
+      "rarityValue": 4000000,
+      "imageId": "rbxassetid://113387454007935",
+      "croppedImageId": "rbxassetid://126006895605441",
+      "weatherLock": "IronLegion",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ece28c2bd1df7a6b5287533ae4ea1fd7/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Verdant Worm",
+      "rarityValue": 3200000,
+      "imageId": "rbxassetid://130794697209749",
+      "croppedImageId": "rbxassetid://88306490844468",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-efd264c7e5cfbb8b13851cfa6e2235fc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Leprechaun",
+      "rarityValue": 3170000,
+      "imageId": "rbxassetid://71746191016383",
+      "croppedImageId": "rbxassetid://135304028258394",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a9cc331e1174a5ba475adb7f6c3429bc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Sun Sprite",
+      "rarityValue": 2000000,
+      "imageId": "rbxassetid://86264589149094",
+      "croppedImageId": "rbxassetid://90831643249890",
+      "weatherLock": "GlaringSun",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1246066b15fab6d0f0140b8acffd1186/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Divine Archmage",
+      "rarityValue": 2000000,
+      "imageId": "rbxassetid://105886278421880",
+      "croppedImageId": "rbxassetid://106936808039826",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-04c16d71511de08c1da9a1b9346dc6b9/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Nian",
+      "rarityValue": 1500000,
+      "imageId": "rbxassetid://84072405353389",
+      "croppedImageId": "rbxassetid://113309977264047",
+      "weatherLock": "NewYearsFestival",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a678ea2e74ce8750130f5ab6bc3e661a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Amethyst Spider",
+      "rarityValue": 1500000,
+      "imageId": "rbxassetid://73576539488621",
+      "croppedImageId": "rbxassetid://123000293653974",
+      "badgeRequired": "SecretSpiderBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-31d5afeac912be3a46da126640b5790d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Tinkering Gnome",
+      "rarityValue": 1400000,
+      "imageId": "rbxassetid://76115542041418",
+      "croppedImageId": "rbxassetid://77503130676004",
+      "weatherLock": "GnomeRaid",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6b5f82b560ff2ce2c529d0cc3bd7929a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Cake of Celebration",
+      "rarityValue": 1270000,
+      "imageId": "rbxassetid://72247581569714",
+      "croppedImageId": "rbxassetid://124226170292377",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-cc8274561694cb069c45f7da5057bc73/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "King Prismalith",
+      "rarityValue": 1250000,
+      "imageId": "rbxassetid://103575384127709",
+      "croppedImageId": "rbxassetid://134610719394054",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a171546886cfb8ca86a96b43d0e992c5/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Wyrmling",
+      "rarityValue": 1110000,
+      "imageId": "rbxassetid://105336521629304",
+      "croppedImageId": "rbxassetid://81323807801126",
+      "weatherLock": "DragonsRoost",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-2fcab19d7a3901df99052a07e9c470e3/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Lich King",
+      "rarityValue": 1000000,
+      "imageId": "rbxassetid://89084779317204",
+      "croppedImageId": "rbxassetid://120286429544243",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e83cae39820c6c98c8039a2f5680781f/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Storm Giant",
+      "rarityValue": 1000000,
+      "imageId": "rbxassetid://127217713116468",
+      "croppedImageId": "rbxassetid://110428035408490",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-df7edcdb93cb565137428313f7ade8ce/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Elemental Lord",
+      "rarityValue": 900000,
+      "imageId": "rbxassetid://133293237266721",
+      "croppedImageId": "rbxassetid://140098149253130",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ae56734d83cb4cfeb2f00986e035dc57/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Gnomelord Technician",
+      "rarityValue": 800000,
+      "imageId": "rbxassetid://136769710987328",
+      "croppedImageId": "rbxassetid://138325517071270",
+      "weatherLock": "GnomeRaid",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-5d147860022d8fe50e600b8d4fcfdf83/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Embodiment of Luck",
+      "rarityValue": 777777,
+      "imageId": "rbxassetid://74124366953332",
+      "croppedImageId": "rbxassetid://108656598910625",
+      "weatherLock": "NewYearsFestival",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-7fbde81f9dfa3f5a41e60083d0eede11/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Archmage",
+      "rarityValue": 750000,
+      "imageId": "rbxassetid://101321719016708",
+      "croppedImageId": "rbxassetid://130551318786069",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-47348c693557055860ea7087162c11b6/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Iron Legionnaire",
+      "rarityValue": 700000,
+      "imageId": "rbxassetid://138032016079823",
+      "croppedImageId": "rbxassetid://115990857650353",
+      "weatherLock": "IronLegion",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-08762dc3240eaf05c42b415077689bfd/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Quartz Beetle",
+      "rarityValue": 610000,
+      "imageId": "rbxassetid://81778634423747",
+      "croppedImageId": "rbxassetid://86247915461395",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ce674c7c63d83ae401884ce62f9de3be/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Rogue(Black Cat)",
+      "rarityValue": 550000,
+      "imageId": "rbxassetid://96366694213826",
+      "croppedImageId": "rbxassetid://140202189094472",
+      "isSecret": true,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6eb640a4863620f5346907d56f2dec3c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Tax Collector",
+      "rarityValue": 500000,
+      "imageId": "rbxassetid://137344716470659",
+      "croppedImageId": "rbxassetid://120888259839230",
+      "weatherLock": "TravelingCaravan",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-719e04153ae2fa0bf26ce520057ad4b8/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Vampire",
+      "rarityValue": 500000,
+      "imageId": "rbxassetid://100865660942664",
+      "croppedImageId": "rbxassetid://116567271676145",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-40a4c7646ce47f5f93b319743c793d82/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Young Disciple",
+      "rarityValue": 444000,
+      "imageId": "rbxassetid://130445113139459",
+      "croppedImageId": "rbxassetid://73440805460994",
+      "weatherLock": "WarriorsPath",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f7b4d0c4be38c58fbe44643084b28d79/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Gleamstone Golem",
+      "rarityValue": 380000,
+      "imageId": "rbxassetid://131315137118366",
+      "croppedImageId": "rbxassetid://94551983484568",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8d138b00cfcb4ff48f3bea1923e0d4e0/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Heartbroken",
+      "rarityValue": 325000,
+      "imageId": "rbxassetid://100558079735711",
+      "croppedImageId": "rbxassetid://110945338282034",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ba61f7d24ef70848ffd747675c6edac7/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Shardsprite",
+      "rarityValue": 295000,
+      "imageId": "rbxassetid://135511263257109",
+      "croppedImageId": "rbxassetid://103123259501621",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-f85f7e08fce6f26d5dd3dcdf1486a8db/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Market Guard",
+      "rarityValue": 250000,
+      "imageId": "rbxassetid://130067034718054",
+      "croppedImageId": "rbxassetid://126103575690191",
+      "weatherLock": "TravelingCaravan",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-06df30b6f5e71dd6faffaf7d1e80a85e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Werewolf",
+      "rarityValue": 225000,
+      "imageId": "rbxassetid://128893011895531",
+      "croppedImageId": "rbxassetid://86978629056229",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-11e2407f1f672f549361988f27624bc1/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Prism Serpent",
+      "rarityValue": 200000,
+      "imageId": "rbxassetid://70714404618268",
+      "croppedImageId": "rbxassetid://72030975346520",
+      "badgeRequired": "CrystalBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1fa83f785f1c350b9d482a6e3f0a2f9d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Burrow Bomber",
+      "rarityValue": 200000,
+      "imageId": "rbxassetid://116973695827759",
+      "croppedImageId": "rbxassetid://117301732780030",
+      "weatherLock": "GnomeRaid",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1c88600903c727c9b4469d084490324b/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Griffin",
+      "rarityValue": 125000,
+      "imageId": "rbxassetid://118493645210527",
+      "croppedImageId": "rbxassetid://91733053492980",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-67ffdb50aee5ac1ab3147f9db1fb7823/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Dragon",
+      "rarityValue": 100000,
+      "imageId": "rbxassetid://137975335631919",
+      "croppedImageId": "rbxassetid://79417836541151",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ede9ef00785ed7fbc40ecd191e2ccb5a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Spider Queen",
+      "rarityValue": 92500,
+      "imageId": "rbxassetid://125772323841491",
+      "croppedImageId": "rbxassetid://129320723626329",
+      "badgeRequired": "SpiderBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6508ae2cfea25c1c7b5a2c162a65cd75/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Pot of Gold",
+      "rarityValue": 85000,
+      "imageId": "rbxassetid://94166061649029",
+      "croppedImageId": "rbxassetid://94081103024646",
+      "weatherLock": "Event",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-c62ca34a986f2c54378a9ad8d33caf05/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Traveling Trader",
+      "rarityValue": 80000,
+      "imageId": "rbxassetid://115939833368312",
+      "croppedImageId": "rbxassetid://93035174829356",
+      "weatherLock": "TravelingCaravan",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1d33cb835f4bdfba8272f01cfece2a07/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "King",
+      "rarityValue": 66000,
+      "imageId": "rbxassetid://112470740776774",
+      "croppedImageId": "rbxassetid://91405471512853",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e5090e9949f0169a54098ad343a204e3/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Black Widow",
+      "rarityValue": 58500,
+      "imageId": "rbxassetid://123484770914348",
+      "croppedImageId": "rbxassetid://85464115045187",
+      "badgeRequired": "SpiderBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a529074ba7ad1e35768f1c038221b93b/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Armored Spider",
+      "rarityValue": 42000,
+      "imageId": "rbxassetid://103205897012115",
+      "croppedImageId": "rbxassetid://128566934952020",
+      "badgeRequired": "SpiderBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-77f72b8b3b5920b7d64ae54ffe21d04c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Knight Commander",
+      "rarityValue": 40000,
+      "imageId": "rbxassetid://109134008941500",
+      "croppedImageId": "rbxassetid://83996789820702",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-d78c56c6a1f2cc8cd4bade0f564ee10a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Coin Squire",
+      "rarityValue": 30000,
+      "imageId": "rbxassetid://124550587133606",
+      "croppedImageId": "rbxassetid://119319125613081",
+      "weatherLock": "TravelingCaravan",
+      "isSecret": false,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-ff3e65cb6947c5b11259385bada9e25d/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Barbarian",
+      "rarityValue": 24000,
+      "imageId": "rbxassetid://99529238315231",
+      "croppedImageId": "rbxassetid://100118236617345",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-0dfc6ba5cf3caa89294c66ee2601072c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Spiderling",
+      "rarityValue": 20000,
+      "imageId": "rbxassetid://96506091154762",
+      "croppedImageId": "rbxassetid://134689872718825",
+      "badgeRequired": "SpiderBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-92f5aa52c5817296166a6fec08d46939/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Lich",
+      "rarityValue": 10000,
+      "imageId": "rbxassetid://74341666030360",
+      "croppedImageId": "rbxassetid://93107183478019",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8091ed90e10114a7c748b9862fa1bc62/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Berserker",
+      "rarityValue": 6000,
+      "imageId": "rbxassetid://108679708648684",
+      "croppedImageId": "rbxassetid://125865378330932",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-15ceafe69aece2e3ef246d88d980e150/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Goblin Lord",
+      "rarityValue": 3500,
+      "imageId": "rbxassetid://121409267989953",
+      "croppedImageId": "rbxassetid://82541533211943",
+      "badgeRequired": "GoblinBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-8a20c6cee86fa5fa84354ed61f410410/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Necromancer",
+      "rarityValue": 2000,
+      "imageId": "rbxassetid://71648759253404",
+      "croppedImageId": "rbxassetid://89217372427117",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-e5a674b2e5f38e38fd21d2d20bebf427/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Paladin",
+      "rarityValue": 1250,
+      "imageId": "rbxassetid://106092959476532",
+      "croppedImageId": "rbxassetid://86359314833198",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-2121c6cde163839cdc8adab519c409bc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Goblin Gang",
+      "rarityValue": 1100,
+      "imageId": "rbxassetid://75075926490112",
+      "croppedImageId": "rbxassetid://125508600811028",
+      "badgeRequired": "GoblinBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-b872b4b563ddbd75afae325218f67641/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Knight",
+      "rarityValue": 800,
+      "imageId": "rbxassetid://77926572878472",
+      "croppedImageId": "rbxassetid://99005620672272",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-1a5374823102837214b6028496ee211e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Spear Goblin",
+      "rarityValue": 650,
+      "imageId": "rbxassetid://74686814949636",
+      "croppedImageId": "rbxassetid://131696355726955",
+      "badgeRequired": "GoblinBadge",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-6ce98ee312b5eaa267be372e26162175/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Assassin",
+      "rarityValue": 500,
+      "imageId": "rbxassetid://97653577142313",
+      "croppedImageId": "rbxassetid://128333228743519",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-22d9cd7acb34f2aef58c3d47e8016cd5/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Witch",
+      "rarityValue": 300,
+      "imageId": "rbxassetid://92669339408658",
+      "croppedImageId": "rbxassetid://119466848541857",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-be830774409d7bba0dc54d187e704d5e/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Mage",
+      "rarityValue": 180,
+      "imageId": "rbxassetid://112346043443647",
+      "croppedImageId": "rbxassetid://97595085226280",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-00cc9106790ff5643e7c0b46213f146f/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Druid",
+      "rarityValue": 100,
+      "imageId": "rbxassetid://91268371031967",
+      "croppedImageId": "rbxassetid://111191485862062",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-393a392ae19baef088c555867e8a3401/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Priest",
+      "rarityValue": 80,
+      "imageId": "rbxassetid://76838432982115",
+      "croppedImageId": "rbxassetid://111907706177001",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-241ef29f57d56a6593e059c8bd96400b/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Rogue",
+      "rarityValue": 55,
+      "imageId": "rbxassetid://85458482801709",
+      "croppedImageId": "rbxassetid://116192795399925",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-bac73e871316a9523ece60c717b4dc5a/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Archer",
+      "rarityValue": 30,
+      "imageId": "rbxassetid://72498432313978",
+      "croppedImageId": "rbxassetid://82587670530265",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-a4d6c8e1d4971c06fdb1a3155673754c/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Goblin",
+      "rarityValue": 10,
+      "imageId": "rbxassetid://108154311011298",
+      "croppedImageId": "rbxassetid://99480292208738",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-647c122386f029ddb52cc9cc3844b4a8/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Peasant",
+      "rarityValue": 5,
+      "imageId": "rbxassetid://97221989954630",
+      "croppedImageId": "rbxassetid://122195750891979",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-60b5d0d735aeae205e29a28c3ed61045/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Scarecrow",
+      "rarityValue": 2,
+      "imageId": "rbxassetid://108447052136484",
+      "croppedImageId": "rbxassetid://112249315395374",
+      "isSecret": false,
+      "weatherLock": null,
+      "thumbnail": "https://tr.rbxcdn.com/180DAY-055836f66580f034852848d1d4ca9e6f/420/420/Image/Png/noFilter"
+    }
+  ],
+  "secretSkins": {
+    "Rogue": [
+      {
+        "to": "Rogue(Black Cat)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Goblin Gang": [
+      {
+        "to": "Goblin Gang(Undead Army)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Paladin": [
+      {
+        "to": "Paladin(Samurai)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Dragon": [
+      {
+        "to": "Dragon(Loong)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Prism Serpent": [
+      {
+        "to": "Prism Serpent(Celestial)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Sun Sprite": [
+      {
+        "to": "Sun Sprite(Eclipse)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Void Angel": [
+      {
+        "to": "Void Angel(True Angel)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Marching Colossus": [
+      {
+        "to": "Marching Colossus(Void Colossus)",
+        "chanceDenom": 7500
+      }
+    ],
+    "Dream Eater": [
+      {
+        "to": "Dream Eater(Signus)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Gnomelord Technician": [
+      {
+        "to": "Gnomelord Technician(Clockwork King)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Specter": [
+      {
+        "to": "Specter(Grim Reaper)",
+        "chanceDenom": 7500
+      }
+    ],
+    "Berserker": [
+      {
+        "to": "Berserker(Voidserker)",
+        "chanceDenom": 9000
+      }
+    ],
+    "Eternal Beast": [
+      {
+        "to": "Eternal Beast(Holy Beast)",
+        "chanceDenom": 7000
+      }
+    ]
+  },
+  "weather": {
+    "Event": {
+      "boostMultiplier": 1.6,
+      "luckBonus": 0,
+      "luckMultiplier": 1,
+      "eligibleCards": {
+        "The Heartbroken": true,
+        "The Cake of Celebration": true,
+        "Romeo and Juliet": true,
+        "Pot of Gold": true,
+        "Leprechaun": true,
+        "Rift Dragon": true
+      }
+    },
+    "TravelingCaravan": {
+      "boostMultiplier": 1.5,
+      "luckBonus": 0,
+      "luckMultiplier": 1,
+      "eligibleCards": {
+        "Coin Squire": true,
+        "Traveling Trader": true,
+        "Market Guard": true,
+        "Tax Collector": true
+      }
+    },
+    "GnomeRaid": {
+      "boostMultiplier": 1.7,
+      "luckBonus": 0,
+      "luckMultiplier": 1,
+      "eligibleCards": {
+        "Burrow Bomber": true,
+        "Gnomelord Technician": true,
+        "Tinkering Gnome": true,
+        "The Grand Contraption": true
+      }
+    },
+    "IronLegion": {
+      "boostMultiplier": 1.85,
+      "luckBonus": 2,
+      "luckMultiplier": 1,
+      "eligibleCards": {
+        "Iron Legionnaire": true,
+        "Iron Protector": true,
+        "Marching Colossus": true,
+        "Iron Juggernaut": true
+      }
+    },
+    "NewYearsFestival": {
+      "boostMultiplier": 2.15,
+      "luckBonus": 4,
+      "luckMultiplier": 1.05,
+      "eligibleCards": {
+        "The Embodiment of Luck": true,
+        "Nian": true,
+        "Janus, God of Beginnings": true
+      }
+    },
+    "GlaringSun": {
+      "boostMultiplier": 2.4,
+      "luckBonus": 6,
+      "luckMultiplier": 1.1,
+      "eligibleCards": {
+        "Sun Sprite": true,
+        "Solar Paladin": true,
+        "Flare King": true
+      }
+    },
+    "DragonsRoost": {
+      "boostMultiplier": 2.85,
+      "luckBonus": 10,
+      "luckMultiplier": 1.15,
+      "eligibleCards": {
+        "Wyrmling": true,
+        "Ice Dragon": true,
+        "Dragon Broodmother": true,
+        "Vorrath, The Calamity": true
+      }
+    },
+    "WarriorsPath": {
+      "boostMultiplier": 3.25,
+      "luckBonus": 15,
+      "luckMultiplier": 1.2,
+      "eligibleCards": {
+        "Young Disciple": true,
+        "Lotus Swordmaiden": true,
+        "Duelist": true,
+        "Grandmaster of Forms": true,
+        "Gunshin": true
+      }
+    },
+    "ShadowedWorld": {
+      "boostMultiplier": 4.6,
+      "luckBonus": 20,
+      "luckMultiplier": 1.5,
+      "eligibleCards": {
+        "Specter": true,
+        "Shade": true,
+        "Revenant": true,
+        "Umbral": true
+      }
+    },
+    "BlackHole": {
+      "boostMultiplier": 6.2,
+      "luckBonus": 32,
+      "luckMultiplier": 2,
+      "eligibleCards": {
+        "Abomination": true,
+        "Paradox Creator": true,
+        "Perfected Singularity": true,
+        "Nihilus, the Final Horizon": true
+      }
+    },
+    "RipInTime": {
+      "boostMultiplier": 9.2,
+      "luckBonus": 50,
+      "luckMultiplier": 2.8,
+      "eligibleCards": {
+        "The Last Mammoth": true,
+        "Theodora, Empress of Resolve": true,
+        "Caesar, Eternal Conqueror": true
+      }
+    }
+  },
+  "pointCaps": [
+    {
+      "Luck": 20,
+      "Shiny": 10,
+      "Awakened": 10,
+      "Void": 10
+    },
+    {
+      "Luck": 50,
+      "Shiny": 20,
+      "Awakened": 30,
+      "Void": 30
+    },
+    {
+      "Luck": 100,
+      "Shiny": 40,
+      "Awakened": 60,
+      "Void": 60
+    },
+    {
+      "Luck": 150,
+      "Shiny": 50,
+      "Awakened": 100,
+      "Void": 80
+    },
+    {
+      "Luck": 225,
+      "Shiny": 60,
+      "Awakened": 200,
+      "Void": 130
+    },
+    {
+      "Luck": 350,
+      "Shiny": 65,
+      "Awakened": 300,
+      "Void": 200
+    },
+    {
+      "Luck": 500,
+      "Shiny": 70,
+      "Awakened": 400,
+      "Void": 300
+    },
+    {
+      "Luck": 1000,
+      "Shiny": 75,
+      "Awakened": 500,
+      "Void": 500
+    }
+  ],
+  "pointGains": {
+    "Luck": 0.5,
+    "Shiny": 0.05,
+    "Awakened": 0.1,
+    "Void": 0.15
+  },
+  "rollsPerPoint": 50000,
+  "minimumInterval": 0.2,
+  "personalArtifact": {
+    "maxLevel": 100,
+    "rollsForMaxLevel": 100000000,
+    "levelExponent": 0.4,
+    "slotUnlockLevels": [
+      1,
+      15,
+      35,
+      60,
+      90
+    ],
+    "gamepassBonusSlots": 2,
+    "maxRarityBonusSlots": 2,
+    "maxTowerBonusSlots": 2,
+    "maxSlots": 11,
+    "autoRollUnlockCost": 100000,
+    "autoRollMaxTargets": 4,
+    "autoRollInterval": 0.5,
+    "autoRollTolerance": 0.005,
+    "maxCopiesPerStat": 2,
+    "duplicateSecondCopyMultiplier": 0.5,
+    "rarities": [
+      {
+        "id": "Common",
+        "name": "Common",
+        "weight": 5500,
+        "statMultiplier": 1.02,
+        "bonusSlots": 0,
+        "bonusLocks": 0,
+        "color": [
+          175,
+          175,
+          180
+        ]
+      },
+      {
+        "id": "Uncommon",
+        "name": "Uncommon",
+        "weight": 2500,
+        "statMultiplier": 1.05,
+        "bonusSlots": 0,
+        "bonusLocks": 0,
+        "color": [
+          105,
+          195,
+          120
+        ]
+      },
+      {
+        "id": "Rare",
+        "name": "Rare",
+        "weight": 1200,
+        "statMultiplier": 1.08,
+        "bonusSlots": 0,
+        "bonusLocks": 0,
+        "color": [
+          95,
+          155,
+          235
+        ]
+      },
+      {
+        "id": "Epic",
+        "name": "Epic",
+        "weight": 500,
+        "statMultiplier": 1.1,
+        "bonusSlots": 0,
+        "bonusLocks": 0,
+        "color": [
+          185,
+          105,
+          235
+        ]
+      },
+      {
+        "id": "Legendary",
+        "name": "Legendary",
+        "weight": 250,
+        "statMultiplier": 1.14,
+        "bonusSlots": 0,
+        "bonusLocks": 0,
+        "color": [
+          245,
+          185,
+          70
+        ]
+      },
+      {
+        "id": "Mythic",
+        "name": "Mythic",
+        "weight": 50,
+        "statMultiplier": 1.2,
+        "bonusSlots": 1,
+        "bonusLocks": 1,
+        "color": [
+          255,
+          90,
+          180
+        ]
+      },
+      {
+        "id": "Celestial",
+        "name": "Celestial",
+        "weight": 5,
+        "statMultiplier": 1.3,
+        "bonusSlots": 2,
+        "bonusLocks": 2,
+        "color": [
+          90,
+          235,
+          255
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "id": "Luck",
+        "kind": "flat",
+        "weight": 100,
+        "min": 5,
+        "max": 500,
+        "decimals": 0
+      },
+      {
+        "id": "ShinyLuck",
+        "kind": "flat",
+        "weight": 80,
+        "min": 0.2,
+        "max": 10,
+        "decimals": 2
+      },
+      {
+        "id": "AwakenedLuck",
+        "kind": "flat",
+        "weight": 80,
+        "min": 1,
+        "max": 80,
+        "decimals": 1
+      },
+      {
+        "id": "FabledLuck",
+        "kind": "flat",
+        "weight": 60,
+        "min": 0.5,
+        "max": 25,
+        "decimals": 1
+      },
+      {
+        "id": "CorruptedLuck",
+        "kind": "flat",
+        "weight": 60,
+        "min": 0.5,
+        "max": 30,
+        "decimals": 1
+      },
+      {
+        "id": "VoidLuck",
+        "kind": "flat",
+        "weight": 30,
+        "min": 0.25,
+        "max": 50,
+        "decimals": 2
+      },
+      {
+        "id": "PotionDurationMult",
+        "kind": "potion",
+        "weight": 40,
+        "min": 0.05,
+        "max": 1,
+        "decimals": 3
+      },
+      {
+        "id": "LuckMult",
+        "kind": "mult",
+        "weight": 25,
+        "min": 1.1,
+        "max": 2,
+        "decimals": 3
+      },
+      {
+        "id": "ShinyLuckMult",
+        "kind": "mult",
+        "weight": 20,
+        "min": 1.05,
+        "max": 1.75,
+        "decimals": 3
+      },
+      {
+        "id": "AwakenedLuckMult",
+        "kind": "mult",
+        "weight": 20,
+        "min": 1.05,
+        "max": 1.75,
+        "decimals": 3
+      },
+      {
+        "id": "FabledLuckMult",
+        "kind": "mult",
+        "weight": 15,
+        "min": 1.05,
+        "max": 1.5,
+        "decimals": 3
+      },
+      {
+        "id": "CorruptedLuckMult",
+        "kind": "mult",
+        "weight": 15,
+        "min": 1.05,
+        "max": 1.5,
+        "decimals": 3
+      },
+      {
+        "id": "VoidLuckMult",
+        "kind": "mult",
+        "weight": 8,
+        "min": 1.03,
+        "max": 1.5,
+        "decimals": 3
+      },
+      {
+        "id": "DoubleRollChance",
+        "kind": "chance",
+        "weight": 8,
+        "min": 0.05,
+        "max": 0.3,
+        "decimals": 3
+      },
+      {
+        "id": "RollTwiceChance",
+        "kind": "chance",
+        "weight": 5,
+        "min": 0.05,
+        "max": 0.27,
+        "decimals": 3
+      },
+      {
+        "id": "LuckyHandChance",
+        "kind": "chance",
+        "weight": 4,
+        "min": 0.05,
+        "max": 0.25,
+        "decimals": 3
+      },
+      {
+        "id": "RollSpeed",
+        "kind": "flat",
+        "weight": 3,
+        "min": 0.02,
+        "max": 0.15,
+        "decimals": 3
+      },
+      {
+        "id": "TripleRollChance",
+        "kind": "chance",
+        "weight": 2,
+        "min": 0.008,
+        "max": 0.12,
+        "decimals": 3
+      }
+    ],
+    "extraLocksConfirmed": false
+  },
+  "indexSets": [
+    {
+      "id": "StarterWorld",
+      "name": "Base Set",
+      "kind": "World",
+      "match": {
+        "badge": false
+      },
+      "bonus": {
+        "Luck": 2,
+        "ShinyLuck": 0.1
+      }
+    },
+    {
+      "id": "GoblinWorld",
+      "name": "Goblin World",
+      "kind": "World",
+      "match": {
+        "badge": "GoblinBadge"
+      },
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.05
+      }
+    },
+    {
+      "id": "SpiderWorld",
+      "name": "Spider World",
+      "kind": "World",
+      "match": {
+        "badge": "SpiderBadge"
+      },
+      "bonus": {
+        "Luck": 1,
+        "AwakenedLuck": 0.1
+      }
+    },
+    {
+      "id": "CrystalWorld",
+      "name": "Crystal World",
+      "kind": "World",
+      "match": {
+        "badge": "CrystalBadge"
+      },
+      "bonus": {
+        "Luck": 1.5,
+        "ShinyLuck": 0.1
+      }
+    },
+    {
+      "id": "TownWorld",
+      "name": "Town World",
+      "kind": "World",
+      "match": {
+        "badge": "TownBadge"
+      },
+      "bonus": {
+        "Luck": 2,
+        "AwakenedLuck": 0.15,
+        "VoidLuck": 0.2
+      }
+    },
+    {
+      "id": "EndWorld",
+      "name": "End World",
+      "kind": "World",
+      "match": {
+        "badge": "EndBadge"
+      },
+      "bonus": {
+        "Luck": 3,
+        "AwakenedLuck": 0.3,
+        "FabledLuck": 0.2
+      }
+    },
+    {
+      "id": "SnowWorld",
+      "name": "Snow World",
+      "kind": "World",
+      "match": {
+        "badge": "SnowBadge"
+      },
+      "bonus": {
+        "Luck": 5,
+        "FabledLuck": 0.5
+      }
+    },
+    {
+      "id": "CorruptedWorld",
+      "name": "Corrupted World",
+      "kind": "World",
+      "match": {
+        "badge": "CorruptedWorldBadge"
+      },
+      "bonus": {
+        "Luck": 10,
+        "CorruptedLuck": 0.7,
+        "VoidLuck": 0.4
+      }
+    },
+    {
+      "id": "VoidWorld",
+      "name": "Void World",
+      "kind": "World",
+      "match": {
+        "badge": "VoidWorldBadge"
+      },
+      "bonus": {
+        "Luck": 21,
+        "FabledLuck": 1,
+        "CorruptedLuck": 0.5,
+        "VoidLuck": 2.5
+      }
+    },
+    {
+      "id": "TravelingCaravan",
+      "name": "Traveling Caravan",
+      "kind": "Weather",
+      "match": {
+        "weather": "TravelingCaravan"
+      },
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.05
+      }
+    },
+    {
+      "id": "GnomeRaid",
+      "name": "Gnome Raid",
+      "kind": "Weather",
+      "match": {
+        "weather": "GnomeRaid"
+      },
+      "bonus": {
+        "Luck": 1,
+        "AwakenedLuck": 0.1
+      }
+    },
+    {
+      "id": "WarriorsPath",
+      "name": "Warrior's Path",
+      "kind": "Weather",
+      "match": {
+        "weather": "WarriorsPath"
+      },
+      "bonus": {
+        "Luck": 2,
+        "AwakenedLuck": 0.1
+      }
+    },
+    {
+      "id": "IronLegion",
+      "name": "Iron Legion",
+      "kind": "Weather",
+      "match": {
+        "weather": "IronLegion"
+      },
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.1
+      }
+    },
+    {
+      "id": "NewYearsFestival",
+      "name": "New Year's Festival",
+      "kind": "Weather",
+      "match": {
+        "weather": "NewYearsFestival"
+      },
+      "bonus": {
+        "Luck": 1.5,
+        "FabledLuck": 0.1
+      }
+    },
+    {
+      "id": "DragonsRoost",
+      "name": "Dragon's Roost",
+      "kind": "Weather",
+      "match": {
+        "weather": "DragonsRoost"
+      },
+      "bonus": {
+        "Luck": 2,
+        "FabledLuck": 0.25
+      }
+    },
+    {
+      "id": "GlaringSun",
+      "name": "Glaring Sun",
+      "kind": "Weather",
+      "match": {
+        "weather": "GlaringSun"
+      },
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.1
+      }
+    },
+    {
+      "id": "RipInTime",
+      "name": "Rip in Time",
+      "kind": "Weather",
+      "match": {
+        "weather": "RipInTime"
+      },
+      "bonus": {
+        "Luck": 6,
+        "AwakenedLuck": 0.6
+      }
+    },
+    {
+      "id": "BlackHole",
+      "name": "Black Hole",
+      "kind": "Weather",
+      "match": {
+        "weather": "BlackHole"
+      },
+      "bonus": {
+        "Luck": 3.5,
+        "CorruptedLuck": 0.25,
+        "VoidLuck": 0.2
+      }
+    },
+    {
+      "id": "ShadowedWorld",
+      "name": "Shadowed World",
+      "kind": "Weather",
+      "match": {
+        "weather": "ShadowedWorld"
+      },
+      "bonus": {
+        "Luck": 2.5,
+        "CorruptedLuck": 0.15
+      }
+    }
+  ],
+  "grandmastery": [
+    {
+      "id": "V3_GRANDMASTERY",
+      "name": "Master of All Paths",
+      "percentBonus": {
+        "Luck": 0.05,
+        "ShinyLuck": 0.05,
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05,
+        "CorruptedLuck": 0.05,
+        "VoidLuck": 0.05
+      }
+    },
+    {
+      "id": "V4_GRANDMASTERY",
+      "name": "Master of Every Path",
+      "percentBonus": {
+        "Luck": 0.05,
+        "ShinyLuck": 0.05,
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05,
+        "CorruptedLuck": 0.05,
+        "VoidLuck": 0.05
+      },
+      "bonus": {
+        "Luck": 5,
+        "DoubleRollChance": 0.02
+      }
+    }
+  ],
+  "transcendence": [
+    {
+      "Id": "V5_TRANSCEND_ENTRY",
+      "Name": "Echo of Eternity",
+      "Cost": 3,
+      "Desc": "Transcendence: +6 Luck and +3% Luck.",
+      "Depth": 3,
+      "Side": 0,
+      "Bonus": {
+        "Luck": 6
+      },
+      "PercentBonus": {
+        "Luck": 0.03
+      },
+      "Requires": [
+        "V4_GRANDMASTERY"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_STAR_1",
+      "Name": "Starforged Fortune",
+      "Cost": 3,
+      "Desc": "Starlit: +4% Luck and +4% Shiny Luck.",
+      "Depth": 4,
+      "Side": -90,
+      "PercentBonus": {
+        "Luck": 0.04,
+        "ShinyLuck": 0.04
+      },
+      "Requires": [
+        "V5_TRANSCEND_ENTRY"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_STAR_2",
+      "Name": "Celestial Rite",
+      "Cost": 4,
+      "Desc": "Starlit: +5% Awakened Luck and +5% Fabled Luck.",
+      "Depth": 5,
+      "Side": -110,
+      "PercentBonus": {
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05
+      },
+      "Requires": [
+        "V5_TRANSCEND_STAR_1"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_ABYSS_1",
+      "Name": "Abyssal Whisper",
+      "Cost": 3,
+      "Desc": "Abyssal: +4% Corrupted Luck and +4% Void Luck.",
+      "Depth": 4,
+      "Side": 90,
+      "PercentBonus": {
+        "CorruptedLuck": 0.04,
+        "VoidLuck": 0.04
+      },
+      "Requires": [
+        "V5_TRANSCEND_ENTRY"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_ABYSS_2",
+      "Name": "Hollow Crown",
+      "Cost": 4,
+      "Desc": "Abyssal: +0.30 Void Luck and +5% Void Luck.",
+      "Depth": 5,
+      "Side": 110,
+      "Bonus": {
+        "VoidLuck": 0.3
+      },
+      "PercentBonus": {
+        "VoidLuck": 0.05
+      },
+      "Requires": [
+        "V5_TRANSCEND_ABYSS_1"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_APOTHEOSIS",
+      "Name": "Apotheosis",
+      "Cost": 5,
+      "Desc": "Requires both paths: +6% to all six Lucks, +0.03 Roll Speed, and +2% Double Roll, Roll Twice, and Triple Roll chance.",
+      "Depth": 6,
+      "Side": 0,
+      "Bonus": {
+        "RollSpeed": 0.03,
+        "DoubleRollChance": 0.02,
+        "RollTwiceChance": 0.02,
+        "TripleRollChance": 0.02
+      },
+      "PercentBonus": {
+        "Luck": 0.06,
+        "ShinyLuck": 0.06,
+        "AwakenedLuck": 0.06,
+        "FabledLuck": 0.06,
+        "CorruptedLuck": 0.06,
+        "VoidLuck": 0.06
+      },
+      "Requires": [
+        "V5_TRANSCEND_STAR_2",
+        "V5_TRANSCEND_ABYSS_2"
+      ]
+    },
+    {
+      "Id": "V5_TRANSCEND_FINAL",
+      "Name": "Beyond the Final Path",
+      "Cost": 6,
+      "Desc": "True final node: +8% to all six Lucks, +15% potion power, and +15% potion duration.",
+      "Depth": 7,
+      "Side": 0,
+      "Bonus": {
+        "PotionPowerMult": 0.15,
+        "PotionDurationMult": 0.15
+      },
+      "PercentBonus": {
+        "Luck": 0.08,
+        "ShinyLuck": 0.08,
+        "AwakenedLuck": 0.08,
+        "FabledLuck": 0.08,
+        "CorruptedLuck": 0.08,
+        "VoidLuck": 0.08
+      },
+      "Requires": [
+        "V5_TRANSCEND_APOTHEOSIS"
+      ]
+    }
+  ],
+  "borderOdds": {
+    "Shiny": 100,
+    "Awakened": 1000000,
+    "Fabled": 10000,
+    "Corrupted": 100000,
+    "Void": 10000000
+  },
+  "borderRarity": {
+    "Shiny": 100,
+    "Awakened": 1000000,
+    "Fabled": 10000,
+    "Corrupted": 100000,
+    "Void": 10000000
+  },
+  "estimatedBorderOdds": [
+    "Fabled",
+    "Corrupted",
+    "Void"
+  ]
+}
