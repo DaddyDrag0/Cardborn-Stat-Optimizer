@@ -1,17 +1,21 @@
 # Cardborn Stat Optimizer
 
-A browser calculator for Cardborn RNG, with a stat-point optimizer and Personal Artifact planner. It uses Cardborn's exported card definitions and rolling code. HitCalculator influenced the presentation; its game formulas are not used.
+A simple browser calculator for Cardborn RNG. Enter your build, see calculated current stats, then optimize in a separate tab. Uses Cardborn's exported definitions and rolling code; HitCalculator influences the layout, not the game formulas.
 
 ## Use
 
-Choose a minimum **base** rarity or a specific card, then select any required borders. Enter your current displayed lucks, measured roll interval, roll-proc percentages, lifetime rolls, point allocation, and raw artifact values. Include your existing buffs in the displayed totals; the app does not add the under-10M Luck boost again.
+Start in **Setup**. Enter lifetime rolls and allocated points, gamepasses, skill-tree nodes, crafted artifact, relics/borders, Personal Artifact values, Tower/Void Shop levels, completed Index Sets, active potions, weather, and unlocks. Totals are calculated and read-only. The under-10M 1.25× Luck boost automatically applies below its threshold, unless disabled.
 
-- Calculator: per-card odds, expected hits per hour, average waiting time, and the chance of at least one hit during a session.
-- Stat points: compare legal allocations across all eight cap stages. Higher stages require filling the previous stage's four caps.
-- Artifact planner: compare possible stat combinations, preserve selected locked slots, respect level ranges and duplicate limits, and use purchased Void Shop slots.
+- Setup: 102 skill nodes including both paths, masteries, Grandmastery, Transcendence and Constellations; 13 crafted artifacts; 16 relics with six border tiers; 24 potion definitions; 19 Index Sets; and all Tower/Void Shop levels. Selecting a skill includes prerequisites, and removing it removes dependent nodes.
+- Hit Calculator: choose a minimum **base** rarity or exact card and required borders; see odds, hit rates, waiting times, and session chances.
+- Optimizer: compare legal point allocations across eight stages or possible Personal Artifact builds, preserving selected locks and level/slot/duplicate limits.
 - Profiles save in your browser and can be exported/imported as JSON. Nothing is sent to a server.
 
-Recommendations compare against the current profile. Applying a recommendation updates both its allocation/artifact and the displayed totals, avoiding counting the same bonuses twice.
+Recommendations use the same full build calculation. Applying them changes the allocation or artifact, then recalculates stats. **Calculation breakdown** shows sources; **Compare with in-game stats** accepts observed values without changing the model. This is intended for correcting unconfirmed server mechanics against a real build.
+
+The Corrupted Shop catalog, code/fountain/server bonuses, and some rewards are server-supplied and absent from the export. Enter actual values as named **Other bonuses**, rather than editing calculated totals. Model settings expose starting values and multiplier order. A Tower discrepancy is explicit: UI says +0.4 Awakened Luck/level, shared shop description says +0.3; the default follows the UI.
+
+Personal Artifact values can be entered as raw values before rarity or full-range quality percentages. Planned optimizer quality uses the available range at your level. Existing v1 profiles retain points/artifact and move their old entered totals into the comparison column; they do not silently become stat overrides.
 
 ## Accuracy
 

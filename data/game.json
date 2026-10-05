@@ -2433,5 +2433,2563 @@
     "Fabled",
     "Corrupted",
     "Void"
+  ],
+  "skillNodes": [
+    {
+      "id": "V2_FORTUNE_CORE_1",
+      "branch": "Fortune",
+      "path": "Core",
+      "name": "Green Thread",
+      "desc": "+2 Luck.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_FORTUNE_CORE_2",
+      "branch": "Fortune",
+      "path": "Core",
+      "name": "Fortunate Step",
+      "desc": "+2 Luck.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_CORE_1"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_CORE_3",
+      "branch": "Fortune",
+      "path": "Core",
+      "name": "Crowned Clover",
+      "desc": "+3 Luck. Fate and Insight are now both available.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_CORE_2"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_FATE_1",
+      "branch": "Fortune",
+      "path": "Fate",
+      "name": "Fated Hand",
+      "desc": "Fate: +3 Luck.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_FATE_2",
+      "branch": "Fortune",
+      "path": "Fate",
+      "name": "House Advantage",
+      "desc": "+5 Luck.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 5
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_FATE_1"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_FATE_3",
+      "branch": "Fortune",
+      "path": "Fate",
+      "name": "Fatebender",
+      "desc": "+4% Luck.",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.04
+      },
+      "requires": [
+        "V2_FORTUNE_FATE_2"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_FATE_4",
+      "branch": "Fortune",
+      "path": "Fate",
+      "name": "Destiny's Chosen",
+      "desc": "Fate capstone: +8 Luck and +1% Luck.",
+      "cost": 2,
+      "bonus": {
+        "Luck": 8
+      },
+      "percent": {
+        "Luck": 0.01
+      },
+      "requires": [
+        "V2_FORTUNE_FATE_3"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_INSIGHT_1",
+      "branch": "Fortune",
+      "path": "Insight",
+      "name": "Second Sight",
+      "desc": "Insight: +2 Luck and +3% Lucky Hand chance.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2,
+        "LuckyHandChance": 0.03
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_INSIGHT_2",
+      "branch": "Fortune",
+      "path": "Insight",
+      "name": "Dealer's Instinct",
+      "desc": "+2 Luck and +5% Lucky Hand chance.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2,
+        "LuckyHandChance": 0.05
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_INSIGHT_1"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_INSIGHT_3",
+      "branch": "Fortune",
+      "path": "Insight",
+      "name": "Perfect Draw",
+      "desc": "+4 Luck and +8% Lucky Hand chance.",
+      "cost": 2,
+      "bonus": {
+        "Luck": 4,
+        "LuckyHandChance": 0.08
+      },
+      "percent": {},
+      "requires": [
+        "V2_FORTUNE_INSIGHT_2"
+      ]
+    },
+    {
+      "id": "V2_FORTUNE_INSIGHT_4",
+      "branch": "Fortune",
+      "path": "Insight",
+      "name": "Read the Future",
+      "desc": "Insight capstone: +3% Luck and +4% Lucky Hand chance.",
+      "cost": 2,
+      "bonus": {
+        "LuckyHandChance": 0.04
+      },
+      "percent": {
+        "Luck": 0.03
+      },
+      "requires": [
+        "V2_FORTUNE_INSIGHT_3"
+      ]
+    },
+    {
+      "id": "V3_FORTUNE_MASTERY",
+      "branch": "Fortune",
+      "path": "Mastery",
+      "name": "Fortune Incarnate",
+      "desc": "Fortune mastery: +5 Luck, +2% Luck, and +3% Lucky Hand chance.",
+      "cost": 2,
+      "bonus": {
+        "Luck": 5,
+        "LuckyHandChance": 0.03
+      },
+      "percent": {
+        "Luck": 0.02
+      },
+      "requires": [
+        "V2_FORTUNE_FATE_4",
+        "V2_FORTUNE_INSIGHT_4"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_CORE_1",
+      "branch": "Velocity",
+      "path": "Core",
+      "name": "Quick Hands",
+      "desc": "+0.02 Roll Speed.",
+      "cost": 1,
+      "bonus": {
+        "RollSpeed": 0.02
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_VELOCITY_CORE_2",
+      "branch": "Velocity",
+      "path": "Core",
+      "name": "Rolling Rhythm",
+      "desc": "+0.02 Roll Speed.",
+      "cost": 1,
+      "bonus": {
+        "RollSpeed": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_CORE_1"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_CORE_3",
+      "branch": "Velocity",
+      "path": "Core",
+      "name": "Split Second",
+      "desc": "+2% Double Roll chance. Tempo and Multiplicity are now both available.",
+      "cost": 1,
+      "bonus": {
+        "DoubleRollChance": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_CORE_2"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_TEMPO_1",
+      "branch": "Velocity",
+      "path": "Tempo",
+      "name": "Rapid Draw",
+      "desc": "Tempo: +0.03 Roll Speed.",
+      "cost": 1,
+      "bonus": {
+        "RollSpeed": 0.03
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_TEMPO_2",
+      "branch": "Velocity",
+      "path": "Tempo",
+      "name": "Blur",
+      "desc": "+0.04 Roll Speed.",
+      "cost": 1,
+      "bonus": {
+        "RollSpeed": 0.04
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_TEMPO_1"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_TEMPO_3",
+      "branch": "Velocity",
+      "path": "Tempo",
+      "name": "Unbound Tempo",
+      "desc": "+0.07 Roll Speed and +4% Roll Twice chance.",
+      "cost": 2,
+      "bonus": {
+        "RollSpeed": 0.07,
+        "RollTwiceChance": 0.04
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_TEMPO_2"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_TEMPO_4",
+      "branch": "Velocity",
+      "path": "Tempo",
+      "name": "Beyond Time",
+      "desc": "Tempo capstone: +0.03 Roll Speed and +2% Roll Twice chance.",
+      "cost": 2,
+      "bonus": {
+        "RollSpeed": 0.03,
+        "RollTwiceChance": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_TEMPO_3"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_MULTIPLICITY_1",
+      "branch": "Velocity",
+      "path": "Multiplicity",
+      "name": "Paired Fate",
+      "desc": "Multiplicity: +3% Double Roll chance.",
+      "cost": 1,
+      "bonus": {
+        "DoubleRollChance": 0.03
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_MULTIPLICITY_2",
+      "branch": "Velocity",
+      "path": "Multiplicity",
+      "name": "Overflow",
+      "desc": "+4% Double Roll and +1% Triple Roll chance.",
+      "cost": 1,
+      "bonus": {
+        "DoubleRollChance": 0.04,
+        "TripleRollChance": 0.01
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_MULTIPLICITY_1"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_MULTIPLICITY_3",
+      "branch": "Velocity",
+      "path": "Multiplicity",
+      "name": "Many Worlds",
+      "desc": "+6% Double Roll, +2% Triple Roll, and +3% Roll Twice chance.",
+      "cost": 2,
+      "bonus": {
+        "DoubleRollChance": 0.06,
+        "TripleRollChance": 0.02,
+        "RollTwiceChance": 0.03
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_MULTIPLICITY_2"
+      ]
+    },
+    {
+      "id": "V2_VELOCITY_MULTIPLICITY_4",
+      "branch": "Velocity",
+      "path": "Multiplicity",
+      "name": "Infinite Hands",
+      "desc": "Multiplicity capstone: +3% Double Roll and +2% Roll Twice chance.",
+      "cost": 2,
+      "bonus": {
+        "DoubleRollChance": 0.03,
+        "RollTwiceChance": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_MULTIPLICITY_3"
+      ]
+    },
+    {
+      "id": "V3_VELOCITY_MASTERY",
+      "branch": "Velocity",
+      "path": "Mastery",
+      "name": "Master of Moments",
+      "desc": "Velocity mastery: +2% Double Roll, +1% Triple Roll, +2% Roll Twice chance, and +0.02 Roll Speed.",
+      "cost": 2,
+      "bonus": {
+        "DoubleRollChance": 0.02,
+        "TripleRollChance": 0.01,
+        "RollTwiceChance": 0.02,
+        "RollSpeed": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_VELOCITY_TEMPO_4",
+        "V2_VELOCITY_MULTIPLICITY_4"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_CORE_1",
+      "branch": "Radiance",
+      "path": "Core",
+      "name": "Glimmer",
+      "desc": "+0.20 Shiny Luck.",
+      "cost": 1,
+      "bonus": {
+        "ShinyLuck": 0.2
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_RADIANCE_CORE_2",
+      "branch": "Radiance",
+      "path": "Core",
+      "name": "Lucid Spark",
+      "desc": "+0.25 Awakened Luck.",
+      "cost": 1,
+      "bonus": {
+        "AwakenedLuck": 0.25
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_CORE_1"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_CORE_3",
+      "branch": "Radiance",
+      "path": "Core",
+      "name": "Prismatic Focus",
+      "desc": "+2 Luck. Luster and Awakening are now both available.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_CORE_2"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_LUSTER_1",
+      "branch": "Radiance",
+      "path": "Luster",
+      "name": "Gilded Vein",
+      "desc": "Luster: +0.25 Shiny Luck.",
+      "cost": 1,
+      "bonus": {
+        "ShinyLuck": 0.25
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_LUSTER_2",
+      "branch": "Radiance",
+      "path": "Luster",
+      "name": "Mirror Bloom",
+      "desc": "+0.35 Shiny Luck.",
+      "cost": 1,
+      "bonus": {
+        "ShinyLuck": 0.35
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_LUSTER_1"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_LUSTER_3",
+      "branch": "Radiance",
+      "path": "Luster",
+      "name": "Aurora Heart",
+      "desc": "+4% Shiny Luck.",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "ShinyLuck": 0.04
+      },
+      "requires": [
+        "V2_RADIANCE_LUSTER_2"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_LUSTER_4",
+      "branch": "Radiance",
+      "path": "Luster",
+      "name": "Living Aurora",
+      "desc": "Luster capstone: +0.50 Shiny Luck and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "ShinyLuck": 0.5,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_LUSTER_3"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_AWAKENING_1",
+      "branch": "Radiance",
+      "path": "Awakening",
+      "name": "Lucid Trance",
+      "desc": "Awakening: +0.30 Awakened Luck.",
+      "cost": 1,
+      "bonus": {
+        "AwakenedLuck": 0.3
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_AWAKENING_2",
+      "branch": "Radiance",
+      "path": "Awakening",
+      "name": "Waking Star",
+      "desc": "+0.45 Awakened Luck.",
+      "cost": 1,
+      "bonus": {
+        "AwakenedLuck": 0.45
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_AWAKENING_1"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_AWAKENING_3",
+      "branch": "Radiance",
+      "path": "Awakening",
+      "name": "Ascendant Rite",
+      "desc": "+4% Awakened Luck.",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "AwakenedLuck": 0.04
+      },
+      "requires": [
+        "V2_RADIANCE_AWAKENING_2"
+      ]
+    },
+    {
+      "id": "V2_RADIANCE_AWAKENING_4",
+      "branch": "Radiance",
+      "path": "Awakening",
+      "name": "Lucid Apotheosis",
+      "desc": "Awakening capstone: +0.65 Awakened Luck and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "AwakenedLuck": 0.65,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_AWAKENING_3"
+      ]
+    },
+    {
+      "id": "V3_RADIANCE_MASTERY",
+      "branch": "Radiance",
+      "path": "Mastery",
+      "name": "Prismatic Soul",
+      "desc": "Radiance mastery: +0.30 Shiny Luck, +0.35 Awakened Luck, and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "ShinyLuck": 0.3,
+        "AwakenedLuck": 0.35,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_RADIANCE_LUSTER_4",
+        "V2_RADIANCE_AWAKENING_4"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_CORE_1",
+      "branch": "Mythos",
+      "path": "Core",
+      "name": "Old Tale",
+      "desc": "+0.35 Fabled Luck.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.35
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_MYTHOS_CORE_3",
+      "branch": "Mythos",
+      "path": "Core",
+      "name": "Forbidden Chronicle",
+      "desc": "+2 Luck.",
+      "cost": 1,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORE_1"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_LEGEND_1",
+      "branch": "Mythos",
+      "path": "Core",
+      "name": "Golden Thread",
+      "desc": "+0.50 Fabled Luck. Saga and Prophecy are now both available.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.5
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_LEGEND_2",
+      "branch": "Mythos",
+      "path": "Saga",
+      "name": "Epic Verse",
+      "desc": "Saga: +0.65 Fabled Luck.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.65
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_LEGEND_1"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_LEGEND_3",
+      "branch": "Mythos",
+      "path": "Saga",
+      "name": "Sagaweaver",
+      "desc": "+0.90 Fabled Luck.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.9
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_LEGEND_2"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_LEGEND_4",
+      "branch": "Mythos",
+      "path": "Saga",
+      "name": "Living Legend",
+      "desc": "+4% Fabled Luck and +2 Luck.",
+      "cost": 2,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {
+        "FabledLuck": 0.04
+      },
+      "requires": [
+        "V2_MYTHOS_LEGEND_3"
+      ]
+    },
+    {
+      "id": "V3_MYTHOS_MASTERY",
+      "branch": "Mythos",
+      "path": "Saga",
+      "name": "Myth Made Flesh",
+      "desc": "Saga capstone: +0.65 Fabled Luck, +0.45 Corrupted Luck, and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "FabledLuck": 0.65,
+        "CorruptedLuck": 0.45,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_LEGEND_4"
+      ]
+    },
+    {
+      "id": "V4_MYTHOS_PROPHECY_1",
+      "branch": "Mythos",
+      "path": "Prophecy",
+      "name": "Whispered Omen",
+      "desc": "Prophecy: +0.35 Fabled Luck and +1 Luck.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.35,
+        "Luck": 1
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_LEGEND_1"
+      ]
+    },
+    {
+      "id": "V4_MYTHOS_PROPHECY_2",
+      "branch": "Mythos",
+      "path": "Prophecy",
+      "name": "Written Fate",
+      "desc": "+0.50 Fabled Luck and +1 Luck.",
+      "cost": 1,
+      "bonus": {
+        "FabledLuck": 0.5,
+        "Luck": 1
+      },
+      "percent": {},
+      "requires": [
+        "V4_MYTHOS_PROPHECY_1"
+      ]
+    },
+    {
+      "id": "V4_MYTHOS_PROPHECY_3",
+      "branch": "Mythos",
+      "path": "Prophecy",
+      "name": "Final Chapter",
+      "desc": "+3% Fabled Luck and +2 Luck.",
+      "cost": 2,
+      "bonus": {
+        "Luck": 2
+      },
+      "percent": {
+        "FabledLuck": 0.03
+      },
+      "requires": [
+        "V4_MYTHOS_PROPHECY_2"
+      ]
+    },
+    {
+      "id": "V4_MYTHOS_PROPHECY_4",
+      "branch": "Mythos",
+      "path": "Prophecy",
+      "name": "Fate Foretold",
+      "desc": "Prophecy capstone: +0.70 Fabled Luck and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "FabledLuck": 0.7,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V4_MYTHOS_PROPHECY_3"
+      ]
+    },
+    {
+      "id": "V4_MYTHOS_MASTERY",
+      "branch": "Mythos",
+      "path": "Mastery",
+      "name": "Keeper of Legends",
+      "desc": "Mythos mastery: +0.70 Fabled Luck, +2% Fabled Luck, and +3 Luck.",
+      "cost": 2,
+      "bonus": {
+        "FabledLuck": 0.7,
+        "Luck": 3
+      },
+      "percent": {
+        "FabledLuck": 0.02
+      },
+      "requires": [
+        "V3_MYTHOS_MASTERY",
+        "V4_MYTHOS_PROPHECY_4"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_CORE_2",
+      "branch": "Corrupted",
+      "path": "Core",
+      "name": "Dark Verse",
+      "desc": "+0.25 Corrupted Luck.",
+      "cost": 1,
+      "bonus": {
+        "CorruptedLuck": 0.25
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_MYTHOS_CORRUPTION_1",
+      "branch": "Corrupted",
+      "path": "Core",
+      "name": "Tainted Veil",
+      "desc": "+0.40 Corrupted Luck.",
+      "cost": 1,
+      "bonus": {
+        "CorruptedLuck": 0.4
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORE_2"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_CORRUPTION_2",
+      "branch": "Corrupted",
+      "path": "Core",
+      "name": "Withered Crown",
+      "desc": "+0.60 Corrupted Luck. Decay and Ruin are now both available.",
+      "cost": 1,
+      "bonus": {
+        "CorruptedLuck": 0.6
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORRUPTION_1"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_CORRUPTION_3",
+      "branch": "Corrupted",
+      "path": "Decay",
+      "name": "Heart of Decay",
+      "desc": "Decay: +0.90 Corrupted Luck.",
+      "cost": 1,
+      "bonus": {
+        "CorruptedLuck": 0.9
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORRUPTION_2"
+      ]
+    },
+    {
+      "id": "V2_MYTHOS_CORRUPTION_4",
+      "branch": "Corrupted",
+      "path": "Decay",
+      "name": "Perfect Blight",
+      "desc": "+0.45 Corrupted Luck and +2 Luck.",
+      "cost": 2,
+      "bonus": {
+        "CorruptedLuck": 0.45,
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORRUPTION_3"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_DECAY_3",
+      "branch": "Corrupted",
+      "path": "Decay",
+      "name": "Rot Eternal",
+      "desc": "+0.60 Corrupted Luck.",
+      "cost": 2,
+      "bonus": {
+        "CorruptedLuck": 0.6
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORRUPTION_4"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_DECAY_4",
+      "branch": "Corrupted",
+      "path": "Decay",
+      "name": "World in Ruin",
+      "desc": "Decay capstone: +4% Corrupted Luck and +3 Luck.",
+      "cost": 3,
+      "bonus": {
+        "Luck": 3
+      },
+      "percent": {
+        "CorruptedLuck": 0.04
+      },
+      "requires": [
+        "V4_CORRUPTED_DECAY_3"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_RUIN_1",
+      "branch": "Corrupted",
+      "path": "Ruin",
+      "name": "Fractured Fate",
+      "desc": "Ruin: +0.35 Corrupted Luck and +1 Luck.",
+      "cost": 1,
+      "bonus": {
+        "CorruptedLuck": 0.35,
+        "Luck": 1
+      },
+      "percent": {},
+      "requires": [
+        "V2_MYTHOS_CORRUPTION_2"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_RUIN_2",
+      "branch": "Corrupted",
+      "path": "Ruin",
+      "name": "Unholy Fortune",
+      "desc": "+0.45 Corrupted Luck and +1 Luck.",
+      "cost": 2,
+      "bonus": {
+        "CorruptedLuck": 0.45,
+        "Luck": 1
+      },
+      "percent": {},
+      "requires": [
+        "V4_CORRUPTED_RUIN_1"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_RUIN_3",
+      "branch": "Corrupted",
+      "path": "Ruin",
+      "name": "Broken Reality",
+      "desc": "+0.70 Corrupted Luck and +2 Luck.",
+      "cost": 2,
+      "bonus": {
+        "CorruptedLuck": 0.7,
+        "Luck": 2
+      },
+      "percent": {},
+      "requires": [
+        "V4_CORRUPTED_RUIN_2"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_RUIN_4",
+      "branch": "Corrupted",
+      "path": "Ruin",
+      "name": "End of All Things",
+      "desc": "Ruin capstone: +0.55 Corrupted Luck, +0.15 Void Luck, and +3 Luck.",
+      "cost": 3,
+      "bonus": {
+        "CorruptedLuck": 0.55,
+        "VoidLuck": 0.15,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V4_CORRUPTED_RUIN_3"
+      ]
+    },
+    {
+      "id": "V4_CORRUPTED_MASTERY",
+      "branch": "Corrupted",
+      "path": "Mastery",
+      "name": "Avatar of Corruption",
+      "desc": "Corrupted mastery: +0.80 Corrupted Luck, +0.30 Void Luck, and +3 Luck.",
+      "cost": 3,
+      "bonus": {
+        "CorruptedLuck": 0.8,
+        "VoidLuck": 0.3,
+        "Luck": 3
+      },
+      "percent": {},
+      "requires": [
+        "V4_CORRUPTED_DECAY_4",
+        "V4_CORRUPTED_RUIN_4"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_CORE_1",
+      "branch": "Alchemy",
+      "path": "Core",
+      "name": "Longer Brew",
+      "desc": "Potions last 10% longer.",
+      "cost": 1,
+      "bonus": {
+        "PotionDurationMult": 0.1
+      },
+      "percent": {},
+      "requires": []
+    },
+    {
+      "id": "V2_ALCHEMY_CORE_2",
+      "branch": "Alchemy",
+      "path": "Core",
+      "name": "Refined Mixture",
+      "desc": "Potion stat boosts are 5% stronger.",
+      "cost": 1,
+      "bonus": {
+        "PotionPowerMult": 0.05
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_CORE_1"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_CORE_3",
+      "branch": "Alchemy",
+      "path": "Core",
+      "name": "Quick Sip",
+      "desc": "+0.02 Roll Speed. Preservation and Potency are now both available.",
+      "cost": 1,
+      "bonus": {
+        "RollSpeed": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_CORE_2"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_PRESERVATION_1",
+      "branch": "Alchemy",
+      "path": "Preservation",
+      "name": "Sealed Flask",
+      "desc": "Preservation: potions last 18% longer.",
+      "cost": 1,
+      "bonus": {
+        "PotionDurationMult": 0.18
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_PRESERVATION_2",
+      "branch": "Alchemy",
+      "path": "Preservation",
+      "name": "Timeless Brew",
+      "desc": "Potions last 25% longer.",
+      "cost": 1,
+      "bonus": {
+        "PotionDurationMult": 0.25
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_PRESERVATION_1"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_PRESERVATION_3",
+      "branch": "Alchemy",
+      "path": "Preservation",
+      "name": "Eternal Elixir",
+      "desc": "Potions last 45% longer.",
+      "cost": 2,
+      "bonus": {
+        "PotionDurationMult": 0.45
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_PRESERVATION_2"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_PRESERVATION_4",
+      "branch": "Alchemy",
+      "path": "Preservation",
+      "name": "Brew Without End",
+      "desc": "Preservation capstone: potions last 20% longer.",
+      "cost": 2,
+      "bonus": {
+        "PotionDurationMult": 0.2
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_PRESERVATION_3"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_POTENCY_1",
+      "branch": "Alchemy",
+      "path": "Potency",
+      "name": "Concentrated Dose",
+      "desc": "Potency: potion stat boosts are 10% stronger.",
+      "cost": 1,
+      "bonus": {
+        "PotionPowerMult": 0.1
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_CORE_3"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_POTENCY_2",
+      "branch": "Alchemy",
+      "path": "Potency",
+      "name": "Catalyst",
+      "desc": "Potion stat boosts are 12% stronger.",
+      "cost": 1,
+      "bonus": {
+        "PotionPowerMult": 0.12
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_POTENCY_1"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_POTENCY_3",
+      "branch": "Alchemy",
+      "path": "Potency",
+      "name": "Grand Alchemist",
+      "desc": "Potion stat boosts are 22% stronger and +0.03 Roll Speed.",
+      "cost": 2,
+      "bonus": {
+        "PotionPowerMult": 0.22,
+        "RollSpeed": 0.03
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_POTENCY_2"
+      ]
+    },
+    {
+      "id": "V2_ALCHEMY_POTENCY_4",
+      "branch": "Alchemy",
+      "path": "Potency",
+      "name": "Philosopher's Draught",
+      "desc": "Potency capstone: potion stat boosts are 14% stronger.",
+      "cost": 2,
+      "bonus": {
+        "PotionPowerMult": 0.14
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_POTENCY_3"
+      ]
+    },
+    {
+      "id": "V3_ALCHEMY_MASTERY",
+      "branch": "Alchemy",
+      "path": "Mastery",
+      "name": "Magnum Opus",
+      "desc": "Alchemy mastery: +15% potion duration, +15% potion power, and +0.02 Roll Speed.",
+      "cost": 2,
+      "bonus": {
+        "PotionDurationMult": 0.15,
+        "PotionPowerMult": 0.15,
+        "RollSpeed": 0.02
+      },
+      "percent": {},
+      "requires": [
+        "V2_ALCHEMY_PRESERVATION_4",
+        "V2_ALCHEMY_POTENCY_4"
+      ]
+    },
+    {
+      "id": "V3_GRANDMASTERY",
+      "branch": "Grandmastery",
+      "path": "",
+      "name": "Master of All Paths",
+      "desc": "All six Lucks +5%",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.05,
+        "ShinyLuck": 0.05,
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05,
+        "CorruptedLuck": 0.05,
+        "VoidLuck": 0.05
+      },
+      "requires": [
+        "V3_FORTUNE_MASTERY",
+        "V3_VELOCITY_MASTERY",
+        "V3_RADIANCE_MASTERY",
+        "V3_MYTHOS_MASTERY",
+        "V3_ALCHEMY_MASTERY"
+      ]
+    },
+    {
+      "id": "V4_GRANDMASTERY",
+      "branch": "Grandmastery",
+      "path": "",
+      "name": "Master of Every Path",
+      "desc": "All six Lucks +5% and +5 Luck, +2% Double Roll",
+      "cost": 1,
+      "bonus": {
+        "Luck": 5,
+        "DoubleRollChance": 0.02
+      },
+      "percent": {
+        "Luck": 0.05,
+        "ShinyLuck": 0.05,
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05,
+        "CorruptedLuck": 0.05,
+        "VoidLuck": 0.05
+      },
+      "requires": [
+        "V3_GRANDMASTERY",
+        "V3_FORTUNE_MASTERY",
+        "V3_VELOCITY_MASTERY",
+        "V3_RADIANCE_MASTERY",
+        "V4_MYTHOS_MASTERY",
+        "V4_CORRUPTED_MASTERY",
+        "V3_ALCHEMY_MASTERY"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_ENTRY",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Echo of Eternity",
+      "desc": "Transcendence: +6 Luck and +3% Luck.",
+      "cost": 3,
+      "bonus": {
+        "Luck": 6
+      },
+      "percent": {
+        "Luck": 0.03
+      },
+      "requires": [
+        "V4_GRANDMASTERY"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_STAR_1",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Starforged Fortune",
+      "desc": "Starlit: +4% Luck and +4% Shiny Luck.",
+      "cost": 3,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.04,
+        "ShinyLuck": 0.04
+      },
+      "requires": [
+        "V5_TRANSCEND_ENTRY"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_STAR_2",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Celestial Rite",
+      "desc": "Starlit: +5% Awakened Luck and +5% Fabled Luck.",
+      "cost": 4,
+      "bonus": {},
+      "percent": {
+        "AwakenedLuck": 0.05,
+        "FabledLuck": 0.05
+      },
+      "requires": [
+        "V5_TRANSCEND_STAR_1"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_ABYSS_1",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Abyssal Whisper",
+      "desc": "Abyssal: +4% Corrupted Luck and +4% Void Luck.",
+      "cost": 3,
+      "bonus": {},
+      "percent": {
+        "CorruptedLuck": 0.04,
+        "VoidLuck": 0.04
+      },
+      "requires": [
+        "V5_TRANSCEND_ENTRY"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_ABYSS_2",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Hollow Crown",
+      "desc": "Abyssal: +0.30 Void Luck and +5% Void Luck.",
+      "cost": 4,
+      "bonus": {
+        "VoidLuck": 0.3
+      },
+      "percent": {
+        "VoidLuck": 0.05
+      },
+      "requires": [
+        "V5_TRANSCEND_ABYSS_1"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_APOTHEOSIS",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Apotheosis",
+      "desc": "Requires both paths: +6% to all six Lucks, +0.03 Roll Speed, and +2% Double Roll, Roll Twice, and Triple Roll chance.",
+      "cost": 5,
+      "bonus": {
+        "RollSpeed": 0.03,
+        "DoubleRollChance": 0.02,
+        "RollTwiceChance": 0.02,
+        "TripleRollChance": 0.02
+      },
+      "percent": {
+        "Luck": 0.06,
+        "ShinyLuck": 0.06,
+        "AwakenedLuck": 0.06,
+        "FabledLuck": 0.06,
+        "CorruptedLuck": 0.06,
+        "VoidLuck": 0.06
+      },
+      "requires": [
+        "V5_TRANSCEND_STAR_2",
+        "V5_TRANSCEND_ABYSS_2"
+      ]
+    },
+    {
+      "id": "V5_TRANSCEND_FINAL",
+      "branch": "Transcendence",
+      "path": "",
+      "name": "Beyond the Final Path",
+      "desc": "True final node: +8% to all six Lucks, +15% potion power, and +15% potion duration.",
+      "cost": 6,
+      "bonus": {
+        "PotionPowerMult": 0.15,
+        "PotionDurationMult": 0.15
+      },
+      "percent": {
+        "Luck": 0.08,
+        "ShinyLuck": 0.08,
+        "AwakenedLuck": 0.08,
+        "FabledLuck": 0.08,
+        "CorruptedLuck": 0.08,
+        "VoidLuck": 0.08
+      },
+      "requires": [
+        "V5_TRANSCEND_APOTHEOSIS"
+      ]
+    },
+    {
+      "id": "CONST_LUCK",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Fortune Normal star",
+      "desc": "+10% Luck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_LUCK_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Fortune Greater star",
+      "desc": "+12% Luck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.12
+      },
+      "requires": [
+        "CONST_LUCK"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_LUCK_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Fortune Ascendant star",
+      "desc": "+8% Luck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "Luck": 0.08
+      },
+      "requires": [
+        "CONST_LUCK_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_SHINY",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Radiance Normal star",
+      "desc": "+10% ShinyLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "ShinyLuck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_SHINY_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Radiance Greater star",
+      "desc": "+12% ShinyLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "ShinyLuck": 0.12
+      },
+      "requires": [
+        "CONST_SHINY"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_SHINY_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Radiance Ascendant star",
+      "desc": "+8% ShinyLuck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "ShinyLuck": 0.08
+      },
+      "requires": [
+        "CONST_SHINY_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_AWAKENED",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Awakening Normal star",
+      "desc": "+10% AwakenedLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "AwakenedLuck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_AWAKENED_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Awakening Greater star",
+      "desc": "+12% AwakenedLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "AwakenedLuck": 0.12
+      },
+      "requires": [
+        "CONST_AWAKENED"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_AWAKENED_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Awakening Ascendant star",
+      "desc": "+8% AwakenedLuck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "AwakenedLuck": 0.08
+      },
+      "requires": [
+        "CONST_AWAKENED_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_FABLED",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Mythos Normal star",
+      "desc": "+10% FabledLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "FabledLuck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_FABLED_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Mythos Greater star",
+      "desc": "+12% FabledLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "FabledLuck": 0.12
+      },
+      "requires": [
+        "CONST_FABLED"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_FABLED_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Mythos Ascendant star",
+      "desc": "+8% FabledLuck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "FabledLuck": 0.08
+      },
+      "requires": [
+        "CONST_FABLED_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_CORRUPTED",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Corrupted Normal star",
+      "desc": "+10% CorruptedLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "CorruptedLuck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_CORRUPTED_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Corrupted Greater star",
+      "desc": "+12% CorruptedLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "CorruptedLuck": 0.12
+      },
+      "requires": [
+        "CONST_CORRUPTED"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_CORRUPTED_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Corrupted Ascendant star",
+      "desc": "+8% CorruptedLuck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "CorruptedLuck": 0.08
+      },
+      "requires": [
+        "CONST_CORRUPTED_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_VOID",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Void Normal star",
+      "desc": "+10% VoidLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "VoidLuck": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_VOID_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Void Greater star",
+      "desc": "+12% VoidLuck",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "VoidLuck": 0.12
+      },
+      "requires": [
+        "CONST_VOID"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_VOID_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Void Ascendant star",
+      "desc": "+8% VoidLuck",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "VoidLuck": 0.08
+      },
+      "requires": [
+        "CONST_VOID_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    },
+    {
+      "id": "CONST_POTION",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Alchemy Normal star",
+      "desc": "+10% PotionDurationMult",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "PotionDurationMult": 0.1
+      },
+      "requires": [],
+      "limitGroup": "star1",
+      "limit": 2
+    },
+    {
+      "id": "CONST_POTION_GREATER",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Alchemy Greater star",
+      "desc": "+12% PotionDurationMult",
+      "cost": 2,
+      "bonus": {},
+      "percent": {
+        "PotionDurationMult": 0.12
+      },
+      "requires": [
+        "CONST_POTION"
+      ],
+      "limitGroup": "star2",
+      "limit": 1
+    },
+    {
+      "id": "CONST_POTION_ASCENDANT",
+      "branch": "Constellations",
+      "path": "",
+      "name": "Alchemy Ascendant star",
+      "desc": "+8% PotionDurationMult",
+      "cost": 1,
+      "bonus": {},
+      "percent": {
+        "PotionDurationMult": 0.08
+      },
+      "requires": [
+        "CONST_POTION_GREATER"
+      ],
+      "limitGroup": "star3",
+      "limit": 1
+    }
+  ],
+  "craftedArtifacts": {
+    "RuinedClover": {
+      "Order": 1,
+      "Name": "Ruined Clover",
+      "Description": "Luck +0.50",
+      "ImageId": "rbxassetid://82070122835130",
+      "Boosts": {
+        "Luck": 0.5
+      },
+      "Recipe": {
+        "Peasant": 10,
+        "Scarecrow": 15
+      }
+    },
+    "OldCoin": {
+      "Order": 2,
+      "Name": "Old Coin",
+      "Description": "Roll Speed +0.1",
+      "ImageId": "rbxassetid://86206542355864",
+      "Boosts": {
+        "RollSpeed": 0.1
+      },
+      "Recipe": {
+        "Assassin": 1,
+        "Witch": 1
+      }
+    },
+    "WishBone": {
+      "Order": 3,
+      "Name": "Wish Bone",
+      "Description": "Luck +1.5",
+      "ImageId": "rbxassetid://130522400182323",
+      "Boosts": {
+        "Luck": 1.5
+      },
+      "Recipe": {
+        "Necromancer": 2
+      }
+    },
+    "RustyMedallion": {
+      "Order": 4,
+      "Name": "Rusty Medallion",
+      "Description": "Luck +4 and Roll Speed +0.1",
+      "ImageId": "rbxassetid://82455327753447",
+      "Boosts": {
+        "Luck": 4,
+        "RollSpeed": 0.1
+      },
+      "Recipe": {
+        "Knight Commander": 1,
+        "Knight": 15
+      }
+    },
+    "FadedLocket": {
+      "Order": 5,
+      "Name": "Faded Locket",
+      "Description": "Luck +6 and Shiny Luck +0.1",
+      "ImageId": "rbxassetid://135827898215191",
+      "Boosts": {
+        "Luck": 6,
+        "ShinyLuck": 0.1
+      },
+      "Recipe": {
+        "Paladin": 40,
+        "Werewolf": 3
+      }
+    },
+    "TarnishedKeepsake": {
+      "Order": 6,
+      "Name": "Tarnished Keepsake",
+      "Description": "Luck +8 and Roll Speed +0.15",
+      "ImageId": "rbxassetid://75927229172597",
+      "Boosts": {
+        "Luck": 8,
+        "RollSpeed": 0.15
+      },
+      "Recipe": {
+        "Vampire": 4,
+        "Archmage": 2,
+        "Lich King": 1
+      }
+    },
+    "RuinedSword": {
+      "Order": 7,
+      "Name": "Ruined Sword",
+      "Description": "Luck +10, Roll Speed +0.15, and Shiny Luck +0.2",
+      "ImageId": "rbxassetid://129233541293094",
+      "Boosts": {
+        "RollSpeed": 0.15,
+        "Luck": 10,
+        "ShinyLuck": 0.2
+      },
+      "Recipe": {
+        "Demon Lord": 1,
+        "Elder Dragon": 1
+      }
+    },
+    "FourLeafClover": {
+      "Order": 8,
+      "Name": "Four Leaf Clover",
+      "Description": "Luck +15, Roll Speed +0.2, Shiny Luck +0.2, and Awakened Luck +0.2",
+      "ImageId": "rbxassetid://76843368354206",
+      "Boosts": {
+        "RollSpeed": 0.2,
+        "Luck": 15,
+        "ShinyLuck": 0.2,
+        "AwakenedLuck": 0.2
+      },
+      "Recipe": {
+        "Storm King": 1,
+        "Earth King": 1,
+        "Frost Warden": 1,
+        "Thunder Arbiter": 1
+      }
+    },
+    "HeavensMark": {
+      "Order": 9,
+      "Name": "Heavens Mark",
+      "Description": "Luck +20, Roll Speed +0.2, Shiny Luck +0.3, Awakened Luck +0.3, and Void Luck +0.1",
+      "ImageId": "rbxassetid://94552611008287",
+      "Boosts": {
+        "Luck": 20,
+        "RollSpeed": 0.2,
+        "ShinyLuck": 0.3,
+        "AwakenedLuck": 0.3,
+        "VoidLuck": 0.1
+      },
+      "Recipe": {
+        "Celestial Entity": 2,
+        "Behemoth": 1,
+        "Supreme Archangel": 1
+      }
+    },
+    "SeraphicSigil": {
+      "Order": 10,
+      "Name": "Seraphic Sigil",
+      "Description": "Luck +26, Roll Speed +0.25, Shiny Luck +0.4, Awakened Luck +0.5, and Void Luck +0.3",
+      "ImageId": "rbxassetid://129319502520794",
+      "Boosts": {
+        "Luck": 26,
+        "RollSpeed": 0.25,
+        "ShinyLuck": 0.4,
+        "AwakenedLuck": 0.5,
+        "VoidLuck": 0.3
+      },
+      "Recipe": {
+        "Celestial Fury": 2,
+        "Dragon King": 1,
+        "Void Reaver": 1
+      }
+    },
+    "EndTimes": {
+      "Order": 11,
+      "Name": "End Times",
+      "Description": "Luck +34, Roll Speed +0.3, Shiny Luck +0.6, Awakened Luck +0.8, Corrupted Luck +0.5, and Void Luck +0.5",
+      "ImageId": "rbxassetid://137047990943347",
+      "Boosts": {
+        "Luck": 34,
+        "RollSpeed": 0.3,
+        "ShinyLuck": 0.6,
+        "AwakenedLuck": 0.8,
+        "CorruptedLuck": 0.5,
+        "VoidLuck": 0.5
+      },
+      "Recipe": {
+        "Titanic Beast": 1,
+        "Abyssal Maw": 1,
+        "Cosmic Dragon": 1,
+        "World Eater": 1
+      }
+    },
+    "FrozenCrown": {
+      "Order": 12,
+      "Name": "Frozen Crown",
+      "Description": "Luck +60, Roll Speed +0.3, Shiny Luck +1, Awakened Luck +1.4, Corrupted Luck +1.2, and Void Luck +0.9",
+      "ImageId": "rbxassetid://120015706857425",
+      "Boosts": {
+        "Luck": 60,
+        "RollSpeed": 0.3,
+        "ShinyLuck": 1,
+        "AwakenedLuck": 1.4,
+        "CorruptedLuck": 1.2,
+        "VoidLuck": 0.9
+      },
+      "Recipe": {
+        "Glacial Goliath": 1,
+        "Blizzard Arcanist": 1,
+        "The Last Mammoth": 3
+      }
+    },
+    "CorruptedHeart": {
+      "Order": 13,
+      "Name": "Corrupted Heart",
+      "Description": "Luck +80, Roll Speed +0.35, Shiny Luck +1.4, Awakened Luck +2, Corrupted Luck +1.6, and Void Luck +1.4",
+      "ImageId": "rbxassetid://125015508790198",
+      "Boosts": {
+        "Luck": 80,
+        "RollSpeed": 0.35,
+        "ShinyLuck": 1.4,
+        "AwakenedLuck": 2,
+        "CorruptedLuck": 1.6,
+        "VoidLuck": 1.4
+      },
+      "Recipe": {
+        "Usurper": 1,
+        "The Crawling Chaos": 1,
+        "Plaguebloom Shaman": 1
+      }
+    }
+  },
+  "relics": {
+    "RelicOfAbundance": {
+      "Name": "Relic of Abundance",
+      "Desc": "+40% chance to get double rewards after an NPC win",
+      "ImageId": "rbxassetid://122455949125582",
+      "Tier": "Normal",
+      "BorderScale": [
+        1,
+        1.25,
+        1.5,
+        1.75,
+        2,
+        2.25
+      ]
+    },
+    "OldBoot": {
+      "Name": "Old Boot",
+      "Desc": "+1 Luck",
+      "ImageId": "rbxassetid://129451085720651",
+      "Tier": "Normal",
+      "Boosts": {
+        "Luck": 1
+      },
+      "BorderScale": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        10
+      ]
+    },
+    "RelicOfFortune": {
+      "Name": "Relic of Fortune",
+      "Desc": "+3 Luck",
+      "ImageId": "rbxassetid://126926010139039",
+      "Tier": "Normal",
+      "Boosts": {
+        "Luck": 3
+      },
+      "BorderScale": [
+        1,
+        1.7,
+        2.4,
+        3.3,
+        4.3,
+        5.5
+      ]
+    },
+    "RelicOfTheShimmeringHeart": {
+      "Name": "Relic of the Shimmering Heart",
+      "Desc": "+0.4 Shiny Luck",
+      "ImageId": "rbxassetid://108098016714446",
+      "Tier": "Normal",
+      "Boosts": {
+        "ShinyLuck": 0.4
+      },
+      "BorderScale": [
+        1,
+        1.6,
+        2.2,
+        3,
+        3.8,
+        5
+      ]
+    },
+    "RelicOfEternalFortune": {
+      "Name": "Relic of Eternal Fortune",
+      "Desc": "+0.2 Shiny Luck and +2 Luck",
+      "ImageId": "rbxassetid://103002190798672",
+      "Tier": "Normal",
+      "Boosts": {
+        "ShinyLuck": 0.2,
+        "Luck": 2
+      },
+      "BorderScale": [
+        1,
+        1.5,
+        2.1,
+        2.8,
+        3.6,
+        4.5
+      ]
+    },
+    "RelicOfAwakening": {
+      "Name": "Relic of Awakening",
+      "Desc": "+0.4 Awakened Luck and +2 Luck",
+      "ImageId": "rbxassetid://94835610740658",
+      "Tier": "Normal",
+      "Boosts": {
+        "AwakenedLuck": 0.4,
+        "Luck": 2
+      },
+      "BorderScale": [
+        1,
+        1.5,
+        2.1,
+        2.8,
+        3.6,
+        4.5
+      ]
+    },
+    "RelicOfTheLuckyHand": {
+      "Name": "Relic of the Lucky Hand",
+      "Desc": "+10% chance to roll two cards instead of one when rolling (keep better one)",
+      "ImageId": "rbxassetid://132584572566945",
+      "Tier": "Normal",
+      "BorderScale": [
+        1,
+        1.25,
+        1.75,
+        2,
+        2.3,
+        2.9
+      ]
+    },
+    "RelicOfAstralDreams": {
+      "Name": "Relic of Astral Dreams",
+      "Desc": "Very rare chance to be teleported to the dream realm on roll",
+      "ImageId": "rbxassetid://129632251886153",
+      "Tier": "Normal",
+      "BorderScale": [
+        1,
+        1.5,
+        2.2,
+        3,
+        4,
+        5
+      ]
+    },
+    "RelicOfBonus": {
+      "Name": "Relic of Bonus",
+      "Desc": "Every 25 rolls, use 2x luck",
+      "ImageId": "rbxassetid://128956127499098",
+      "Tier": "Normal",
+      "BorderScale": [
+        1,
+        1.25,
+        1.5,
+        1.8,
+        2.1,
+        2.5
+      ]
+    },
+    "AllSeeingEye": {
+      "Name": "All Seeing Eye",
+      "Desc": "+0.2 AwakenedLuck, +0.1 Shiny Luck, and +1 Fabled Luck ",
+      "ImageId": "rbxassetid://130138119929155",
+      "Tier": "Normal",
+      "Boosts": {
+        "AwakenedLuck": 0.2,
+        "ShinyLuck": 0.1,
+        "FabledLuck": 1
+      },
+      "BorderScale": [
+        1,
+        1.4,
+        1.9,
+        2.5,
+        3.2,
+        4
+      ]
+    },
+    "ChronoCore": {
+      "Name": "Chrono Core",
+      "Desc": "+0.5 AwakenedLuck, +0.3 Shiny Luck, +1 Fabled Luck, and +0.1 Roll Speed",
+      "ImageId": "rbxassetid://105327912634245",
+      "Tier": "Legendary",
+      "Boosts": {
+        "AwakenedLuck": 0.5,
+        "ShinyLuck": 0.3,
+        "FabledLuck": 1,
+        "RollSpeed": 0.1
+      },
+      "BorderScale": [
+        1,
+        1.3,
+        1.6,
+        2,
+        2.5,
+        3
+      ]
+    },
+    "SunforgedHammer": {
+      "Name": "Sunforged Hammer",
+      "Desc": "+0.8 Shiny Luck and +1.1 Awakened Luck",
+      "ImageId": "rbxassetid://127615879356065",
+      "Tier": "Legendary",
+      "Boosts": {
+        "ShinyLuck": 0.8,
+        "AwakenedLuck": 1.1
+      },
+      "BorderScale": [
+        1,
+        1.35,
+        1.75,
+        2.2,
+        2.7,
+        3.3
+      ]
+    },
+    "VoidLily": {
+      "Name": "Void Lily",
+      "Desc": "+10 Luck",
+      "ImageId": "rbxassetid://100419356359772",
+      "Tier": "Legendary",
+      "Boosts": {
+        "Luck": 10
+      },
+      "BorderScale": [
+        1,
+        1.4,
+        1.8,
+        2.3,
+        2.9,
+        3.6
+      ]
+    },
+    "AlchemistSeal": {
+      "Name": "Alchemist Seal",
+      "Desc": "Potions last 50% longer",
+      "ImageId": "rbxassetid://95787831898614",
+      "Tier": "Legendary",
+      "Boosts": {
+        "PotionDurationMult": 0.5
+      },
+      "BorderScale": [
+        1,
+        1.3,
+        1.6,
+        1.9,
+        2.2,
+        2.6
+      ]
+    },
+    "RaidersSword": {
+      "Name": "Raider's Sword",
+      "Desc": "Use 2x fabled luck in raids(Total Fabled Luck), halve the raid cooldown, and allow yourself to join raids from anywhere",
+      "ImageId": "rbxassetid://114476141367247",
+      "Tier": "Legendary",
+      "BorderScale": [
+        1,
+        1.15,
+        1.3,
+        1.45,
+        1.6,
+        1.8
+      ]
+    },
+    "WeightedDice": {
+      "Name": "Weighted Dice",
+      "Desc": "Every 50 rolls, use 4x luck",
+      "ImageId": "rbxassetid://107767565952558",
+      "Tier": "Legendary",
+      "BorderScale": [
+        1,
+        1.25,
+        1.5,
+        1.8,
+        2.1,
+        2.5
+      ]
+    }
+  },
+  "relicBorders": [
+    "Base",
+    "Shiny",
+    "Fabled",
+    "Corrupted",
+    "Awakened",
+    "Void"
+  ],
+  "potions": {
+    "LuckPotion": {
+      "Name": "Luck Potion",
+      "Description": "Increases luck by +1 for 2 minutes.",
+      "StatCategory": "Luck",
+      "Duration": 120,
+      "Image": "rbxassetid://75166923279176",
+      "Boosts": {
+        "Luck": 1
+      }
+    },
+    "SpeedPotion": {
+      "Name": "Speed Potion",
+      "Description": "Reduces roll cooldown by 0.1s for 2 minutes.",
+      "StatCategory": "RollSpeed",
+      "Duration": 120,
+      "Image": "rbxassetid://93182552565805",
+      "Boosts": {
+        "RollSpeed": 0.1
+      }
+    },
+    "LuckPotionLarge": {
+      "Name": "Large Luck Potion",
+      "Description": "Increases luck by +3 for 3 minutes.",
+      "StatCategory": "Luck",
+      "Duration": 180,
+      "Image": "rbxassetid://98928101412308",
+      "Boosts": {
+        "Luck": 3
+      }
+    },
+    "SpeedPotionLarge": {
+      "Name": "Large Speed Potion",
+      "Description": "Reduces roll cooldown by 0.2s for 3 minutes.",
+      "StatCategory": "RollSpeed",
+      "Duration": 180,
+      "Image": "rbxassetid://91985463607268",
+      "Boosts": {
+        "RollSpeed": 0.2
+      }
+    },
+    "LesserShinyPotion": {
+      "Name": "Lesser Shiny Potion",
+      "Description": "Increases shiny chance by +0.3 for 1 minute.",
+      "StatCategory": "ShinyLuck",
+      "Duration": 60,
+      "Image": "rbxassetid://139115220151555",
+      "Boosts": {
+        "ShinyLuck": 0.3
+      }
+    },
+    "LesserAwakenedPotion": {
+      "Name": "Lesser Awakened Potion",
+      "Description": "Increases awakened chance by +0.4 for 1 minute.",
+      "StatCategory": "AwakenedLuck",
+      "Duration": 60,
+      "Image": "rbxassetid://81929590721661",
+      "Boosts": {
+        "AwakenedLuck": 0.4
+      }
+    },
+    "ShinyPotion": {
+      "Name": "Shiny Potion",
+      "Description": "Increases shiny chance by +0.6 for 2 minutes.",
+      "StatCategory": "ShinyLuck",
+      "Duration": 120,
+      "Image": "rbxassetid://98247799607424",
+      "Boosts": {
+        "ShinyLuck": 0.6
+      }
+    },
+    "AwakenedPotion": {
+      "Name": "Awakened Potion",
+      "Description": "Increases awakened chance by +0.75 for 2 minutes.",
+      "StatCategory": "AwakenedLuck",
+      "Duration": 120,
+      "Image": "rbxassetid://137074477914013",
+      "Boosts": {
+        "AwakenedLuck": 0.75
+      }
+    },
+    "LuckPotionLegendary": {
+      "Name": "Legendary Luck Potion",
+      "Description": "Increases luck by +5 for 4 minutes.",
+      "StatCategory": "Luck",
+      "Duration": 240,
+      "Image": "rbxassetid://137448917787656",
+      "Boosts": {
+        "Luck": 5
+      }
+    },
+    "SpeedPotionLegendary": {
+      "Name": "Legendary Speed Potion",
+      "Description": "Reduces roll cooldown by 0.3s for 4 minutes.",
+      "StatCategory": "RollSpeed",
+      "Duration": 240,
+      "Image": "rbxassetid://98330059021720",
+      "Boosts": {
+        "RollSpeed": 0.3
+      }
+    },
+    "ShinyPotionLegendary": {
+      "Name": "Legendary Shiny Potion",
+      "Description": "Increases shiny chance by +1 for 4 minutes.",
+      "StatCategory": "ShinyLuck",
+      "Duration": 240,
+      "Image": "rbxassetid://117146918655081",
+      "Boosts": {
+        "ShinyLuck": 1
+      }
+    },
+    "AwakenedPotionLegendary": {
+      "Name": "Legendary Awakened Potion",
+      "Description": "Increases awakened chance by +1.2 for 4 minutes.",
+      "StatCategory": "AwakenedLuck",
+      "Duration": 240,
+      "Image": "rbxassetid://122693041594529",
+      "Boosts": {
+        "AwakenedLuck": 1.2
+      }
+    },
+    "LuckPotionMythic": {
+      "Name": "Mythic Luck Potion",
+      "Description": "Increases luck by +8 and a further +5% for 5 minutes.",
+      "StatCategory": "Luck",
+      "Duration": 300,
+      "Image": "rbxassetid://110622953063630",
+      "Boosts": {
+        "Luck": 8,
+        "FinalLuckMult": 0.05
+      }
+    },
+    "SpeedPotionMythic": {
+      "Name": "Mythic Speed Potion",
+      "Description": "Reduces roll cooldown by 0.4s and a further +5% for 5 minutes.",
+      "StatCategory": "RollSpeed",
+      "Duration": 300,
+      "Image": "rbxassetid://130051285808045",
+      "Boosts": {
+        "RollSpeed": 0.4,
+        "FinalRollSpeedMult": 0.05
+      }
+    },
+    "ShinyPotionMythic": {
+      "Name": "Mythic Shiny Potion",
+      "Description": "Increases shiny chance by +1.6 and a further +5% for 5 minutes.",
+      "StatCategory": "ShinyLuck",
+      "Duration": 300,
+      "Image": "rbxassetid://121955609970111",
+      "Boosts": {
+        "ShinyLuck": 1.6,
+        "FinalShinyMult": 0.05
+      }
+    },
+    "AwakenedPotionMythic": {
+      "Name": "Mythic Awakened Potion",
+      "Description": "Increases awakened chance by +2 and a further +5% for 5 minutes.",
+      "StatCategory": "AwakenedLuck",
+      "Duration": 300,
+      "Image": "rbxassetid://112927883575597",
+      "Boosts": {
+        "AwakenedLuck": 2,
+        "FinalAwakenedMult": 0.05
+      }
+    },
+    "LesserFabledPotion": {
+      "Name": "Lesser Fabled Potion",
+      "Description": "Increases fabled chance by +0.3 for 1 minute.",
+      "StatCategory": "FabledLuck",
+      "Duration": 60,
+      "Image": "rbxassetid://126480996934087",
+      "Boosts": {
+        "FabledLuck": 0.3
+      }
+    },
+    "FabledPotion": {
+      "Name": "Fabled Potion",
+      "Description": "Increases fabled chance by +0.7 for 2 minutes.",
+      "StatCategory": "FabledLuck",
+      "Duration": 120,
+      "Image": "rbxassetid://109137870120343",
+      "Boosts": {
+        "FabledLuck": 0.7
+      }
+    },
+    "LesserEventRollPotion": {
+      "Name": "Lesser Event Roll Potion",
+      "Description": "Rolls for a common event! (60% Caravan, 30% Gnome Raid, 10% Iron Legion).",
+      "StatCategory": "EventRoll",
+      "Duration": 0,
+      "Image": "rbxassetid://100788419479441",
+      "Boosts": []
+    },
+    "EventRollPotion": {
+      "Name": "Event Roll Potion",
+      "Description": "Rolls for an event! (50% Iron Legion, 30% New Years Festival, 20% Glaring Sun).",
+      "StatCategory": "EventRoll",
+      "Duration": 0,
+      "Image": "rbxassetid://82050310970013",
+      "Boosts": []
+    },
+    "GreaterEventRollPotion": {
+      "Name": "Event Roll Potion",
+      "Description": "Rolls for an event! (40% Glaring Sun, 35% Dragons Roost , 20% Warriors Path, 5% Shadowed World).",
+      "StatCategory": "EventRoll",
+      "Duration": 0,
+      "Image": "rbxassetid://99679491399704",
+      "Boosts": []
+    },
+    "LuckOrbBuff": {
+      "Name": "Parkour Luck",
+      "Description": "+3 Luck for 2 minutes (Parkour Orb)",
+      "StatCategory": "LuckOrb",
+      "Image": "rbxassetid://99711224073271",
+      "Duration": 120,
+      "Boosts": {
+        "Luck": 3,
+        "FinalLuckMult": 0.1
+      }
+    },
+    "HeavenlyLuckPotion": {
+      "Name": "Heavenly Luck Potion",
+      "Description": "40% more luck for 20 minutes",
+      "StatCategory": "HeavenlyLuck",
+      "Image": "rbxassetid://72780217707067",
+      "Duration": 1200,
+      "Boosts": {
+        "FinalLuckMult": 0.4
+      }
+    },
+    "LegendaryEventRollPotion": {
+      "Name": "Legendary Event Roll Potion",
+      "Description": "Rolls for a legendary event! (50% Warriors Path, 30% Shadowed World, 15% Black Hole, 5% Rip In Time).",
+      "StatCategory": "EventRoll",
+      "Duration": 0,
+      "Image": "rbxassetid://97727902573597",
+      "Boosts": []
+    }
+  },
+  "towerShop": [
+    {
+      "id": "Luck",
+      "name": "Luck",
+      "desc": "+2 Luck per level",
+      "maxLevel": 20,
+      "cost": 4,
+      "gain": 2
+    },
+    {
+      "id": "ShinyLuck",
+      "name": "Shiny Luck",
+      "desc": "+0.1 Shiny Luck per level",
+      "maxLevel": 20,
+      "cost": 4,
+      "gain": 0.1
+    },
+    {
+      "id": "AwakenedLuck",
+      "name": "Awakened Luck",
+      "desc": "+0.3 Awakened Luck per level",
+      "maxLevel": 20,
+      "cost": 5,
+      "gain": 0.4
+    },
+    {
+      "id": "FabledLuck",
+      "name": "Fabled Luck",
+      "desc": "+0.2 Fabled Luck per level",
+      "maxLevel": 20,
+      "cost": 6,
+      "gain": 0.2
+    },
+    {
+      "id": "CorruptedLuck",
+      "name": "Corrupted Luck",
+      "desc": "+0.2 Corrupted Luck per level",
+      "maxLevel": 20,
+      "cost": 8,
+      "gain": 0.2
+    },
+    {
+      "id": "VoidLuck",
+      "name": "Void Luck",
+      "desc": "+0.5 Void Luck per level",
+      "maxLevel": 20,
+      "cost": 8,
+      "gain": 0.5
+    },
+    {
+      "id": "DoubleRollChance",
+      "name": "Double Roll Chance",
+      "desc": "+2% chance per roll to receive 2 cards(Increases roll count by 1)",
+      "maxLevel": 10,
+      "cost": 5,
+      "gain": 0.02
+    },
+    {
+      "id": "RollTwiceChance",
+      "name": "Roll Twice Chance",
+      "desc": "+1% chance to roll an additional time!(Increases roll count by 2)",
+      "maxLevel": 10,
+      "cost": 5,
+      "gain": 0.01
+    },
+    {
+      "id": "LuckyHandChance",
+      "name": "Lucky Hand Chance",
+      "desc": "+2% chance for Lucky Hand effect (no relic needed)",
+      "maxLevel": 10,
+      "cost": 6,
+      "gain": 0.02
+    },
+    {
+      "id": "ThirdRelicSlot",
+      "name": "Third Relic Slot",
+      "desc": "Unlocks a permanent third relic equip slot",
+      "maxLevel": 1,
+      "cost": 25,
+      "noExtraLevels": true,
+      "gain": 1
+    }
+  ],
+  "voidShop": [
+    {
+      "id": "InfiniteBanSlots",
+      "name": "Infinite Ban Slot",
+      "desc": "+1 Infinite Dungeon enemy ban slot",
+      "per": 1,
+      "suffix": "",
+      "statName": "ban slot(s)",
+      "maxLevel": 3,
+      "cost": 30
+    },
+    {
+      "id": "PASlots",
+      "name": "Personal Artifact Slot",
+      "desc": "+1 Personal Artifact stat slot and +1 lock",
+      "per": 1,
+      "suffix": "",
+      "statName": "artifact slot(s) + lock(s)",
+      "maxLevel": 2,
+      "cost": 60
+    },
+    {
+      "id": "VoidPotionPower",
+      "name": "Potion Potency",
+      "desc": "Potion stat boosts are stronger",
+      "per": 4,
+      "suffix": "%",
+      "statName": "potion power",
+      "maxLevel": 10,
+      "cost": 8
+    },
+    {
+      "id": "VoidArtifactPower",
+      "name": "Artifact Resonance",
+      "desc": "Equipped artifact stats are stronger",
+      "per": 5,
+      "suffix": "%",
+      "statName": "artifact stats",
+      "maxLevel": 10,
+      "cost": 8
+    },
+    {
+      "id": "VoidLuckPct",
+      "name": "Void Attunement",
+      "desc": "Multiplies your total Void Luck",
+      "per": 3,
+      "suffix": "%",
+      "statName": "Void Luck",
+      "maxLevel": 10,
+      "cost": 11
+    }
+  ],
+  "gamepasses": [
+    {
+      "id": 1191214547,
+      "passKey": "Luck",
+      "name": "+5 Luck",
+      "description": "Luck increased by +5, from 1 -> 6!",
+      "price": 249
+    },
+    {
+      "id": 1191268548,
+      "passKey": "Shiny",
+      "name": "More Shiny Luck",
+      "description": "Shiny Luck increased by +0.5, from 1 -> 1.5, plus 10% more final shiny luck!",
+      "price": 600
+    },
+    {
+      "id": 1198535241,
+      "passKey": "Awakened",
+      "name": "More Awakened Luck",
+      "description": "Awakened Luck increased by +0.5, from 1 -> 1.5, plus 10% more final awakened luck! (Note: Awakened Cards only become available AFTER defeating King Prismalith)",
+      "price": 600
+    },
+    {
+      "id": 1673781235,
+      "passKey": "Fabled",
+      "name": "50% More Fabled Luck",
+      "description": "Fabled Luck increased by +1, from 2 -> 3! (Note: Fabled Cards are not rollable until you defeat the raid boss in world 5! Check the Index to see which fabled cards you can roll!)",
+      "price": 400
+    },
+    {
+      "id": 1820603959,
+      "passKey": "Corrupted",
+      "name": "More Corrupted Luck",
+      "description": "Corrupted Luck increased by +0.5, from 1 -> 1.5, plus 10% more final corrupted luck! (Note: Corrupted Cards only become available AFTER defeating the Corrupter in world 6)",
+      "price": 400
+    },
+    {
+      "id": 1198543683,
+      "passKey": "TwoRelic",
+      "name": "2X Relic Equip",
+      "description": "Unlocks a second relic slot, so you can equip 2 relics at once! (Note: Relics are only obtainable after defeating the relic boss. Legendary relics are still capped at 2 equipped. This does not apply to artifacts)",
+      "price": 500
+    },
+    {
+      "id": 1907790376,
+      "passKey": "ArtifactSlots",
+      "name": "+2 Personal Artifact Slots",
+      "description": "Unlock 2 extra Personal Artifact slots (5 -> 7) and raise your locked stat limit from 2 to 4!",
+      "price": 600
+    }
   ]
 }

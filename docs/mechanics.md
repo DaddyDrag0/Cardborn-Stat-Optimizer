@@ -1,5 +1,23 @@
 # Mechanics and assumptions
 
+## Build calculator v2
+
+Setup derives stats from investments/equipment rather than taking final totals as inputs. It includes all 102 generated skill-tree nodes (72 regular, 2 Grandmastery, 7 Transcendence, 21 Constellations), 13 crafted artifacts, 16 relics/six border tiers, 24 potion definitions, 19 Index Sets, passes, and Tower/Void upgrades. Skill prerequisites/costs reproduce the definition module's generated IDs, including legacy IDs retained in Mythos and Corrupted paths. The two path capstones are required for each mastery; Constellation limits are 2/1/1.
+
+The model adds base, points, pass flats, equipment, tree flats, sets, shops, manual source bonuses, potion flats, and weather flat Luck. Artifact multipliers, summed tree percentages, pass percentages, individual potion percentages, weather, under-10M Luck, and Void attunement then apply. The default keeps groups separate. An alternative combines artifact bonus-above-one with summed tree percentages. Server aggregation is absent, so neither order is claimed confirmed. SkillTree.ComputeBonuses confirms sums within the tree, not its position in the final calculation.
+
+Base defaults follow shop text: Luck/Shiny/Awakened/Corrupted 1; Fabled 2. Void 1 is assumed. A base interval of 1 second follows the client `1 - RollSpeed` cooldown. The update's minimum is 0.2s. Final speed potion percentages are modeled on the accumulated cooldown reduction, not on interval; this needs server confirmation.
+
+Gamepass flat boosts and +10% final Shiny/Awakened/Corrupted follow descriptions; Fabled adds +1. Potion power is 1 + tree/manual power bonuses + 4% per Void Shop level, modeled on flat and final-percent potion boosts. Potion duration includes artifact/relic/tree bonuses. Void resonance adds 5% per level to equipment strength, modeled for both crafted and Personal Artifacts; exact scope/order is unconfirmed. Void attunement multiplies final Void Luck by 1 + 3% per level. Additional artifact strength defaults to zero and does not duplicate resonance.
+
+Relic border scales use each exported BorderScale, with default scales only when absent. Lucky Hand relic chance is min(60%, 10% × scale). Bonus rolls occur every max(5, round(25/scale)); Dice every max(10, round(50/scale)). Their 2× and 4× Luck rolls are averaged with synchronized intersections and multiplicative overlap as assumptions. Rates average actual rounded-card probabilities, rather than multiplying ordinary Luck by an average. Session/wait estimates use stationary average cycles because server phase/counter rules are missing. Raider's Sword applies only to the separate raid Fabled readout.
+
+Tower gain defaults use the Tower UI: Luck 2, Shiny .1, Awakened .4, Fabled .2, Corrupted .2, Void .5; Double .02, Roll Twice .01, Lucky Hand .02 per level. The shared description instead says Awakened .3, so this discrepancy is configurable. Above-base Tower levels are accepted for players with extra-cap upgrades; actual Corrupted Shop upgrade definitions are server-supplied and not available.
+
+Other bonuses accepts named flat and luck-percent contributions for missing Corrupted Shop/code/fountain/server/reward data. These amounts require user input. It does not invent costs or levels for an absent catalog. Optional in-game totals are comparison data only. Infinite Dungeon floor bonuses are opt-in historical estimates and added after permanent multipliers. Normal rolling excludes them.
+
+The older displayed-total inversion model remains internally available for legacy regression fixtures. The v2 interface migrates old totals to comparison values and uses build sources; its recommendations apply by replacing only allocations/artifact slots and recalculating.
+
 ## Source
 
 The supplied `225x Luck Cardborn RNG.rbxl` export is place version 3786, SHA-256 `ba7ad2c92039807c5e3220df79b83c717f3c399496b11aa27c751ce8040ad66d`. Its shared/client Lua was inspected as text; none was executed. It omits server scripts. Data includes 160 cards, secret upgrades, weather/badge requirements, point caps, and 18 artifact stats. The recent update log confirms the 0.2-second minimum interval, +0.15 Void Luck per point, and two extra artifact slots.
@@ -24,8 +42,8 @@ The supplied `225x Luck Cardborn RNG.rbxl` export is place version 3786, SHA-256
 - Border rolls are independent. Fabled and Corrupted are modeled as continuous Luck/base-odds probabilities after unlock. Their server rolls are missing. The global Fabled switch assumes all eligible cards have their individual unlock.
 - Default base odds for Fabled 10,000, Corrupted 100,000, and Void 10,000,000 are estimates, editable in Model settings. These defaults must not be presented as verified odds.
 - Double Roll adds one card, Roll Twice adds two, and Triple Roll adds two; these procs stack independently. The UI supports the first two counts, but the server batching/interaction logic and Triple Roll count are missing. Enter measured percentages and treat throughput as a model estimate.
-- Current flat artifact bonuses are removed before current multipliers; new flat bonuses and points are then applied before the new multipliers. Separate multiplier stats multiply together. Artifact strength scales their bonus above one and flat values. The server's final buff aggregation and resonance order are missing. The optional point scale calibrates additional multipliers beyond the artifact.
-- Current displayed totals already include all other buffs, potions, sets, skill trees, weather/stat bonuses, and the under-10M boost. These remain constant during each comparison. The app does not optimize skill-tree selections or potion costs.
+- Artifact flat values and scaled bonus-above-one multipliers follow shared/client data. Separate duplicate multipliers multiply in this model; final server aggregation and resonance order are missing. Optional point scaling adds any further confirmed per-point factor; it normally stays at one because the build already includes equipment/tree percentages.
+- Other build selections remain constant during recommendations. The app does not optimize skill-tree selections or potion costs. Under-10M Luck is automatically applied exactly once based on entered rolls, with a disable switch for calibration.
 - A session holds the entered stats constant. Potion duration, potion expiry, free-roll currencies, and reroll acquisition costs are outside the objective.
 
 ## Optimization and probability
