@@ -1,5 +1,21 @@
 # Mechanics and assumptions
 
+## Current v5 corrections
+
+Card Index is now the only SP source: floor(Index/20)*2. Default/blank Index is zero; no unknown budget or extra-SP override exists. Selection rejects overspending and normalization trims trailing nodes/dependents if Index decreases. The removed Other bonuses and observed-stat controls no longer contribute hidden imported bonuses.
+
+Mythic Shiny/Awakened use a separate stack group from regular/Legendary potions. Flats from both groups add, and the Mythic final +5% applies once. Other categories retain one strongest selection. Fabled potions are excluded as unobtainable by the player's explicit correction, despite appearing in the shared definition file.
+
+Fabled maximum base rarity is an Account setting for rollable borders, not card abilities. A 1B limit means eligible cards with base rarity <=1B can roll as Fabled; all probability/optimizer/simulator paths use this gate. World/weather availability remains separate.
+
+Player screenshot data adds 19 achievement definitions and five Corrupted upgrade effects/caps. Corrupted Fortune is +8 Luck/level (max10), Awakened Ritual +3 Awakened/level (max10), Corrupted Calling +1 Corrupted/level (max10), Echo Roll +1% Double/level (max10), and Fractured Roll +0.5% Triple/level (max6). Known next-level costs are Fortune at5:447, Calling at7:2830, Echo at7:1290, Fractured at5:2052. No full curve or unshown refund price is inferred; unavailable prices block purchases. Owned-level fields accept confirmed investments without recharging them.
+
+Vaeloryn's ×40 Luck every20,000 rolls is periodic, not a permanent total multiplier; owning it also grants World8 card access. Periodic distributions now use least-common-multiple intersections/inclusion-exclusion across all equipped relic/achievement boosts. This preserves the synchronized-cycle assumption; exact server counters and proc interactions are still unconfirmed.
+
+The manual Tower cap-extension workaround is removed. Shiny and Fabled caps are25 from supplied game screenshots. Other gold caps retain the old shared definitions because their current caps were not shown; this remains explicitly pending. The root data-overrides/player-confirmed.json preserves screenshot provenance and applies during regeneration.
+
+The following v4 notes describe the earlier iteration where extra SP, cap extensions and manual bonuses were still present. The v5 rules above supersede those controls.
+
 ## Build calculator v4
 
 ### Progression and input constraints
