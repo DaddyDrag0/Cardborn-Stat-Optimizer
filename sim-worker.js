@@ -1,3 +1,3 @@
-import {normalize} from './core.js?v=6.1';
-import {prepareSimulation,simulateSession,aggregateSessions} from './simulation.js?v=6';
+import {normalize} from './core.js?v=6.5';
+import {prepareSimulation,simulateSession,aggregateSessions} from './simulation.js?v=6.5';
 self.onmessage=e=>{const {id,profile,data,seconds,runs,seed}=e.data;try{const prepared=prepareSimulation(normalize(profile,data),data,Math.max(1,Math.min(172800,seconds))),results=[];for(let i=0;i<Math.max(1,Math.min(1000,runs));i++){results.push(simulateSession(prepared,(seed+i*2654435761)>>>0));if(i%10===0)postMessage({id,type:'progress',value:(i+1)/runs})}postMessage({id,type:'result',result:{runs:results,aggregate:aggregateSessions(results)}})}catch(error){postMessage({id,type:'error',message:error.message})}};

@@ -1,5 +1,5 @@
-// Matches PersonalArtifactUI's stat and Max display; Void strength is applied
-// separately by artifactBonuses, not baked into the stored slot value.
+// Matches PersonalArtifactUI's stat and Max display. Void Artifact Resonance
+// affects crafted artifacts, not Personal Artifact values.
 const rarity=(s,data)=>data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.statMultiplier||1;
 const percent=def=>def.kind==='chance'||def.kind==='potion';
 export function paGameValue(s,def,raw,data){const factor=rarity(s,data),value=def.kind==='mult'?1+(raw-1)*factor:raw*factor;return value*(percent(def)?100:1)}

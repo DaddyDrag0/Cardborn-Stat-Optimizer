@@ -35,7 +35,7 @@ export function artifactSlots(s,data){const n=data.personalArtifact.slotUnlockLe
 export function scaledMax(def,level){const f=10**def.decimals;return Math.floor((def.min+(def.max-def.min)*level/100)*f+.5)/f}
 export function artifactBonuses(s,slots,data){
   const flat={},mult={},seen={},rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.statMultiplier||1;
-  for(const slot of [...slots].sort((a,b)=>(a.position??slots.indexOf(a))-(b.position??slots.indexOf(b)))){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1),scale=(copy===1?1:copy===2?.5:0)*rarity*(1+s.artifact.strength+.05*(s.build?.void.VoidArtifactPower||0));
+  for(const slot of [...slots].sort((a,b)=>(a.position??slots.indexOf(a))-(b.position??slots.indexOf(b)))){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1),scale=(copy===1?1:copy===2?.5:0)*rarity*(1+s.artifact.strength);
     if(def.kind==='mult')mult[slot.id.slice(0,-4)]=(mult[slot.id.slice(0,-4)]||1)*(1+(slot.value-1)*scale);
     else flat[slot.id]=(flat[slot.id]||0)+slot.value*scale;
   }return{flat,mult};
