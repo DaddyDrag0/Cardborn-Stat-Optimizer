@@ -2,13 +2,15 @@
 export const BUILD_STATS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck','RollSpeed','DoubleRollChance','RollTwiceChance','TripleRollChance','LuckyHandChance','PotionPowerMult','PotionDurationMult'];
 const LUCKS=BUILD_STATS.slice(0,6),CHANCES=BUILD_STATS.slice(7,11);
 const n=(v,lo=0,hi=1e9)=>Math.max(lo,Math.min(hi,Number.isFinite(Number(v))?Number(v):lo));
-export function buildDefaults(){return{skills:[],sets:[],crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
+export function buildDefaults(){return{index:0,skills:[],sets:[],achievements:[],corrupted:{},crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
 export function normalizeBuild(raw,data){
   const b=buildDefaults(),known=(values,ids)=>Array.isArray(values)?[...new Set(values.filter(x=>ids.includes(x)))]:[];
   b.skills=known(raw.skills,(data.skillNodes||[]).map(x=>x.id));b.sets=known(raw.sets,data.indexSets.map(x=>x.id));
   const groupCounts={};for(const id of [...b.skills]){const node=data.skillNodes.find(x=>x.id===id);if(node.limitGroup&&(groupCounts[node.limitGroup]=(groupCounts[node.limitGroup]||0)+1)>(node.limitGroup==='star1'?2:1))b.skills=removeSkill(b.skills,id,data)}
-  b.index=raw.index==null?null:Math.floor(n(raw.index,0,1e9));b.extraSkillPoints=Math.floor(n(raw.extraSkillPoints??0,0,1e6));
-  b.towerCapExtra=Math.floor(n(raw.towerCapExtra??0,0,1000));b.currencies=Object.fromEntries(['tower','void','corrupted'].map(k=>[k,Math.floor(n(raw.currencies?.[k]??0,0,1e15))]));
+  b.index=Math.floor(n(raw.index??0,0,1e9));b.currencies=Object.fromEntries(['tower','void','corrupted'].map(k=>[k,Math.floor(n(raw.currencies?.[k]??0,0,1e15))]));
+  for(const id of [...b.skills].reverse())if(skillCost(b.skills,data)>skillBudget(b,data))b.skills=removeSkill(b.skills,id,data);
+  b.achievements=known(raw.achievements,data.achievements.map(a=>a.id));
+  for(const d of data.corruptedUpgrades)b.corrupted[d.id]=Math.floor(n(raw.corrupted?.[d.id]??0,0,d.maxLevel));
   b.dungeonSeconds=Math.floor(n(raw.dungeonSeconds??3600,1,1e9));
   b.crafted=Object.hasOwn(data.craftedArtifacts||{},raw.crafted)?raw.crafted:'';
   b.craftedTier=data.craftedTiers.some(t=>t.id===raw.craftedTier)?raw.craftedTier:'Normal';
@@ -22,31 +24,32 @@ export function normalizeBuild(raw,data){
   for(const k of LUCKS)b.base[k]=n(raw.base?.[k]??b.base[k],.0001);
   b.baseInterval=n(raw.baseInterval??1,.2,3600);b.under10M=raw.under10M!==false;b.inDungeon=raw.inDungeon===true;b.floor=Math.floor(n(raw.floor??0,0,1e6));
   b.percentOrder=raw.percentOrder==='combined'?'combined':'separate';b.towerAwakenedGain=n(raw.towerAwakenedGain??.4,0,10);
-  b.extras=Array.isArray(raw.extras)?raw.extras.slice(0,20).map(x=>({name:String(x.name||'Other bonus').slice(0,80),stat:BUILD_STATS.includes(x.stat)?x.stat:BUILD_STATS.find(k=>x.flat?.[k]||x.percent?.[k])||'Luck',flat:Object.fromEntries(BUILD_STATS.map(k=>[k,n(x.flat?.[k]??0,-1e9,1e9)])),percent:Object.fromEntries(LUCKS.map(k=>[k,n(x.percent?.[k]??0,-.99,100)]))})):[];
-  b.observed=Object.fromEntries(BUILD_STATS.map(k=>[k,raw.observed?.[k]==null?null:n(raw.observed[k],0,1e12)]));return b;
+  return b;
 }
 export function skillClosure(ids,data){const out=new Set(ids),by=new Map(data.skillNodes.map(x=>[x.id,x]));function add(id){for(const req of by.get(id)?.requires||[])if(!out.has(req)){out.add(req);add(req)}}for(const id of [...out])add(id);return[...out]}
 export function removeSkill(ids,id,data){const out=new Set(ids);out.delete(id);let changed=true;while(changed){changed=false;for(const node of data.skillNodes)if(out.has(node.id)&&node.requires.some(r=>!out.has(r))){out.delete(node.id);changed=true}}return[...out]}
-export function skillBudget(b,data){return b.index==null?null:Math.floor(b.index/data.indexSkillPoints.every)*data.indexSkillPoints.amount+(b.extraSkillPoints||0)}
+export function skillBudget(b,data){return Math.floor((b.index||0)/data.indexSkillPoints.every)*data.indexSkillPoints.amount}
 export function skillCost(ids,data){return data.skillNodes.filter(n=>ids.includes(n.id)).reduce((a,n)=>a+n.cost,0)}
 export function skillSelection(b,id,on,data){
   const ids=on?skillClosure([...b.skills,id],data):removeSkill(b.skills,id,data);
   for(const g of ['star1','star2','star3'])if(data.skillNodes.filter(n=>ids.includes(n.id)&&n.limitGroup===g).length>(g==='star1'?2:1))return{error:'Constellations allow only 2 Normal, 1 Greater, and 1 Ascendant stars.'};
   const budget=skillBudget(b,data);if(on&&budget!=null&&skillCost(ids,data)>budget)return{error:'Not enough skill points for this node and its prerequisites.'};return{ids};
 }
-export function shopCap(b,d,shop){return d.maxLevel+(shop==='tower'&&!d.noExtraLevels?(b.towerCapExtra||0):0)}
+export function shopCap(b,d,shop){return d.maxLevel}
+export function potionGroup(id,data){const d=data.potions[id];return d&&['ShinyLuck','AwakenedLuck'].includes(d.StatCategory)&&id.endsWith('Mythic')?d.StatCategory+'Mythic':d?.StatCategory}
 export function shopAction(b,shop,id,direction,data){
-  const defs=shop==='tower'?data.towerShop:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
-  const level=b[shop][id]||0,cost=d.cost;
+  const defs=shop==='tower'?data.towerShop:shop==='corrupted'?data.corruptedUpgrades:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
+  const level=b[shop][id]||0,cost=shop==='corrupted'?d.knownNextCosts[level]:d.cost;
+  if(shop==='corrupted'&&(direction<0||cost==null))return{error:'This level’s purchase/refund price is not provided.'};
   if(direction<0&&shop==='void')return{error:'Void upgrades cannot be refunded.'};
   if(direction>0){if(level>=shopCap(b,d,shop))return{error:'Upgrade is at its cap.'};if((b.currencies?.[shop]||0)<cost)return{error:'Not enough currency.'}}
   else if(level<=0)return{error:'No upgrade to refund.'};
   return{level:level+direction,balance:(b.currencies?.[shop]||0)-direction*cost};
 }
 export function buildWarnings(s,data){const b=s.build;if(!b)return[];const w=[],owned=new Set(b.skills),groups={};for(const node of data.skillNodes){if(!owned.has(node.id))continue;if(node.requires.some(r=>!owned.has(r)))w.push(`${node.name}: prerequisite missing.`);if(node.limitGroup)groups[node.limitGroup]=(groups[node.limitGroup]||0)+1}for(const [g,count]of Object.entries(groups))if(count>(g==='star1'?2:1))w.push('Constellations allow 2 Normal, 1 Greater, and 1 Ascendant stars.');
-  if(skillBudget(b,data)!=null&&skillCost(b.skills,data)>skillBudget(b,data))w.push('Selected skills exceed your Index skill-point budget. Remove nodes or check your Index / extra SP.');
+  if(skillCost(b.skills,data)>skillBudget(b,data))w.push('Selected skills exceed your Index skill-point budget. Enter your Card Index or remove nodes.');
   const relicSlots=1+(b.passes.TwoRelic?1:0)+(b.tower.ThirdRelicSlot||0);if(b.relics.length>relicSlots)w.push(`You equipped ${b.relics.length} relics but have ${relicSlots} slots.`);if(new Set(b.relics.map(x=>x.id)).size!==b.relics.length)w.push('Equip each relic only once.');if(b.relics.filter(x=>data.relics[x.id].Tier==='Legendary').length>2)w.push('At most two Legendary relics can be equipped.');
-  const cats={};for(const id of b.potions){const category=data.potions[id].StatCategory;cats[category]=(cats[category]||0)+1}if(Object.values(cats).some(x=>x>1))w.push('Select one active potion per category. The strongest selected boost in a category is used; stacking behavior is unconfirmed.');
+  const cats={};for(const id of b.potions){const category=potionGroup(id,data);cats[category]=(cats[category]||0)+1}if(Object.values(cats).some(x=>x>1))w.push('Select one potion per tier group. Mythic Shiny/Awakened can stack with their regular or Legendary potion.');
   if(b.towerAwakenedGain!==.4&&b.towerAwakenedGain!==.3)w.push('Tower Awakened gain is a custom model value.');return[...new Set(w)];
 }
 function merge(target,values,scale=1){for(const[k,v]of Object.entries(values||{}))if(typeof v==='number')target[k]=(target[k]||0)+v*scale}
@@ -71,11 +74,12 @@ export function calculateBuild(s,data,points,pa){
   const treeFlat={},treePct={};for(const node of data.skillNodes)if(b.skills.includes(node.id)){merge(treeFlat,node.bonus);merge(treePct,node.percent)}row('Skill tree',treeFlat,treePct);
   const relicFlat={};let raidMult=1;for(const relic of b.relics){const def=data.relics[relic.id],scale=(def.BorderScale||[1,1.4,1.9,2.5,3.2,4])[relic.border-1];merge(relicFlat,def.Boosts,scale);if(relic.id==='RelicOfTheLuckyHand')relicFlat.LuckyHandChance=(relicFlat.LuckyHandChance||0)+Math.min(.6,.1*scale);if(relic.id==='RaidersSword')raidMult*=2*scale;if(['RelicOfBonus','WeightedDice'].includes(relic.id))periodic.push({every:Math.max(relic.id==='WeightedDice'?10:5,Math.floor((relic.id==='WeightedDice'?50:25)/scale+.5)),mult:relic.id==='WeightedDice'?4:2})}row('Relics',relicFlat);
   const setFlat={};for(const set of data.indexSets)if(b.sets.includes(set.id))merge(setFlat,set.bonus);row('Completed Index Sets',setFlat);
+  const achievementFlat={};for(const a of data.achievements)if(b.achievements.includes(a.id)){merge(achievementFlat,a.bonus);if(a.periodic)periodic.push({...a.periodic})}row('Achievements',achievementFlat);
+  const corruptedFlat={};for(const d of data.corruptedUpgrades)corruptedFlat[d.stat]=(corruptedFlat[d.stat]||0)+(b.corrupted[d.id]||0)*d.gain;row('Corrupted permanent upgrades',corruptedFlat);
   const towerFlat={};for(const def of data.towerShop)if(def.id!=='ThirdRelicSlot')towerFlat[def.id]=(b.tower[def.id]||0)*(def.id==='AwakenedLuck'?b.towerAwakenedGain:def.gain);row('Tower Shop',towerFlat);
   row('Void Shop',{}, {},{VoidLuck:1+.03*(b.void.VoidLuckPct||0)});
-  for(const extra of b.extras)row(extra.name,extra.flat,extra.percent);
   const power=Math.max(0,1+(flat.PotionPowerMult||0)+.04*(b.void.VoidPotionPower||0)),potionFlat={},potionMult={},categories=new Map();
-  for(const id of b.potions){const def=data.potions[id],selected=categories.get(def.StatCategory)||{};for(const[k,v]of Object.entries(def.Boosts))selected[k]=Math.max(selected[k]||0,v);categories.set(def.StatCategory,selected)}
+  for(const id of b.potions){const def=data.potions[id],group=potionGroup(id,data),selected=categories.get(group)||{};for(const[k,v]of Object.entries(def.Boosts))selected[k]=Math.max(selected[k]||0,v);categories.set(group,selected)}
   const finalNames={FinalLuckMult:'Luck',FinalShinyMult:'ShinyLuck',FinalAwakenedMult:'AwakenedLuck',FinalFabledMult:'FabledLuck',FinalCorruptedMult:'CorruptedLuck',FinalVoidMult:'VoidLuck',FinalRollSpeedMult:'RollSpeed'};
   for(const selected of categories.values())for(const[k,v]of Object.entries(selected)){if(finalNames[k])potionMult[finalNames[k]]=(potionMult[finalNames[k]]||1)*(1+v*power);else potionFlat[k]=(potionFlat[k]||0)+v*power}row('Active potions / Parkour Orb',potionFlat,{},potionMult);
   const weather=data.weather[s.weather]||{};row('Weather',{Luck:weather.luckBonus||0},{},{Luck:weather.luckMultiplier||1});
@@ -89,4 +93,7 @@ export function calculateBuild(s,data,points,pa){
   stats.periodic=periodic;stats.RaidFabledLuck=stats.FabledLuck*raidMult;
   return{stats,rows,power,periodic,raidMult};
 }
-export function luckVariants(stats){const a=stats.periodic?.[0],b=stats.periodic?.[1];if(!a)return[{weight:1,mult:1}];if(!b)return[{weight:1-1/a.every,mult:1},{weight:1/a.every,mult:a.mult}];const gcd=(x,y)=>y?gcd(y,x%y):x,joint=gcd(a.every,b.every)/(a.every*b.every);return[{weight:1-1/a.every-1/b.every+joint,mult:1},{weight:1/a.every-joint,mult:a.mult},{weight:1/b.every-joint,mult:b.mult},{weight:joint,mult:a.mult*b.mult}].filter(x=>x.weight>0)}
+export function luckVariants(stats){
+  const rows=stats.periodic||[],count=rows.length,gcd=(x,y)=>y?gcd(y,x%y):x,mass=mask=>{let period=1;for(let i=0;i<count;i++)if(mask&(1<<i))period=period/gcd(period,rows[i].every)*rows[i].every;return 1/period},out=new Map();
+  for(let mask=0;mask<(1<<count);mask++){let weight=0;for(let sup=mask;sup<(1<<count);sup++)if((sup&mask)===mask){let parity=0;for(let i=0;i<count;i++)if((sup^mask)&(1<<i))parity++;weight+=(parity%2?-1:1)*mass(sup)}const mult=rows.reduce((m,r,i)=>m*(mask&(1<<i)?r.mult:1),1);if(weight>1e-15)out.set(mult,(out.get(mult)||0)+weight)}return[...out].map(([mult,weight])=>({mult,weight}));
+}

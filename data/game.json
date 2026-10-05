@@ -5037,26 +5037,6 @@
         "FinalAwakenedMult": 0.05
       }
     },
-    "LesserFabledPotion": {
-      "Name": "Lesser Fabled Potion",
-      "Description": "Increases fabled chance by +0.3 for 1 minute.",
-      "StatCategory": "FabledLuck",
-      "Duration": 60,
-      "Image": "rbxassetid://126480996934087",
-      "Boosts": {
-        "FabledLuck": 0.3
-      }
-    },
-    "FabledPotion": {
-      "Name": "Fabled Potion",
-      "Description": "Increases fabled chance by +0.7 for 2 minutes.",
-      "StatCategory": "FabledLuck",
-      "Duration": 120,
-      "Image": "rbxassetid://109137870120343",
-      "Boosts": {
-        "FabledLuck": 0.7
-      }
-    },
     "LesserEventRollPotion": {
       "Name": "Lesser Event Roll Potion",
       "Description": "Rolls for a common event! (60% Caravan, 30% Gnome Raid, 10% Iron Legion).",
@@ -5124,9 +5104,10 @@
       "id": "ShinyLuck",
       "name": "Shiny Luck",
       "desc": "+0.1 Shiny Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 4,
-      "gain": 0.1
+      "gain": 0.1,
+      "capSource": "Player screenshot"
     },
     {
       "id": "AwakenedLuck",
@@ -5140,9 +5121,10 @@
       "id": "FabledLuck",
       "name": "Fabled Luck",
       "desc": "+0.2 Fabled Luck per level",
-      "maxLevel": 20,
+      "maxLevel": 25,
       "cost": 6,
-      "gain": 0.2
+      "gain": 0.2,
+      "capSource": "Player screenshot"
     },
     {
       "id": "CorruptedLuck",
@@ -5295,6 +5277,240 @@
       "name": "+2 Personal Artifact Slots",
       "description": "Unlock 2 extra Personal Artifact slots (5 -> 7) and raise your locked stat limit from 2 to 4!",
       "price": 600
+    }
+  ],
+  "playerConfirmedSource": "User gameplay corrections and supplied screenshots, 2026-10-05",
+  "achievements": [
+    {
+      "id": "Vaeloryn",
+      "name": "Vaeloryn, The Last",
+      "bonus": {},
+      "periodic": {
+        "every": 20000,
+        "mult": 40
+      },
+      "badge": "VoidWorldBadge"
+    },
+    {
+      "id": "DreamRealm",
+      "name": "Dream Realm",
+      "bonus": {
+        "AwakenedLuck": 0.3
+      }
+    },
+    {
+      "id": "Ca2e",
+      "name": "Ca2e",
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.1,
+        "AwakenedLuck": 0.1
+      }
+    },
+    {
+      "id": "Creator",
+      "name": "Creator",
+      "bonus": {
+        "Luck": 2,
+        "AwakenedLuck": 0.2
+      }
+    },
+    {
+      "id": "HallAwakened1",
+      "name": "Hall of Awakened I",
+      "bonus": {
+        "Luck": 1,
+        "AwakenedLuck": 0.1
+      }
+    },
+    {
+      "id": "HallAwakened2",
+      "name": "Hall of Awakened II",
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.1
+      }
+    },
+    {
+      "id": "HallAwakened3",
+      "name": "Hall of Awakened III",
+      "bonus": {
+        "ShinyLuck": 0.1,
+        "AwakenedLuck": 0.2
+      }
+    },
+    {
+      "id": "HallAwakened4",
+      "name": "Hall of Awakened IV",
+      "bonus": {
+        "Luck": 1,
+        "ShinyLuck": 0.1,
+        "AwakenedLuck": 0.2
+      }
+    },
+    {
+      "id": "HallAwakened5",
+      "name": "Hall of Awakened V",
+      "bonus": {
+        "Luck": 2,
+        "AwakenedLuck": 0.3,
+        "FabledLuck": 0.2
+      }
+    },
+    {
+      "id": "HallAwakened6",
+      "name": "Hall of Awakened VI",
+      "bonus": {
+        "Luck": 3,
+        "AwakenedLuck": 0.3,
+        "FabledLuck": 0.3,
+        "CorruptedLuck": 0.2,
+        "VoidLuck": 0.1
+      }
+    },
+    {
+      "id": "HallCorrupted1",
+      "name": "Hall Corrupted 1",
+      "bonus": {
+        "Luck": 2,
+        "CorruptedLuck": 0.4,
+        "VoidLuck": 0.2
+      }
+    },
+    {
+      "id": "Worldbreaker",
+      "name": "Worldbreaker",
+      "bonus": {
+        "Luck": 3,
+        "ShinyLuck": 0.2,
+        "AwakenedLuck": 0.4,
+        "FabledLuck": 0.25
+      }
+    },
+    {
+      "id": "TheUnwritten",
+      "name": "The Unwritten",
+      "bonus": {
+        "Luck": 6,
+        "FabledLuck": 0.4,
+        "CorruptedLuck": 0.7,
+        "VoidLuck": 1
+      }
+    },
+    {
+      "id": "HallCorrupted2",
+      "name": "Hall Corrupted 2",
+      "bonus": {
+        "Luck": 3,
+        "FabledLuck": 0.2,
+        "CorruptedLuck": 0.25,
+        "VoidLuck": 0.12
+      }
+    },
+    {
+      "id": "HallCorrupted3",
+      "name": "Hall Corrupted 3",
+      "bonus": {
+        "Luck": 4,
+        "FabledLuck": 0.3,
+        "CorruptedLuck": 0.3,
+        "VoidLuck": 0.15
+      }
+    },
+    {
+      "id": "HallCorrupted4",
+      "name": "Hall Corrupted 4",
+      "bonus": {
+        "Luck": 4,
+        "AwakenedLuck": 0.5,
+        "FabledLuck": 0.3,
+        "CorruptedLuck": 0.3,
+        "VoidLuck": 0.15
+      }
+    },
+    {
+      "id": "HallCorrupted5",
+      "name": "Hall Corrupted 5",
+      "bonus": {
+        "Luck": 5,
+        "ShinyLuck": 0.2,
+        "AwakenedLuck": 0.7,
+        "FabledLuck": 0.25,
+        "CorruptedLuck": 0.4,
+        "VoidLuck": 0.2
+      }
+    },
+    {
+      "id": "HallCorrupted6",
+      "name": "Hall Corrupted 6",
+      "bonus": {
+        "Luck": 5,
+        "ShinyLuck": 0.2,
+        "AwakenedLuck": 1,
+        "FabledLuck": 0.4,
+        "CorruptedLuck": 0.6,
+        "VoidLuck": 0.3
+      }
+    },
+    {
+      "id": "SuperHardSecret",
+      "name": "Super Hard Secret",
+      "bonus": {
+        "Luck": 8,
+        "AwakenedLuck": 1.2,
+        "CorruptedLuck": 1,
+        "VoidLuck": 1
+      }
+    }
+  ],
+  "corruptedUpgrades": [
+    {
+      "id": "CorruptedFortune",
+      "name": "Corrupted Fortune",
+      "stat": "Luck",
+      "gain": 8,
+      "maxLevel": 10,
+      "knownNextCosts": {
+        "5": 447
+      }
+    },
+    {
+      "id": "AwakenedRitual",
+      "name": "Awakened Ritual",
+      "stat": "AwakenedLuck",
+      "gain": 3,
+      "maxLevel": 10,
+      "knownNextCosts": {}
+    },
+    {
+      "id": "CorruptedCalling",
+      "name": "Corrupted Calling",
+      "stat": "CorruptedLuck",
+      "gain": 1,
+      "maxLevel": 10,
+      "knownNextCosts": {
+        "7": 2830
+      }
+    },
+    {
+      "id": "EchoRoll",
+      "name": "Echo Roll",
+      "stat": "DoubleRollChance",
+      "gain": 0.01,
+      "maxLevel": 10,
+      "knownNextCosts": {
+        "7": 1290
+      }
+    },
+    {
+      "id": "FracturedRoll",
+      "name": "Fractured Roll",
+      "stat": "TripleRollChance",
+      "gain": 0.005,
+      "maxLevel": 6,
+      "knownNextCosts": {
+        "5": 2052
+      }
     }
   ]
 }

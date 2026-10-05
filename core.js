@@ -1,4 +1,4 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=4';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=5';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -27,7 +27,7 @@ export function normalize(raw,data){
   s.artifact.slots=Array.isArray(a.slots)?a.slots.slice(0,11).filter(x=>data.personalArtifact.stats.some(d=>d.id===x?.id)).map(x=>({id:x.id,value:number(x.value,0,1e6),locked:x.locked===true})):[];
   if(raw.build&&typeof raw.build==='object'&&!Array.isArray(raw.build)){s.build=normalizeBuild(raw.build,data);s.version=2;s.artifact.gamepass=s.build.passes.ArtifactSlots;s.artifact.voidSlots=s.build.void.PASlots||0}
   s.fabledMax=number(raw.fabledMax??1e30,0,1e30);
-  if(s.build){s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
+  if(s.build){for(const achievement of data.achievements)if(s.build.achievements.includes(achievement.id)&&achievement.badge&&!s.badges.includes(achievement.badge))s.badges.push(achievement.badge);s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}
