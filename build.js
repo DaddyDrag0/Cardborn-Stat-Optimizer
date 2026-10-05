@@ -44,6 +44,7 @@ export function potionGroup(id,data){const d=data.potions[id];return d&&['ShinyL
 export function shopAction(b,shop,id,direction,data){
   const defs=shop==='tower'?data.towerShop:shop==='corrupted'?data.corruptedUpgrades:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
   const level=b[shop][id]||0,cost=shop==='corrupted'?(direction<0?corruptedRefund(d,level):corruptedCost(d,level)):d.cost;
+  if(direction==='max'){if(shop!=='tower')return{error:'Buy max is only available in the Tower Shop.'};const cap=shopCap(b,d,shop);direction=Math.min(cap-level,Math.floor((b.currencies?.tower||0)/cost));if(direction<=0)return{error:level>=cap?'Upgrade is at its cap.':'Not enough currency.'}}
   if(direction<0&&shop==='void')return{error:'Void upgrades cannot be refunded.'};
   if(direction>0){if(level>=shopCap(b,d,shop))return{error:'Upgrade is at its cap.'};if((b.currencies?.[shop]||0)<cost)return{error:'Not enough currency.'}}
   else if(level<=0)return{error:'No upgrade to refund.'};
