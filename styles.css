@@ -11,3 +11,5 @@
 .mobile-section-picker{display:none}@media(max-width:680px){.section-nav{display:none}.mobile-section-picker{display:flex;margin-bottom:24px}.mobile-section-picker select{min-height:44px}}
 
 .tree-scroll{cursor:grab;scrollbar-width:none;touch-action:none;user-select:none}.tree-scroll::-webkit-scrollbar{display:none}.tree-scroll.dragging,.tree-scroll.dragging .tree-node{cursor:grabbing}.tree-scroll .skill-tree{width:1120px;min-width:1120px;height:855px}
+
+body{background:#161d25}header h1{font-size:27px;letter-spacing:-.6px;font-weight:650}header{margin-bottom:20px}.section-nav button{padding:12px 14px;min-height:43px}.section-nav button b{font-size:12px;font-weight:550}.section-nav .nav-group{padding-top:22px}.best-pull{background:#1c2a34;padding:20px;border-color:#3c505f}.best-pull h3{font-size:21px}.sim-empty{background:#1b2531;border-style:solid;min-height:120px;padding:38px 20px}.sim-empty h2{font-size:16px;color:#8da3b6;margin:0}.sim-config{align-items:start}@media(max-width:680px){header h1{font-size:24px}.section-nav button b{font-size:11px}}
