@@ -1,6 +1,6 @@
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=8.1';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost} from './build.js?v=8.1';
-import {periodicGroups} from './roll-timing.js?v=8.1';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=8.2';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost} from './build.js?v=8.2';
+import {periodicGroups} from './roll-timing.js?v=8.2';
 
 const clone=x=>structuredClone(x),STEP=.125;
 export const COMPONENTS={points:'Stat points',skills:'Skill tree & constellations',artifact:'Personal Artifact',equipment:'Relics',shops:'Shop spending'};

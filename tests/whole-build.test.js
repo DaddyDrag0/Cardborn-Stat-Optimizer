@@ -65,12 +65,12 @@ test('Owned relic combinations and an affordable third slot work together, witho
   const p=optimizeBuild(s,data);assert.ok(p.profile.build.relics.length<=1+1+p.profile.build.tower.ThirdRelicSlot);assert.ok(p.profile.build.relics.every(x=>available.some(y=>y.id===x.id)));assert.ok(p.result.score>=p.current.score);assert.equal(p.profile.build.currencies.tower,25-p.profile.build.tower.ThirdRelicSlot*25);
 });
 
-test('Exact session checks each rarest-first card separately, secret skins and then all five borders',()=>{
+test('Individual draws use the rarest-first distribution, secret skins and then all five borders',()=>{
   const d={...toy,cards:[...toy.cards,{name:'Secret',rarityValue:200,isSecret:true}],secretSkins:{Rare:[{to:'Secret',chanceDenom:2}]}};
   const s=setup(d);s.globalLuck=1;s.fabledMax=100;s.build.base={Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1};s.artifact.slots=[];
   const prepared=prepareExactRolls(s,d,1),values=[0,0,0,0,0,0],rng={unit53:()=>values.shift()??0};
   const row=prepared.draw(1,rng);assert.equal(row.name,'Secret');assert.equal(row.mask,27);assert.ok(!row.borders.includes('Fabled'));assert.equal(row.baseRarity,200);
-  let called=0;const common=prepared.draw(1,{unit53:()=>{called++;return .999999}});assert.equal(common.name,'Common');assert.ok(called>=7);
+  let called=0;const common=prepared.draw(1,{unit53:()=>{called++;return .999999}});assert.equal(common.name,'Common');assert.equal(called,6);
 });
 
 test('Individual rolling matches known independent frequencies and fresh seeds differ; no count approximation',()=>{

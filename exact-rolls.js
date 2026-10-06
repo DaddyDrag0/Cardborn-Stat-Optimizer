@@ -1,4 +1,4 @@
-import {BORDERS,effective,eligibleCards,borderProbabilities} from './core.js?v=8.1';
+import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=8.2';
 
 // sfc32 with independently mixed seed words. Two draws give a 53-bit fraction,
 // so rare checks are not limited to the 1 / 2^32 resolution of the old LCG.
@@ -12,45 +12,57 @@ export function rollRandom(seed){
 }
 
 export function prepareExactRolls(s,data,seconds){
-  const stats=effective(s,data),cards=eligibleCards(s,data),byName=new Map(data.cards.map(c=>[c.name,c])),cache=new Map(),rows=new Map(),bp=borderProbabilities(s,stats);
-  const trials=mult=>{if(!cache.has(mult))cache.set(mult,cards.map(c=>({card:c,p:1/Math.max(1,Math.ceil(c.rarityValue/(stats.Luck*s.globalLuck*mult)))})));return cache.get(mult)};
-  function draw(mult,rng){
-    let card=cards.at(-1);
-    for(const entry of trials(mult))if(rng.unit53()<entry.p){card=entry.card;break}
-    for(const skin of data.secretSkins[card.name]||[])if(rng.unit53()<1/skin.chanceDenom){card=byName.get(skin.to)||card;break}
-    let mask=0;
-    for(let i=0;i<BORDERS.length;i++){
-      const border=BORDERS[i];
-      if(border==='Fabled'&&card.rarityValue>s.fabledMax)continue;
-      if(rng.unit53()<bp[border])mask|=1<<i;
+  const stats=effective(s,data),cache=new Map(),rows=[],bp=borderProbabilities(s,stats),byName=new Map(data.cards.map((c,i)=>[c.name,i]));
+  const probabilities=BORDERS.map(b=>bp[b]);
+  // This is the exact distribution of the rarest-first independent checks,
+  // including secret upgrades. Each card still gets its own random draw; no
+  // frequencies are estimated, rounded or sampled in bulk.
+  function pool(mult){
+    if(!cache.has(mult)){
+      const distribution=cardDistribution(s,data,stats.Luck*mult),cdf=new Float64Array(distribution.length),indices=new Uint16Array(distribution.length);let mass=0;
+      for(let i=0;i<distribution.length;i++){mass+=distribution[i].p;cdf[i]=mass;indices[i]=byName.get(distribution[i].card.name)}
+      cdf[cdf.length-1]=1;cache.set(mult,{cdf,indices});
     }
-    const key=card.name+'|'+mask;
-    if(!rows.has(key)){
+    return cache.get(mult);
+  }
+  function drawPool(selection,rng){
+    const r=rng.unit53(),cdf=selection.cdf;let lo=0,hi=cdf.length-1;
+    while(lo<hi){const mid=(lo+hi)>>>1;if(r<cdf[mid])hi=mid;else lo=mid+1}
+    const ci=selection.indices[lo],card=data.cards[ci];let mask=0;
+    if(rng.unit53()<probabilities[0])mask|=1;
+    if(rng.unit53()<probabilities[1])mask|=2;
+    if(card.rarityValue<=s.fabledMax&&rng.unit53()<probabilities[2])mask|=4;
+    if(rng.unit53()<probabilities[3])mask|=8;
+    if(rng.unit53()<probabilities[4])mask|=16;
+    const index=ci*32+mask;
+    if(!rows[index]){
       const borders=BORDERS.filter((_,i)=>mask&(1<<i));let rarity=card.rarityValue;
       for(const border of borders)rarity*=data.borderRarity[border];
       const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);
-      rows.set(key,{key,name:card.name,baseRarity:card.rarityValue,rarity,borders,mask,score:hp+2*Math.floor(hp/2),hit:(s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity)&&s.goal.borders.every(b=>borders.includes(b))});
+      rows[index]={index,key:card.name+'|'+mask,name:card.name,baseRarity:card.rarityValue,rarity,borders,mask,score:hp+2*Math.floor(hp/2),hit:(s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity)&&s.goal.borders.every(b=>borders.includes(b))};
     }
-    return rows.get(key);
+    return rows[index];
   }
-  return{stats,cycles:Math.floor(seconds/stats.RollInterval),seconds,start:s.rollCounter||0,draw};
+  return{stats,cycles:Math.floor(seconds/stats.RollInterval),seconds,start:s.rollCounter||0,pool,drawPool,draw:(mult,rng)=>drawPool(pool(mult),rng),rows,capacity:data.cards.length*32};
 }
 
 export function simulateExactSession(prepared,seed,progress=()=>{}){
-  const rng=rollRandom(seed),stats=prepared.stats,inventory=new Map(),borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={};let cards=0,hits=0;
+  const rng=rollRandom(seed),stats=prepared.stats,counts=new Uint32Array(prepared.capacity),comboCounts=new Uint32Array(32),periodic=stats.periodic||[],handChance=stats.LuckyHandChance,double=stats.DoubleRollChance,twice=stats.RollTwiceChance,triple=stats.TripleRollChance;let cards=0,hits=0;
   for(let i=1;i<=prepared.cycles;i++){
-    const mult=(stats.periodic||[]).reduce((n,p)=>n*((i+prepared.start)%p.every===0?p.mult:1),1);
-    const hand=rng.unit53()<stats.LuckyHandChance;let count=1;
-    for(const [k,extra]of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]])if(rng.unit53()<stats[k])count+=extra;
+    let mult=1;for(let p=0;p<periodic.length;p++)if((i+prepared.start)%periodic[p].every===0)mult*=periodic[p].mult;
+    const selection=prepared.pool(mult),hand=rng.unit53()<handChance;
+    const count=1+(rng.unit53()<double?1:0)+(rng.unit53()<twice?2:0)+(rng.unit53()<triple?2:0);
     for(let j=0;j<count;j++){
-      let row=prepared.draw(mult,rng);
-      if(hand){const other=prepared.draw(mult,rng);if(other.score>row.score||other.score===row.score&&other.rarity>row.rarity)row=other}
-      const old=inventory.get(row.key);if(old)old.count++;else{const {key,score,...item}=row;inventory.set(key,{...item,count:1})}
-      cards++;if(row.hit)hits++;combos[row.mask]=(combos[row.mask]||0)+1;for(const border of row.borders)borderTotals[border]++;
+      let row=prepared.drawPool(selection,rng);
+      if(hand){const other=prepared.drawPool(selection,rng);if(other.score>row.score||other.score===row.score&&other.rarity>row.rarity)row=other}
+      counts[row.index]++;cards++;if(row.hit)hits++;comboCounts[row.mask]++;
     }
     if(i%10000===0)progress(i/prepared.cycles,i);
   }
   progress(1,prepared.cycles);
-  const rows=[...inventory.values()].sort((a,b)=>b.rarity-a.rarity);
+  const rows=[],borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={};
+  for(let i=0;i<counts.length;i++)if(counts[i]){const {index,key,score,...item}=prepared.rows[i];rows.push({...item,count:counts[i]})}
+  for(let mask=0;mask<32;mask++)if(comboCounts[mask]){combos[mask]=comboCounts[mask];for(let b=0;b<5;b++)if(mask&(1<<b))borderTotals[BORDERS[b]]+=comboCounts[mask]}
+  rows.sort((a,b)=>b.rarity-a.rarity);
   return{seed,cycles:prepared.cycles,seconds:prepared.seconds,cards,hits,uniqueCards:new Set(rows.map(o=>o.name)).size,borderTotals,combos,best:rows.length?{...rows[0]}:null,inventory:rows};
 }

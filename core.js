@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8.1';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8.1';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8.2';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8.2';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];

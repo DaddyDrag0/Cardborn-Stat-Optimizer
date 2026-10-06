@@ -1,2 +1,2 @@
-import {optimizeBuild} from './optimizer.js?v=8.1';
+import {optimizeBuild} from './optimizer.js?v=8.2';
 self.onmessage=e=>{const {id,profile,data}=e.data;try{const result=optimizeBuild(profile,data,value=>postMessage({id,type:'progress',value}));postMessage({id,type:'result',result})}catch(error){postMessage({id,type:'error',message:error.message})}};
