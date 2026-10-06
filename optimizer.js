@@ -1,8 +1,8 @@
-import {matchesBorderTarget} from './rarity-results.js?v=9.5';
-import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.5';
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.5';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.5';
-import {periodicGroups} from './roll-timing.js?v=9.5';
+import {matchesBorderTarget} from './rarity-results.js?v=9.6';
+import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.6';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.6';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.6';
+import {periodicGroups} from './roll-timing.js?v=9.6';
 
 const clone=x=>structuredClone(x),STEP=.125;
 const pullGoal=settings=>['hits','borders'].includes(settings.objective);
@@ -147,22 +147,41 @@ function skillSearch(profile,data,score){
   return best;
 }
 
-function paSearch(profile,data,score){
+const plannedPAValue=(def,profile,data)=>Math.round((def.min+(scaledMax(def,artifactLevel(profile,data))-def.min)*profile.artifact.quality)*10**def.decimals)/10**def.decimals;
+
+// Treat the proposed stats as a multiset. Retain matching owned rolls once each,
+// in their actual slots; planned quality applies only to new or improved rolls.
+export function reuseOwnedPARolls(profile,origin,data){
+  const length=artifactSlots(profile,data),slots=Array.from({length},(_,i)=>profile.artifact.slots[i]?.locked?clone(profile.artifact.slots[i]):{id:'',value:0,locked:false}),pending=[];
+  for(const def of data.personalArtifact.stats){
+    const requested=profile.artifact.slots.slice(0,length).map((slot,i)=>({...slot,i})).filter(x=>!x.locked&&x.id===def.id).sort((a,b)=>b.value-a.value||a.i-b.i);
+    const owned=origin.artifact.slots.slice(0,length).map((slot,i)=>({...slot,i})).filter(x=>!x.locked&&!slots[x.i].locked&&x.id===def.id).sort((a,b)=>b.value-a.value||a.i-b.i);
+    for(let i=0;i<requested.length;i++){
+      const value=Math.min(requested[i].value,plannedPAValue(def,profile,data)),keep=owned[i];
+      if(keep)slots[keep.i]={id:def.id,value:Math.max(value,keep.value),locked:false};
+      else pending.push({id:def.id,value,locked:false,i:requested[i].i});
+    }
+  }
+  for(const {i,...slot}of pending){const position=!slots[i].id?i:slots.findIndex(x=>!x.id&&!x.locked);slots[position]=slot}
+  return{...profile,artifact:{...profile.artifact,slots}};
+}
+
+function paSearch(profile,data,score,origin=profile){
   const length=artifactSlots(profile,data);if(!length)return profile;
-  const level=artifactLevel(profile,data),candidates=data.personalArtifact.stats.filter(d=>d.id!=='PotionDurationMult').map(d=>({id:d.id,value:Math.round((d.min+(scaledMax(d,level)-d.min)*profile.artifact.quality)*10**d.decimals)/10**d.decimals,locked:false}));
+  const candidates=data.personalArtifact.stats.filter(d=>d.id!=='PotionDurationMult').map(d=>({id:d.id,value:plannedPAValue(d,profile,data),locked:false}));
+  const reuse=p=>reuseOwnedPARolls(p,origin,data),reusedScore=p=>score(reuse(p));
   const starting=Array.from({length},(_,i)=>profile.artifact.slots[i]?.locked?clone(profile.artifact.slots[i]):{id:'',value:0,locked:false});
   let beam=[{...profile,artifact:{...profile.artifact,slots:starting}}];
   for(let i=0;i<length;i++){
     if(starting[i].locked)continue;const next=[];
     for(const p of beam)for(const slot of candidates){if(p.artifact.slots.filter(x=>x.id===slot.id).length>=2)continue;const slots=p.artifact.slots.slice();slots[i]=slot;next.push({...p,artifact:{...p.artifact,slots}})}
-    next.sort((a,b)=>score(b)-score(a));beam=next.slice(0,6);
+    next.sort((a,b)=>reusedScore(b)-reusedScore(a));beam=next.slice(0,6);
   }
-  let best=bestOf([profile,...beam],score);
+  let best=bestOf([profile,...beam.map(reuse)],score);
   for(let pass=0;pass<3;pass++){
     const next=[best],slots=best.artifact.slots;
     for(let i=0;i<length;i++)if(!slots[i].locked){
-      for(const slot of candidates){if(slots.filter((x,j)=>j!==i&&x.id===slot.id).length>=2)continue;const copy=slots.slice();copy[i]=slot;next.push({...best,artifact:{...best.artifact,slots:copy}})}
-      for(let j=i+1;j<length;j++)if(!slots[j].locked){const copy=slots.slice();[copy[i],copy[j]]=[copy[j],copy[i]];next.push({...best,artifact:{...best.artifact,slots:copy}})}
+      for(const slot of candidates){if(slots.filter((x,j)=>j!==i&&x.id===slot.id).length>=2)continue;const copy=slots.slice();copy[i]=slot;next.push(reuse({...best,artifact:{...best.artifact,slots:copy}}))}
     }
     const winner=bestOf(next,score);if(winner===best)break;best=winner;
   }
@@ -220,7 +239,7 @@ export function optimizeBuild(raw,data,progress=()=>{}){
   const s=normalize(raw,data);if(!s.build)throw Error('Complete Setup before optimizing.');
   const warnings=profileWarnings(s,data);if(warnings.length)throw Error(warnings.join(' '));
   const settings=optimizerSettings(s,data),evaluator=createBuildEvaluator(s,data,settings),score=p=>searchScore(evaluator.evaluate(p),settings),current=evaluator.evaluate(s);
-  const operations={equipment:p=>equipmentSearch(p,data,settings,score),points:p=>pointSearch(p,data,score),skills:p=>skillSearch(p,data,score),artifact:p=>paSearch(p,data,score),shops:p=>shopSearch(p,data,settings,score,s)};
+  const operations={equipment:p=>equipmentSearch(p,data,settings,score),points:p=>pointSearch(p,data,score),skills:p=>skillSearch(p,data,score),artifact:p=>paSearch(p,data,score,s),shops:p=>shopSearch(p,data,settings,score,s)};
   let best=s,done=0;
   // Different group orders and another pass let potion power, multipliers,
   // speed saturation, periodic relics and point allocations influence each other.

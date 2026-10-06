@@ -1,4 +1,4 @@
-import {BORDERS,effective,cardDistribution,borderProbabilities,matchesGoal} from './core.js?v=9.5';
+import {BORDERS,effective,cardDistribution,borderProbabilities,matchesGoal} from './core.js?v=9.6';
 
 // sfc32 with independently mixed seed words. Two draws give a 53-bit fraction,
 // so rare checks are not limited to the 1 / 2^32 resolution of the old LCG.
