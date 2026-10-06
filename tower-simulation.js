@@ -1,5 +1,5 @@
-import {BORDERS,effective} from './core.js?v=9.6';
-import {prepareExactRolls,simulateExactSession,rollRandom} from './exact-rolls.js?v=9.6';
+import {BORDERS,effective} from './core.js?v=9.7';
+import {prepareExactRolls,simulateExactSession,rollRandom} from './exact-rolls.js?v=9.7';
 
 // Existing Tower calculator reward bands. Server reward generation is absent
 // from the export: additive floor bonuses and single reward draws are modeled.
