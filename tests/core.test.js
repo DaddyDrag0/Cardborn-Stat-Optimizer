@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {defaults,normalize,cardDistribution,borderProbabilities,targetProbability,evaluate,effective,artifactLevel,artifactSlots,artifactBonuses,scaledMax,validPoints,optimizePoints,optimizeArtifact,profileWarnings,sum,POINTS} from '../core.js';
 const data=JSON.parse(fs.readFileSync(new URL('../data/game.json',import.meta.url)));
 const toy={...data,cards:[{name:'Rare',rarityValue:100},{name:'Common',rarityValue:1}],secretSkins:{},weather:{Clear:{boostMultiplier:1}}};
-const fresh=d=>{const s=defaults(d);s.stats.Luck=1;s.goal.rarity=100;s.goal.borders=[];return s};
+const fresh=d=>{const s=defaults(d);s.globalLuck=1;s.stats.Luck=1;s.goal.rarity=100;s.goal.borders=[];return s};
 const near=(a,b,tolerance=1e-12)=>assert.ok(Math.abs(a-b)<=tolerance,`${a} != ${b}`);
 test('Game data keeps the Cardborn channels, exact point gains, and all cap stages',()=>{
   assert.equal(data.cards.length,160);assert.equal(data.pointCaps.length,8);assert.equal(data.pointGains.Void,.15);assert.equal(data.pointGains.Luck,.5);assert.equal(sum(data.pointCaps.at(-1)),2075);assert.equal(data.personalArtifact.stats.length,18);assert.deepEqual(data.estimatedBorderOdds,['Fabled','Corrupted','Void']);

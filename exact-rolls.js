@@ -1,4 +1,4 @@
-import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=9.2';
+import {BORDERS,effective,cardDistribution,borderProbabilities,matchesGoal} from './core.js?v=9.5';
 
 // sfc32 with independently mixed seed words. Two draws give a 53-bit fraction,
 // so rare checks are not limited to the 1 / 2^32 resolution of the old LCG.
@@ -39,7 +39,7 @@ export function prepareExactRolls(s,data,seconds,{stats=effective(s,data),rows=[
       const borders=BORDERS.filter((_,i)=>mask&(1<<i));let rarity=card.rarityValue;
       for(const border of borders)rarity*=data.borderRarity[border];
       const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);
-      rows[index]={index,key:card.name+'|'+mask,name:card.name,baseRarity:card.rarityValue,rarity,borders,mask,score:hp+2*Math.floor(hp/2),hit:(s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity)&&s.goal.borders.every(b=>borders.includes(b))};
+      rows[index]={index,key:card.name+'|'+mask,name:card.name,baseRarity:card.rarityValue,rarity,borders,mask,score:hp+2*Math.floor(hp/2),hit:matchesGoal(card,rarity,borders,s.goal)};
     }
     return rows[index];
   }

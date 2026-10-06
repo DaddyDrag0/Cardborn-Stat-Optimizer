@@ -9,7 +9,7 @@ import {prepareSimulation,simulateSession,simulationOutcomes,binomial,randomSour
 const data=JSON.parse(fs.readFileSync(new URL('../data/game.json',import.meta.url)));
 const toy={...data,cards:[{name:'Rare',rarityValue:100},{name:'Common',rarityValue:1}],secretSkins:{},weather:{Clear:{boostMultiplier:1}}};
 const close=(a,b,tolerance=1e-10)=>assert.ok(Math.abs(a-b)<=tolerance,`${a} != ${b}`);
-function setup(d=toy){const s=defaults(d);s.stats.Luck=1;s.goal={kind:'rarity',rarity:100,borders:[]};s.odds=Object.fromEntries(Object.keys(s.odds).map(k=>[k,1e100]));return s}
+function setup(d=toy){const s=defaults(d);s.globalLuck=1;s.stats.Luck=1;s.goal={kind:'rarity',rarity:100,borders:[]};s.odds=Object.fromEntries(Object.keys(s.odds).map(k=>[k,1e100]));return s}
 
 test('Global Luck affects card rolls once, without changing base stats or border rates, and survives imports',()=>{
   const s=setup();s.globalLuck=2.25;s.stats.Luck=4;
@@ -17,7 +17,7 @@ test('Global Luck affects card rolls once, without changing base stats or border
   close(evaluate(s,toy).probability,1/12);
   close(simulationOutcomes(s,toy,effective(s,toy)).filter(x=>x.hit).reduce((n,x)=>n+x.p,0),1/12);
   const restored=normalize({...s,rollCounter:12345},toy);assert.equal(restored.globalLuck,2.25);assert.equal(restored.rollCounter,12345);
-  assert.equal(normalize(defaults(toy),toy).globalLuck,1);assert.equal(normalize(defaults(toy),toy).rollCounter,0);
+  assert.equal(normalize(defaults(toy),toy).globalLuck,2.25);assert.equal(normalize(defaults(toy),toy).rollCounter,0);
   assert.equal(normalize({...s,globalLuck:Infinity},toy).globalLuck,.0001);
 });
 
@@ -57,7 +57,7 @@ test('Finite hit forecasts agree with explicit cycles and simulator expectations
   s.odds=Object.fromEntries(Object.keys(s.odds).map(k=>[k,1e100]));
   const forecast=evaluate(s,toy),stats=effective(s,toy),mean=1+.3+2*.15+2*.03;let misses=1,expectedHits=0;
   for(let i=25;i<=55;i++){
-    const mult=(i%25===0?2:1)*(i%50===0?4:1),p=1/Math.ceil(100/(stats.Luck*mult));
+    const mult=(i%25===0?2:1)*(i%50===0?4:1),p=1/Math.ceil(100/(stats.Luck*mult*s.globalLuck));
     let miss=0;
     for(const dbl of [0,1])for(const twice of [0,1])for(const triple of [0,1])miss+=(dbl?.3:.7)*(twice?.15:.85)*(triple?.03:.97)*(1-p)**(1+dbl+2*twice+2*triple);
     misses*=miss;expectedHits+=mean*p;

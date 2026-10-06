@@ -1,8 +1,8 @@
-import {matchesBorderTarget} from './rarity-results.js?v=9.2';
-import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.2';
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.2';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.2';
-import {periodicGroups} from './roll-timing.js?v=9.2';
+import {matchesBorderTarget} from './rarity-results.js?v=9.5';
+import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.5';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.5';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.5';
+import {periodicGroups} from './roll-timing.js?v=9.5';
 
 const clone=x=>structuredClone(x),STEP=.125;
 const pullGoal=settings=>['hits','borders'].includes(settings.objective);
@@ -31,10 +31,10 @@ export function createBuildEvaluator(s,data,settings=optimizerSettings(s,data),{
     const card=cards[ci];let rarity=card.rarityValue;
     for(let i=0;i<5;i++)if(mask&(1<<i))rarity*=data.borderRarity[BORDERS[i]];
     const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);
-    geometry.push({ci,mask,rarity,score:hp+2*Math.floor(hp/2),bin:Math.floor(Math.log10(Math.max(1,rarity))/STEP+1e-10),multi:mask.toString(2).replace(/0/g,'').length>=2,hit:settings.objective==='borders'?matchesBorderTarget(BORDERS.filter((b,i)=>mask&(1<<i)),settings):rarity>=settings.rarity,fabled:card.rarityValue<=s.fabledMax});
+    geometry.push({ci,mask,rarity,score:hp+2*Math.floor(hp/2),bin:Math.floor(Math.log10(Math.max(1,rarity))/STEP+1e-10),multi:mask.toString(2).replace(/0/g,'').length>=2,hit:settings.objective==='borders'?matchesBorderTarget(BORDERS.filter((b,i)=>mask&(1<<i)),settings):(settings.baseRarity?card.rarityValue:rarity)>=settings.rarity&&(!settings.targetCard||card.name===settings.targetCard)&&(!settings.requiredBorders?.length||matchesBorderTarget(BORDERS.filter((b,i)=>mask&(1<<i)),{borders:settings.requiredBorders,match:'contains'})),fabled:card.rarityValue<=s.fabledMax});
   }
   geometry.sort((a,b)=>a.score-b.score||a.rarity-b.rarity);
-  if(settings.objective==='hits'&&settings.rarity>Math.max(...geometry.map(o=>o.rarity)))throw Error('Minimum rarity is above the highest modeled final rarity. Lower it and try again.');
+  if(settings.objective==='hits'&&!settings.allowUnavailable&&settings.rarity>Math.max(...geometry.map(o=>o.rarity)))throw Error('Minimum rarity is above the highest modeled final rarity. Lower it and try again.');
   const bins=1+Math.max(...geometry.map(o=>o.bin)),ties=[];
   for(let i=0;i<geometry.length;){let j=i+1;while(j<geometry.length&&geometry[j].score===geometry[i].score&&geometry[j].rarity===geometry[i].rarity)j++;ties.push([i,j]);i=j}
   const plan=settings.tower?towerSessionPlan(s.build,settings.seconds):null,towerGroups=[];
@@ -81,7 +81,7 @@ export function createBuildEvaluator(s,data,settings=optimizerSettings(s,data),{
     let bestLog=0,median=0;const curve=[];
     if(settings.objective==='highest')for(let i=1;i<bins;i++){const chance=-Math.expm1(logMiss[i]);bestLog+=STEP*chance;if(chance>=.5)median=10**(i*STEP);if(i%8===0)curve.push({rarity:10**(i*STEP),chance})}
     const expectedHits=normalHits+towerHits,multiPerHour=multiCards/settings.seconds*3600;
-    const result={score:pullGoal(settings)?expectedHits:bestLog,expectedHits,normalHits,towerHits,chance:-Math.expm1(hitLogMiss),bestLog,typicalBest:10**bestLog,medianBest:median,cardsPerHour,expectedCards,normalExpectedCards,towerExpectedCards,multiPerHour,curve,stats};
+    const result={score:pullGoal(settings)?expectedHits:bestLog,expectedHits,normalHits,towerHits,chance:Math.max(0,-Math.expm1(hitLogMiss)),logMiss:hitLogMiss,bestLog,typicalBest:10**bestLog,medianBest:median,cardsPerHour,expectedCards,normalExpectedCards,towerExpectedCards,multiPerHour,curve,stats};
     if(cache.size>40000)cache.clear();return remember(profile,key,result);
   }
   return{evaluate,get checked(){return checked},finalists:()=>[...leaders.values()].map(x=>x.profile)};

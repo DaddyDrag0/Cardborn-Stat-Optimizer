@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.2';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.2';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.5';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.5';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -7,7 +7,7 @@ export const CHANCES=['DoubleRollChance','RollTwiceChance','TripleRollChance','L
 export const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
 export const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const number=(n,a=0,b=1e100)=>clamp(Number.isFinite(Number(n))?Number(n):a,a,b);
-export function defaults(data){return{version:1,globalLuck:1,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.95,qualityEdited:false,slots:[]},minutes:60}}
+export function defaults(data){return{version:1,globalLuck:2.25,globalLuckEdited:false,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.95,qualityEdited:false,slots:[]},minutes:60}}
 export function normalize(raw,data){
   if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Choose a valid Cardborn profile JSON file.');
   const s=defaults(data);
@@ -19,7 +19,7 @@ export function normalize(raw,data){
   s.badges=Array.isArray(raw.badges)?[...new Set(raw.badges.filter(x=>data.cards.some(c=>c.badgeRequired===x)))]:[];
   s.weather=Object.hasOwn(data.weather,raw.weather)?raw.weather:'Clear';
   for(const k of Object.keys(s.unlocks))s.unlocks[k]=raw.unlocks?.[k]===true;
-  s.goal.kind=raw.goal?.kind==='card'?'card':'rarity';s.goal.rarity=number(raw.goal?.rarity??1e6,1,1e30);
+  s.goal.kind=['card','final'].includes(raw.goal?.kind)?raw.goal.kind:'rarity';s.goal.rarity=number(raw.goal?.rarity??1e6,1,1e30);
   s.goal.card=data.cards.some(c=>c.name===raw.goal?.card)?raw.goal.card:s.goal.card;
   s.goal.borders=Array.isArray(raw.goal?.borders)?BORDERS.filter(k=>raw.goal.borders.includes(k)):s.goal.borders;
   for(const k of BORDERS)s.odds[k]=number(raw.odds?.[k]??data.borderOdds[k],1,1e30);
@@ -29,7 +29,7 @@ export function normalize(raw,data){
   if(raw.build&&typeof raw.build==='object'&&!Array.isArray(raw.build)){s.build=normalizeBuild(raw.build,data);s.version=2;s.artifact.gamepass=s.build.passes.ArtifactSlots;s.artifact.voidSlots=s.build.void.PASlots||0;s.artifact.strength=0}
   s.fabledMax=number(raw.fabledMax??1e30,0,1e30);
   if(s.build){for(const achievement of data.achievements)if(s.build.achievements.includes(achievement.id)&&achievement.badge&&!s.badges.includes(achievement.badge))s.badges.push(achievement.badge);s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
-  s.globalLuck=number(raw.globalLuck??1,.0001,1000);
+  s.globalLuck=number(raw.globalLuck??2.25,.0001,1000);s.globalLuckEdited=raw.globalLuckEdited===true;
   s.rollCounter=Math.floor(number(raw.rollCounter??0,0,1e12));
   s.optimizer={objective:['hits','highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'hits',rarity:number(raw.optimizer?.rarity??1e15,1,1e100),borders:Array.isArray(raw.optimizer?.borders)?BORDERS.filter(k=>raw.optimizer.borders.includes(k)):['Shiny','Awakened'],match:raw.optimizer?.match==='exact'?'exact':'contains',seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
   s.simulation={tower:raw.simulation?.tower===true};
@@ -66,21 +66,23 @@ export function cardDistribution(s,data,luck){
 }
 export function borderProbabilities(s,stats){return Object.fromEntries(BORDERS.map(k=>{let p=k==='Void'?1/Math.max(1,Math.ceil(s.odds[k]/Math.max(.0001,stats.VoidLuck))):Math.min(1,stats[k+'Luck']/s.odds[k]);if((k==='Awakened'||k==='Fabled'||k==='Corrupted')&&!s.unlocks[k])p=0;return[k,p]}))}
 function matchesCard(card,s){return s.goal.kind==='card'?card.name===s.goal.card:card.rarityValue>=s.goal.rarity}
+export function matchesGoal(card,rarity,borders,goal){return(goal.kind==='card'?card.name===goal.card:(goal.kind==='final'?rarity:card.rarityValue)>=goal.rarity)&&goal.borders.every(b=>borders.includes(b))}
 function baseProbability(s,data,stats){return luckVariants(stats).reduce((n,v)=>n+v.weight*cardDistribution(s,data,stats.Luck*v.mult).reduce((p,o)=>p+(matchesCard(o.card,s)&&(!s.goal.borders.includes('Fabled')||o.card.rarityValue<=(s.fabledMax??1e30))?o.p:0),0),0)}
-export function fastProbability(s,data,stats){const borders=borderProbabilities(s,stats),base=baseProbability(s,data,stats);
+export function fastProbability(s,data,stats){if(s.goal.kind==='final')return rollOutcomes(s,data,stats).reduce((p,o)=>p+(o.hit?o.p:0),0);const borders=borderProbabilities(s,stats),base=baseProbability(s,data,stats);
   return base*s.goal.borders.reduce((n,k)=>n*borders[k],1)}
 export function targetProbability(s,data,stats){const variants=luckVariants(stats);let plain=0,best=0;for(const v of variants){const result=singleTargetProbability(s,data,{...stats,Luck:stats.Luck*v.mult,periodic:[]});plain+=v.weight*result.plain;best+=v.weight*result.best}return{plain,best,p:(1-stats.LuckyHandChance)*plain+stats.LuckyHandChance*best}}
 export function rollOutcomes(s,data,stats,mult=1){
   const bp=borderProbabilities(s,stats),variants=[];
-  for(const outcome of cardDistribution(s,data,stats.Luck*mult))for(let mask=0;mask<32;mask++){const cardBp={...bp,Fabled:outcome.card.rarityValue<=(s.fabledMax??1e30)?bp.Fabled:0};let p=outcome.p,rarity=outcome.card.rarityValue,match=matchesCard(outcome.card,s);const borders=[];
-    for(let j=0;j<BORDERS.length;j++){const k=BORDERS[j],on=!!(mask&(1<<j));p*=on?cardBp[k]:1-cardBp[k];if(on){rarity*=data.borderRarity[k];borders.push(k)}if(!on&&s.goal.borders.includes(k))match=false}
-    if(p<=0)continue;const boost=outcome.card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost),score=hp+2*Math.floor(hp/2);variants.push({name:outcome.card.name,baseRarity:outcome.card.rarityValue,borders,mask,p,rarity,score,hit:match});
+  for(const outcome of cardDistribution(s,data,stats.Luck*mult))for(let mask=0;mask<32;mask++){const cardBp={...bp,Fabled:outcome.card.rarityValue<=(s.fabledMax??1e30)?bp.Fabled:0};let p=outcome.p,rarity=outcome.card.rarityValue;const borders=[];
+    for(let j=0;j<BORDERS.length;j++){const k=BORDERS[j],on=!!(mask&(1<<j));p*=on?cardBp[k]:1-cardBp[k];if(on){rarity*=data.borderRarity[k];borders.push(k)}}
+    if(p<=0)continue;const boost=outcome.card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost),score=hp+2*Math.floor(hp/2);variants.push({name:outcome.card.name,baseRarity:outcome.card.rarityValue,borders,mask,p,rarity,score,hit:matchesGoal(outcome.card,rarity,borders,s.goal)});
   }
   variants.sort((a,b)=>a.score-b.score||a.rarity-b.rarity);let below=0;
   for(let i=0;i<variants.length;){let j=i,mass=0;while(j<variants.length&&variants[j].score===variants[i].score&&variants[j].rarity===variants[i].rarity)mass+=variants[j++].p;for(let k=i;k<j;k++)variants[k].handP=variants[k].p*(2*below+mass);below+=mass;i=j}
   return variants;
 }
 function singleTargetProbability(s,data,stats){
+  if(s.goal.kind==='final'){const outcomes=rollOutcomes(s,data,stats);let plain=0,best=0;for(const o of outcomes)if(o.hit){plain+=o.p;best+=o.handP}return{plain,best,p:(1-stats.LuckyHandChance)*plain+stats.LuckyHandChance*best}}
   const plain=fastProbability(s,data,stats),hand=stats.LuckyHandChance;if(!hand)return{plain,best:plain,p:plain};
   const best=rollOutcomes(s,data,stats).reduce((p,o)=>p+(o.hit?o.handP:0),0);
   return{plain,best,p:(1-hand)*plain+hand*best};
@@ -88,7 +90,7 @@ function singleTargetProbability(s,data,stats){
 export function batchDistribution(stats){let dist=[{n:1,p:1}];for(const [key,extra] of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]]){const chance=stats[key];dist=dist.flatMap(o=>[{n:o.n,p:o.p*(1-chance)},{n:o.n+extra,p:o.p*chance}]).filter(o=>o.p>0)}return dist}
 export function simulateRolls(s,data,count=1000,seed=1){
   count=Math.floor(number(count,1,50000));seed=Math.floor(number(seed,1,4294967295));let state=seed,hits=0,cards=0;const rng=()=>((state=(Math.imul(state,1664525)+1013904223)>>>0)/4294967296),stats=effective(s,data),cache=new Map(),best=[];
-  function draw(mult){let pool=cache.get(mult);if(!pool){let total=0;pool=cardDistribution(s,data,stats.Luck*mult).map(o=>({...o,cdf:(total+=o.p)}));cache.set(mult,pool)}const r=rng();let lo=0,hi=pool.length-1;while(lo<hi){const mid=(lo+hi)>>1;if(r<=pool[mid].cdf)hi=mid;else lo=mid+1}const card=pool[lo].card,bp=borderProbabilities(s,stats),borders=[];let rarity=card.rarityValue;for(const b of BORDERS)if((b!=='Fabled'||card.rarityValue<=(s.fabledMax??1e30))&&rng()<bp[b]){borders.push(b);rarity*=data.borderRarity[b]}const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);return{name:card.name,rarity,borders,score:hp+2*Math.floor(hp/2),hit:matchesCard(card,s)&&s.goal.borders.every(b=>borders.includes(b))}}
+  function draw(mult){let pool=cache.get(mult);if(!pool){let total=0;pool=cardDistribution(s,data,stats.Luck*mult).map(o=>({...o,cdf:(total+=o.p)}));cache.set(mult,pool)}const r=rng();let lo=0,hi=pool.length-1;while(lo<hi){const mid=(lo+hi)>>1;if(r<=pool[mid].cdf)hi=mid;else lo=mid+1}const card=pool[lo].card,bp=borderProbabilities(s,stats),borders=[];let rarity=card.rarityValue;for(const b of BORDERS)if((b!=='Fabled'||card.rarityValue<=(s.fabledMax??1e30))&&rng()<bp[b]){borders.push(b);rarity*=data.borderRarity[b]}const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);return{name:card.name,rarity,borders,score:hp+2*Math.floor(hp/2),hit:matchesGoal(card,rarity,borders,s.goal)}}
   for(let i=1;i<=count;i++){const mult=(stats.periodic||[]).reduce((m,p)=>m*((i+(s.rollCounter||0))%p.every===0?p.mult:1),1),hand=rng()<stats.LuckyHandChance;let batch=1;for(const[k,n]of [['DoubleRollChance',1],['RollTwiceChance',2],['TripleRollChance',2]])if(rng()<stats[k])batch+=n;for(let j=0;j<batch;j++){let roll=draw(mult);if(hand){const other=draw(mult);if(other.score>roll.score||other.score===roll.score&&other.rarity>roll.rarity)roll=other}cards++;if(roll.hit)hits++;if(best.length<10||roll.rarity>best.at(-1).rarity){best.push(roll);best.sort((a,b)=>b.rarity-a.rarity);best.length=Math.min(best.length,10)}}}
   return{cycles:count,cards,hits,seed,seconds:count*stats.RollInterval,best};
 }
