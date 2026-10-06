@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8.3';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8.3';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -7,7 +7,7 @@ export const CHANCES=['DoubleRollChance','RollTwiceChance','TripleRollChance','L
 export const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
 export const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const number=(n,a=0,b=1e100)=>clamp(Number.isFinite(Number(n))?Number(n):a,a,b);
-export function defaults(data){return{version:1,globalLuck:1,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.9,slots:[]},minutes:60}}
+export function defaults(data){return{version:1,globalLuck:1,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.95,qualityEdited:false,slots:[]},minutes:60}}
 export function normalize(raw,data){
   if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Choose a valid Cardborn profile JSON file.');
   const s=defaults(data);
@@ -24,14 +24,14 @@ export function normalize(raw,data){
   s.goal.borders=Array.isArray(raw.goal?.borders)?BORDERS.filter(k=>raw.goal.borders.includes(k)):s.goal.borders;
   for(const k of BORDERS)s.odds[k]=number(raw.odds?.[k]??data.borderOdds[k],1,1e30);
   const a=raw.artifact||{};s.artifact.rarity=data.personalArtifact.rarities.some(r=>r.id===a.rarity)?a.rarity:'Common';
-  s.artifact.gamepass=a.gamepass===true;s.artifact.voidSlots=Math.floor(number(a.voidSlots??0,0,2));s.artifact.strength=number(a.strength??0,0,10);s.artifact.quality=number(a.quality??.9,0,1);
+  s.artifact.gamepass=a.gamepass===true;s.artifact.voidSlots=Math.floor(number(a.voidSlots??0,0,2));s.artifact.strength=number(a.strength??0,0,10);s.artifact.quality=number(a.quality===.9&&a.qualityEdited!==true?.95:a.quality??.95,0,1);s.artifact.qualityEdited=a.qualityEdited===true;
   s.artifact.slots=Array.isArray(a.slots)?a.slots.slice(0,11).filter(x=>data.personalArtifact.stats.some(d=>d.id===x?.id)).map(x=>({id:x.id,value:number(x.value,0,1e6),locked:x.locked===true})):[];
   if(raw.build&&typeof raw.build==='object'&&!Array.isArray(raw.build)){s.build=normalizeBuild(raw.build,data);s.version=2;s.artifact.gamepass=s.build.passes.ArtifactSlots;s.artifact.voidSlots=s.build.void.PASlots||0;s.artifact.strength=0}
   s.fabledMax=number(raw.fabledMax??1e30,0,1e30);
   if(s.build){for(const achievement of data.achievements)if(s.build.achievements.includes(achievement.id)&&achievement.badge&&!s.badges.includes(achievement.badge))s.badges.push(achievement.badge);s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
   s.globalLuck=number(raw.globalLuck??1,.0001,1000);
   s.rollCounter=Math.floor(number(raw.rollCounter??0,0,1e12));
-  s.optimizer={objective:['highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'highest',seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
+  s.optimizer={objective:['hits','highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'hits',rarity:number(raw.optimizer?.rarity??1e15,1,1e100),seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
   s.simulation={tower:raw.simulation?.tower===true};
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }

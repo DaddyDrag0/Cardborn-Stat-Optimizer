@@ -1,5 +1,5 @@
-import {normalize} from './core.js?v=8.3';
-import {prepareRollSession,simulateRollSession} from './tower-simulation.js?v=8.3';
+import {normalize} from './core.js?v=9';
+import {prepareRollSession,simulateRollSession} from './tower-simulation.js?v=9';
 self.onmessage=e=>{
   const {id,profile,data,seconds,runs,seed,indices}=e.data;
   try{

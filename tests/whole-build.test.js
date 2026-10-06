@@ -8,7 +8,7 @@ import {prepareExactRolls,simulateExactSession,rollRandom} from '../exact-rolls.
 const data=JSON.parse(fs.readFileSync(new URL('../data/game.json',import.meta.url)));
 const toy={...data,cards:[{name:'Rare',rarityValue:100},{name:'Common',rarityValue:1}],secretSkins:{},weather:{Clear:{boostMultiplier:1}}};
 const close=(a,b,tol=1e-9)=>assert.ok(Math.abs(a-b)<tol,`${a} != ${b}`);
-function setup(d=data){return normalize({...defaults(d),rolls:4e6,build:{...buildDefaults(),index:400,currencies:{tower:40,void:0,corrupted:125}},artifact:{...defaults(d).artifact,slots:[{id:'Luck',value:20,locked:true}]}},d)}
+function setup(d=data){return normalize({...defaults(d),optimizer:{objective:'highest'},rolls:4e6,build:{...buildDefaults(),index:400,currencies:{tower:40,void:0,corrupted:125}},artifact:{...defaults(d).artifact,slots:[{id:'Luck',value:20,locked:true}]}},d)}
 
 test('Whole-build forecasts match an independent explicit-cycle CDF with Lucky Hand, all extra rolls and phase',()=>{
   const s=setup(toy);s.optimizer.seconds=61;s.rollCounter=24;s.build.relics=[{id:'RelicOfBonus',border:1}];s.build.tower.DoubleRollChance=15;s.build.tower.RollTwiceChance=15;s.build.corrupted.FracturedRoll=6;s.build.tower.LuckyHandChance=15;s.odds.Shiny=4;s.odds.Awakened=20;s.odds.Fabled=20;s.odds.Corrupted=20;s.odds.Void=10;
