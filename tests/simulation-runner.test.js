@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {defaults,normalize} from '../core.js';
 import {prepareExactRolls,simulateExactSession} from '../exact-rolls.js';
+import {prepareRollSession,simulateRollSession} from '../tower-simulation.js';
+import {buildDefaults} from '../build.js';
 import {runSimulations} from '../simulation-runner.js';
 const data=JSON.parse(fs.readFileSync(new URL('../data/game.json',import.meta.url)));
 const profile=normalize(defaults(data),data);
@@ -14,9 +16,9 @@ function factory({failure=false,hold=false}={}){
     setTimeout(()=>{
       if(this.stopped)return;
       if(failure){this.onmessage({data:{id:config.id,type:'error',message:'Worker failure'}});return}
-      const prepared=prepareExactRolls(config.profile,config.data,config.seconds),results=config.indices.map((index,i)=>{
-        const result=simulateExactSession(prepared,(config.seed+Math.imul(index,2654435761))>>>0);
-        this.onmessage({data:{id:config.id,type:'progress',cycles:(i+1)*prepared.cycles,total:config.runs*prepared.cycles}});return result;
+      const prepared=prepareRollSession(config.profile,config.data,config.seconds),results=config.indices.map((index,i)=>{
+        const result=simulateRollSession(prepared,(config.seed+Math.imul(index,2654435761))>>>0);
+        this.onmessage({data:{id:config.id,type:'progress',cycles:(i+1)*prepared.work,total:config.runs*prepared.work}});return result;
       });
       this.onmessage({data:{id:config.id,type:'result',indices:config.indices,result:{runs:results}}});
     },config.indices[0]%2?1:10);
@@ -37,6 +39,14 @@ test('Cancelling terminates every worker and ignores stale progress and completi
   const run=runSimulations({id:1,profile,data,seconds:30,runs:50,seed:1},{workerCount:8,workerFactory:()=>f.create(),onProgress:x=>progress.push(x)});
   run.cancel();await assert.rejects(run.promise,{name:'AbortError'});assert.ok(f.workers.every(w=>w.stopped));
   for(const worker of f.workers)worker.onmessage({data:{id:1,type:'progress',cycles:100,total:100}});assert.deepEqual(progress,[]);
+});
+
+test('Tower reward sessions preserve inventories, accounting and seeds across worker counts',async()=>{
+  const s=normalize({...profile,build:{...buildDefaults(),floor:20,dungeonSeconds:10},simulation:{tower:true}},data),config={id:8,profile:s,data,seconds:25,runs:7,seed:12},a=factory(),b=factory(),progress=[];
+  const serial=await runSimulations(config,{workerCount:1,workerFactory:()=>a.create()}).promise;
+  const parallel=await runSimulations(config,{workerCount:4,workerFactory:()=>b.create(),onProgress:x=>progress.push(x)}).promise;
+  assert.deepEqual(parallel,serial);assert.equal(parallel.aggregate.towerCards,350*7);assert.equal(parallel.aggregate.tower.completedRuns,14);
+  assert.equal(progress.at(-1).value,1);assert.ok(progress.every((x,i)=>!i||x.value>=progress[i-1].value));
 });
 
 test('Worker errors stop the complete pool and hardware limits cannot create more workers than runs',async()=>{

@@ -1,6 +1,6 @@
-import {rollRandom,prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=8.2';
-import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=8.2';
-import {periodicGroups} from './roll-timing.js?v=8.2';
+import {rollRandom,prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=8.3';
+import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=8.3';
+import {periodicGroups} from './roll-timing.js?v=8.3';
 export {periodicGroups};
 
 // Count sampling adapted from Hit Calculator's roll-sim-worker-v39.js.
@@ -42,6 +42,6 @@ export function sampleSessionCounts(prepared,seed){
   const rows=[...inventory.values()].sort((a,b)=>b.rarity-a.rarity);
   return{seed,cycles:prepared.cycles,seconds:prepared.seconds,cards,hits,uniqueCards:new Set(rows.map(o=>o.name)).size,borderTotals,combos,best:rows.length?{...rows[0]}:null,inventory:rows};
 }
-export function aggregateSessions(runs){const inventory=new Map(),borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={};let cards=0,hits=0,best=null;for(const run of runs){cards+=run.cards;hits+=run.hits;if(run.best&&(!best||run.best.rarity>best.rarity))best=run.best;for(const b of BORDERS)borderTotals[b]+=run.borderTotals[b];for(const [mask,count] of Object.entries(run.combos))combos[mask]=(combos[mask]||0)+count;for(const row of run.inventory){const key=row.name+'|'+row.mask,item=inventory.get(key)||{...row,count:0,runsHit:0};item.count+=row.count;item.runsHit++;inventory.set(key,item)}}return{runCount:runs.length,cards,hits,cycles:runs.reduce((n,r)=>n+r.cycles,0),seconds:runs[0]?.seconds||0,hitRuns:runs.filter(r=>r.hits>0).length,uniqueCards:new Set([...inventory.values()].map(o=>o.name)).size,borderTotals,combos,best,inventory:[...inventory.values()].sort((a,b)=>b.rarity-a.rarity)}}
+export function aggregateSessions(runs){const inventory=new Map(),borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={};let cards=0,hits=0,best=null;for(const run of runs){cards+=run.cards;hits+=run.hits;if(run.best&&(!best||run.best.rarity>best.rarity))best=run.best;for(const b of BORDERS)borderTotals[b]+=run.borderTotals[b];for(const [mask,count] of Object.entries(run.combos))combos[mask]=(combos[mask]||0)+count;for(const row of run.inventory){const key=row.name+'|'+row.mask,item=inventory.get(key)||{...row,count:0,runsHit:0};item.count+=row.count;item.runsHit++;inventory.set(key,item)}}return{...(runs[0]?.tower?{regularCards:runs.reduce((n,r)=>n+r.regularCards,0),towerCards:runs.reduce((n,r)=>n+r.towerCards,0),tower:{...runs[0].tower,completedRuns:runs.reduce((n,r)=>n+r.tower.completedRuns,0),clearedFloors:runs.reduce((n,r)=>n+r.tower.clearedFloors,0)}}:{}),runCount:runs.length,cards,hits,cycles:runs.reduce((n,r)=>n+r.cycles,0),seconds:runs[0]?.seconds||0,hitRuns:runs.filter(r=>r.hits>0).length,uniqueCards:new Set([...inventory.values()].map(o=>o.name)).size,borderTotals,combos,best,inventory:[...inventory.values()].sort((a,b)=>b.rarity-a.rarity)}}
 
 export const simulateSession=simulateExactSession;

@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8.2';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8.2';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8.3';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8.3';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -32,6 +32,7 @@ export function normalize(raw,data){
   s.globalLuck=number(raw.globalLuck??1,.0001,1000);
   s.rollCounter=Math.floor(number(raw.rollCounter??0,0,1e12));
   s.optimizer={objective:['highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'highest',seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
+  s.simulation={tower:raw.simulation?.tower===true};
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}

@@ -1,4 +1,4 @@
-import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=8.2';
+import {BORDERS,effective,cardDistribution,borderProbabilities} from './core.js?v=8.3';
 
 // sfc32 with independently mixed seed words. Two draws give a 53-bit fraction,
 // so rare checks are not limited to the 1 / 2^32 resolution of the old LCG.
@@ -11,8 +11,8 @@ export function rollRandom(seed){
   return{unit53:()=>((next()>>>5)*67108864+(next()>>>6))/9007199254740992};
 }
 
-export function prepareExactRolls(s,data,seconds){
-  const stats=effective(s,data),cache=new Map(),rows=[],bp=borderProbabilities(s,stats),byName=new Map(data.cards.map((c,i)=>[c.name,i]));
+export function prepareExactRolls(s,data,seconds,{stats=effective(s,data),rows=[]}={}){
+  const cache=new Map(),bp=borderProbabilities(s,stats),byName=new Map(data.cards.map((c,i)=>[c.name,i]));
   const probabilities=BORDERS.map(b=>bp[b]);
   // This is the exact distribution of the rarest-first independent checks,
   // including secret upgrades. Each card still gets its own random draw; no
