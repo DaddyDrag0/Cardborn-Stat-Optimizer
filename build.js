@@ -38,11 +38,23 @@ export function skillSelection(b,id,on,data){
 export function shopCap(b,d,shop){return d.maxLevel}
 export function corruptedCost(d,level){return level>=d.maxLevel?null:d.knownNextCosts[level]??Math.round(d.costFormula.base*d.costFormula.growth**level)}
 export function corruptedRefund(d,level){let total=0;for(let i=0;i<level;i++)total+=corruptedCost(d,i);return total}
+export function setCorruptedLevel(b,id,value,data){
+  const d=data.corruptedUpgrades.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
+  const level=Number(value);if(!Number.isInteger(level)||level<0||level>d.maxLevel)return{error:`Enter a whole level from 0 to ${d.maxLevel}.`};
+  const cost=corruptedRefund(d,level)-corruptedRefund(d,b.corrupted[id]||0),balance=(b.currencies?.corrupted||0)-cost;
+  if(balance<0)return{error:'Not enough Corrupted Coins.'};return{level,balance};
+}
 export function corruptedRemainingCost(b,data){return data.corruptedUpgrades.reduce((total,d)=>total+corruptedRefund(d,d.maxLevel)-corruptedRefund(d,b.corrupted[d.id]||0),0)}
 export function buyAllCorrupted(b,data){const cost=corruptedRemainingCost(b,data);if((b.currencies.corrupted||0)<cost)return{error:'Not enough Corrupted Coins.'};return{levels:Object.fromEntries(data.corruptedUpgrades.map(d=>[d.id,d.maxLevel])),balance:b.currencies.corrupted-cost}}
 export function potionGroup(id,data){const d=data.potions[id];return d&&['ShinyLuck','AwakenedLuck'].includes(d.StatCategory)&&id.endsWith('Mythic')?d.StatCategory+'Mythic':d?.StatCategory}
 export function shopAction(b,shop,id,direction,data){
   const defs=shop==='tower'?data.towerShop:shop==='corrupted'?data.corruptedUpgrades:data.voidShop,d=defs.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
+  if(shop==='corrupted'&&(direction===1||direction===-1)){
+    const level=b.corrupted[id]||0;
+    if(direction===1&&level>=d.maxLevel)return{error:'Upgrade is at its cap.'};
+    if(direction===-1&&level<=0)return{error:'No upgrade to refund.'};
+    return setCorruptedLevel(b,id,direction===-1?0:level+1,data);
+  }
   const level=b[shop][id]||0,cost=shop==='corrupted'?(direction<0?corruptedRefund(d,level):corruptedCost(d,level)):d.cost;
   if(direction==='max'){if(shop!=='tower')return{error:'Buy max is only available in the Tower Shop.'};const cap=shopCap(b,d,shop);direction=Math.min(cap-level,Math.floor((b.currencies?.tower||0)/cost));if(direction<=0)return{error:level>=cap?'Upgrade is at its cap.':'Not enough currency.'}}
   if(direction<0&&shop==='void')return{error:'Void upgrades cannot be refunded.'};
