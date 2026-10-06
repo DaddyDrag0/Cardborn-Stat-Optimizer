@@ -1,10 +1,11 @@
-import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=7';
-import {periodicGroups} from './roll-timing.js?v=7';
+import {rollRandom,prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=8';
+import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=8';
+import {periodicGroups} from './roll-timing.js?v=8';
 export {periodicGroups};
 
 // Count sampling adapted from Hit Calculator's roll-sim-worker-v39.js.
 // https://github.com/DaddyDrag0/HitCalculator/blob/main/roll-sim-worker-v39.js
-export function randomSource(seed){let state=seed>>>0;return{unit53:()=>((state=(Math.imul(state,1664525)+1013904223)>>>0)/4294967296)}}
+export const randomSource=rollRandom;
 function normal(random){return Math.sqrt(-2*Math.log(Math.max(Number.MIN_VALUE,random.unit53())))*Math.cos(2*Math.PI*random.unit53())}
 function poisson(lambda,random){if(!lambda)return 0;if(lambda<24){const stop=Math.exp(-lambda);let product=1;for(let k=0;k<128;k++){product*=Math.max(Number.MIN_VALUE,random.unit53());if(product<=stop)return k}}return Math.max(0,Math.round(lambda+Math.sqrt(lambda)*normal(random)))}
 export function binomial(n,p,random){n=Math.max(0,Math.floor(n));p=Math.max(0,Math.min(1,p));if(!n||!p)return 0;if(p===1)return n;if(p>.5)return n-binomial(n,1-p,random);if(n<=64){let hits=0;for(let i=0;i<n;i++)if(random.unit53()<p)hits++;return hits}const mean=n*p;if(mean<24&&p<=.08)return Math.min(n,poisson(mean,random));const z=normal(random),skew=(1-2*p)/6*(z*z-1);return Math.max(0,Math.min(n,Math.round(mean+Math.sqrt(mean*(1-p))*z+skew)))}
@@ -16,12 +17,12 @@ function sampler(probabilities){return{probabilities,order:probabilities.map((p,
 export function prepareSimulation(s,data,seconds){
   const stats=effective(s,data),cycles=Math.floor(seconds/stats.RollInterval);
   const batches=batchDistribution(stats).flatMap(b=>[{...b,hand:false,p:b.p*(1-stats.LuckyHandChance)},{...b,hand:true,p:b.p*stats.LuckyHandChance}]).filter(b=>b.p>0);
-  return{stats,cycles,seconds,batches,batchSampler:sampler(batches.map(b=>b.p)),groups:periodicGroups(cycles,stats.periodic,s.rollCounter||0).map(g=>{
+  return{...prepareExactRolls(s,data,seconds),stats,cycles,seconds,batches,batchSampler:sampler(batches.map(b=>b.p)),groups:periodicGroups(cycles,stats.periodic,s.rollCounter||0).map(g=>{
     const outcomes=rollOutcomes(s,data,stats,g.mult);
     return{...g,outcomes,plain:sampler(outcomes.map(o=>o.p)),hand:sampler(outcomes.map(o=>o.handP))};
   })};
 }
-export function simulateSession(prepared,seed){
+export function sampleSessionCounts(prepared,seed){
   const random=randomSource(seed),borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={},inventory=new Map();let cards=0,hits=0;
   for(const group of prepared.groups){
     const batchCounts=multinomial(group.cycles,prepared.batchSampler.probabilities,random,prepared.batchSampler.order),amounts={plain:0,hand:0};
@@ -42,3 +43,5 @@ export function simulateSession(prepared,seed){
   return{seed,cycles:prepared.cycles,seconds:prepared.seconds,cards,hits,uniqueCards:new Set(rows.map(o=>o.name)).size,borderTotals,combos,best:rows.length?{...rows[0]}:null,inventory:rows};
 }
 export function aggregateSessions(runs){const inventory=new Map(),borderTotals=Object.fromEntries(BORDERS.map(b=>[b,0])),combos={};let cards=0,hits=0,best=null;for(const run of runs){cards+=run.cards;hits+=run.hits;if(run.best&&(!best||run.best.rarity>best.rarity))best=run.best;for(const b of BORDERS)borderTotals[b]+=run.borderTotals[b];for(const [mask,count] of Object.entries(run.combos))combos[mask]=(combos[mask]||0)+count;for(const row of run.inventory){const key=row.name+'|'+row.mask,item=inventory.get(key)||{...row,count:0,runsHit:0};item.count+=row.count;item.runsHit++;inventory.set(key,item)}}return{runCount:runs.length,cards,hits,cycles:runs.reduce((n,r)=>n+r.cycles,0),seconds:runs[0]?.seconds||0,hitRuns:runs.filter(r=>r.hits>0).length,uniqueCards:new Set([...inventory.values()].map(o=>o.name)).size,borderTotals,combos,best,inventory:[...inventory.values()].sort((a,b)=>b.rarity-a.rarity)}}
+
+export const simulateSession=simulateExactSession;

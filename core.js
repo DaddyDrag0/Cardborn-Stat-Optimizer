@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=7';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=7';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=8';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=8';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -31,6 +31,7 @@ export function normalize(raw,data){
   if(s.build){for(const achievement of data.achievements)if(s.build.achievements.includes(achievement.id)&&achievement.badge&&!s.badges.includes(achievement.badge))s.badges.push(achievement.badge);s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
   s.globalLuck=number(raw.globalLuck??1,.0001,1000);
   s.rollCounter=Math.floor(number(raw.rollCounter??0,0,1e12));
+  s.optimizer={objective:['highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'highest',seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','potions','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),crafted:Array.isArray(raw.optimizer?.crafted)?raw.optimizer.crafted.slice(0,208).filter(x=>x&&data.craftedArtifacts[x.id]&&data.craftedTiers.some(t=>t.id===x.tier)).map(x=>({id:x.id,tier:x.tier})):[],relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[],potions:Array.isArray(raw.optimizer?.potions)?[...new Set(raw.optimizer.potions.filter(id=>data.potions[id]))]:[]};
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}
