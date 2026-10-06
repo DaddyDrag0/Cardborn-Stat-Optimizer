@@ -1,4 +1,4 @@
-import {BORDERS,effective,eligibleCards,borderProbabilities} from './core.js?v=8';
+import {BORDERS,effective,eligibleCards,borderProbabilities} from './core.js?v=8.1';
 
 // sfc32 with independently mixed seed words. Two draws give a 53-bit fraction,
 // so rare checks are not limited to the 1 / 2^32 resolution of the old LCG.

@@ -1,18 +1,16 @@
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=8';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,potionGroup,corruptedCost} from './build.js?v=8';
-import {periodicGroups} from './roll-timing.js?v=8';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=8.1';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost} from './build.js?v=8.1';
+import {periodicGroups} from './roll-timing.js?v=8.1';
 
 const clone=x=>structuredClone(x),STEP=.125;
-export const COMPONENTS={points:'Stat points',skills:'Skill tree & constellations',artifact:'Personal Artifact',equipment:'Artifact & relics',potions:'Potions',shops:'Shop spending'};
+export const COMPONENTS={points:'Stat points',skills:'Skill tree & constellations',artifact:'Personal Artifact',equipment:'Relics',shops:'Shop spending'};
 export function optimizerSettings(s,data){
   const raw=s.optimizer||{},b=s.build||{};
   return{
     objective:['highest','cards','borders'].includes(raw.objective)?raw.objective:'highest',
     seconds:Math.max(60,Math.min(172800,Number(raw.seconds)||28800)),
     components:Object.fromEntries(Object.keys(COMPONENTS).map(k=>[k,raw.components?.[k]!==false])),
-    crafted:[...(raw.crafted||[]),...(b.crafted?[{id:b.crafted,tier:b.craftedTier}]:[])].filter(x=>data.craftedArtifacts[x.id]&&data.craftedTiers.some(t=>t.id===x.tier)).filter((x,i,a)=>a.findIndex(y=>y.id===x.id&&y.tier===x.tier)===i),
     relics:[...(raw.relics||[]),...(b.relics||[])].filter(x=>data.relics[x.id]).map(x=>({id:x.id,border:Math.max(1,Math.min(6,Math.floor(Number(x.border)||1)))})).filter((x,i,a)=>a.findIndex(y=>y.id===x.id&&y.border===x.border)===i),
-    potions:[...new Set([...(raw.potions||[]),...(b.potions||[])])].filter(id=>data.potions[id]&&Object.keys(data.potions[id].Boosts).length),
   };
 }
 
@@ -165,15 +163,9 @@ function equipmentSearch(profile,data,settings,score){
   // Exact enumeration of the permitted owned equipment combinations for the
   // current point/tree/PA allocation. Revisiting it after those searches matters.
   let best=profile;
-  for(const crafted of [{id:profile.build.crafted,tier:profile.build.craftedTier},...settings.crafted])for(const relics of combos){const p={...profile,build:{...profile.build,crafted:crafted.id,craftedTier:crafted.tier,relics}};if(score(p)>score(best)+1e-10)best=p}
+  for(const relics of combos){const p={...profile,build:{...profile.build,relics}};if(score(p)>score(best)+1e-10)best=p}
   return best;
 }
-function potionSearch(profile,data,settings,score){
-  let best=profile;const groups=[...new Set(settings.potions.map(id=>potionGroup(id,data)))];
-  for(let pass=0;pass<2;pass++)for(const group of groups){const other=best.build.potions.filter(id=>potionGroup(id,data)!==group),candidates=[best,...['',...settings.potions.filter(id=>potionGroup(id,data)===group)].map(id=>({...best,build:{...best.build,potions:[...other,...(id?[id]:[])]}}))];best=bestOf(candidates,score)}
-  return best;
-}
-
 function shopSearch(profile,data,settings,score,origin=profile){
   // Reconsider purchases using the original owned levels and unspent balances.
   // Earlier hypothetical purchases must not become locked investments merely
@@ -215,13 +207,13 @@ export function optimizeBuild(raw,data,progress=()=>{}){
   const s=normalize(raw,data);if(!s.build)throw Error('Complete Setup before optimizing.');
   const warnings=profileWarnings(s,data);if(warnings.length)throw Error(warnings.join(' '));
   const settings=optimizerSettings(s,data),evaluator=createBuildEvaluator(s,data,settings),score=p=>evaluator.evaluate(p).score,current=evaluator.evaluate(s);
-  const operations={equipment:p=>equipmentSearch(p,data,settings,score),potions:p=>potionSearch(p,data,settings,score),points:p=>pointSearch(p,data,score),skills:p=>skillSearch(p,data,score),artifact:p=>paSearch(p,data,score),shops:p=>shopSearch(p,data,settings,score,s)};
+  const operations={equipment:p=>equipmentSearch(p,data,settings,score),points:p=>pointSearch(p,data,score),skills:p=>skillSearch(p,data,score),artifact:p=>paSearch(p,data,score),shops:p=>shopSearch(p,data,settings,score,s)};
   let best=s,done=0;
   // Different group orders and another pass let potion power, multipliers,
   // speed saturation, periodic relics and point allocations influence each other.
-  const orders=[['potions','equipment','points','skills','artifact','shops'],['shops','artifact','skills','points','equipment','potions'],['equipment','potions','skills','points','artifact','shops']];
+  const orders=[['equipment','points','skills','artifact','shops'],['shops','artifact','skills','points','equipment'],['equipment','skills','points','artifact','shops']];
   for(const order of orders)for(const key of order){
-    progress({phase:COMPONENTS[key],value:done++/18,checked:evaluator.checked});if(!settings.components[key])continue;
+    progress({phase:COMPONENTS[key],value:done++/15,checked:evaluator.checked});if(!settings.components[key])continue;
     const candidate=operations[key](best);if(score(candidate)>=score(best)-1e-10)best=candidate;
   }
   best=normalize(best,data);const result=evaluator.evaluate(best);
@@ -247,8 +239,6 @@ export function nextUpgrades(profile,data,settings,evaluator=createBuildEvaluato
   }
   for(const set of data.indexSets)if(!profile.build.sets.includes(set.id))add(set.name,'Complete Index set',{...profile,build:{...profile.build,sets:[...profile.build.sets,set.id]}});
   for(const achievement of data.achievements)if(!profile.build.achievements.includes(achievement.id))add(achievement.name,'Earn achievement',{...profile,build:{...profile.build,achievements:[...profile.build.achievements,achievement.id]}});
-  const tier=data.craftedTiers.findIndex(t=>t.id===profile.build.craftedTier);
-  if(profile.build.crafted&&tier<data.craftedTiers.length-1)add(data.craftedArtifacts[profile.build.crafted].Name+' · '+data.craftedTiers[tier+1].label,'Craft higher artifact tier',{...profile,build:{...profile.build,craftedTier:data.craftedTiers[tier+1].id}});
   const rarity=data.personalArtifact.rarities.findIndex(r=>r.id===profile.artifact.rarity);
   if(rarity<data.personalArtifact.rarities.length-1)add(data.personalArtifact.rarities[rarity+1].name+' PA','Roll higher PA rarity',{...profile,artifact:{...profile.artifact,rarity:data.personalArtifact.rarities[rarity+1].id}});
   if(profile.build.skills.length<data.skillNodes.length){

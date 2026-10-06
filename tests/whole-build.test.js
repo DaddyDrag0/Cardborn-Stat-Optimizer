@@ -83,5 +83,19 @@ test('Individual rolling matches known independent frequencies and fresh seeds d
 
 test('Ownership and optimizer configuration round trip through profile normalization',()=>{
   const s=setup();s.optimizer={objective:'borders',seconds:3600,components:{skills:false},crafted:[{id:'FrozenCrown',tier:'Normal'},{id:'<bad>',tier:'Normal'}],relics:[{id:'WeightedDice',border:6}],potions:['<bad>']};
-  const n=normalize(JSON.parse(JSON.stringify(s)),data);assert.equal(n.optimizer.objective,'borders');assert.equal(n.optimizer.components.skills,false);assert.deepEqual(n.optimizer.crafted,[{id:'FrozenCrown',tier:'Normal'}]);assert.equal(n.optimizer.relics[0].border,6);assert.deepEqual(n.optimizer.potions,[]);
+  const n=normalize(JSON.parse(JSON.stringify(s)),data);assert.equal(n.optimizer.objective,'borders');assert.equal(n.optimizer.components.skills,false);assert.equal(n.optimizer.crafted,undefined);assert.equal(n.optimizer.relics[0].border,6);assert.equal(n.optimizer.potions,undefined);
+});
+
+test('Crafted artifact tier and active buffs stay fixed even when old profiles offer stronger alternatives',()=>{
+  const s=setup();s.build.crafted='FrozenCrown';s.build.craftedTier='Normal';
+  s.build.potions=[Object.keys(data.potions).find(id=>data.potions[id].StatCategory==='Luck')];
+  s.optimizer.crafted=Object.keys(data.craftedArtifacts).map(id=>({id,tier:data.craftedTiers.at(-1).id}));
+  s.optimizer.potions=Object.keys(data.potions);s.optimizer.components.potions=true;
+  for(const objective of ['highest','cards','borders']){
+    s.optimizer.objective=objective;const result=optimizeBuild(s,data);
+    assert.equal(result.profile.build.crafted,s.build.crafted);assert.equal(result.profile.build.craftedTier,s.build.craftedTier);
+    assert.deepEqual(result.profile.build.potions,s.build.potions);assert.ok(result.result.score>=result.current.score);
+    assert.equal(result.settings.components.potions,undefined);assert.equal(result.settings.crafted,undefined);assert.equal(result.settings.potions,undefined);
+    assert.ok(result.opportunities.every(x=>x.requirement!=='Craft higher artifact tier'));
+  }
 });

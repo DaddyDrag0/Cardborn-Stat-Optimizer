@@ -1,4 +1,4 @@
-import {normalize} from './core.js?v=8';
-import {aggregateSessions} from './simulation.js?v=8';
-import {prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=8';
+import {normalize} from './core.js?v=8.1';
+import {aggregateSessions} from './simulation.js?v=8.1';
+import {prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=8.1';
 self.onmessage=e=>{const {id,profile,data,seconds,runs,seed}=e.data;try{const count=Math.max(1,Math.min(1000,Math.floor(runs))),prepared=prepareExactRolls(normalize(profile,data),data,Math.max(1,Math.min(172800,seconds))),results=[];let last=0;for(let i=0;i<count;i++){results.push(simulateExactSession(prepared,(seed+Math.imul(i,2654435761))>>>0,(fraction,cycles)=>{const now=performance.now();if(now-last>100||fraction===1){last=now;postMessage({id,type:'progress',value:(i+fraction)/count,run:i+1,cycles:i*prepared.cycles+cycles,total:count*prepared.cycles})}}))}postMessage({id,type:'result',result:{runs:results,aggregate:aggregateSessions(results)}})}catch(error){postMessage({id,type:'error',message:error.message})}};
