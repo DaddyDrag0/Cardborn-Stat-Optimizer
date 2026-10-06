@@ -95,10 +95,16 @@ export function calculateBuild(s,data,points,pa){
   const corruptedFlat={};for(const d of data.corruptedUpgrades)corruptedFlat[d.stat]=(corruptedFlat[d.stat]||0)+(b.corrupted[d.id]||0)*d.gain;row('Corrupted permanent upgrades',corruptedFlat);
   const towerFlat={};for(const def of data.towerShop)if(def.id!=='ThirdRelicSlot')towerFlat[def.id]=(b.tower[def.id]||0)*(def.id==='AwakenedLuck'?b.towerAwakenedGain:def.gain);row('Tower Shop',towerFlat);
   row('Void Shop',{}, {},{VoidLuck:1+.03*(b.void.VoidLuckPct||0)});
-  const power=Math.max(0,1+(flat.PotionPowerMult||0)+.04*(b.void.VoidPotionPower||0)),potionFlat={},potionMult={},categories=new Map();
+  const skillPower=Math.max(0,1+(flat.PotionPowerMult||0)),power=Math.max(0,skillPower+.04*(b.void.VoidPotionPower||0)),potionFlat={},potionMult={},categories=new Map();
   for(const id of b.potions){const def=data.potions[id],group=potionGroup(id,data),selected=categories.get(group)||{};for(const[k,v]of Object.entries(def.Boosts))selected[k]=Math.max(selected[k]||0,v);categories.set(group,selected)}
   const finalNames={FinalLuckMult:'Luck',FinalShinyMult:'ShinyLuck',FinalAwakenedMult:'AwakenedLuck',FinalFabledMult:'FabledLuck',FinalCorruptedMult:'CorruptedLuck',FinalVoidMult:'VoidLuck',FinalRollSpeedMult:'RollSpeed'};
-  for(const selected of categories.values())for(const[k,v]of Object.entries(selected)){if(finalNames[k])potionMult[finalNames[k]]=(potionMult[finalNames[k]]||1)*(1+v*power);else potionFlat[k]=(potionFlat[k]||0)+v*power}row('Active potions / Parkour Orb',potionFlat,{},potionMult);
+  for(const [group,selected] of categories){
+    // Parkour is a fixed temporary buff, as requested by the user. Heavenly's
+    // skill-only scaling closely fits the supplied pre-Parkour reading; its
+    // server implementation remains unavailable, so this is a modeled rule.
+    const boostPower=group==='LuckOrb'?1:group==='HeavenlyLuck'?skillPower:power;
+    for(const[k,v]of Object.entries(selected)){if(finalNames[k])potionMult[finalNames[k]]=(potionMult[finalNames[k]]||1)*(1+v*boostPower);else potionFlat[k]=(potionFlat[k]||0)+v*boostPower}
+  }row('Active potions / Parkour Orb',potionFlat,{},potionMult);
   // User-reported +25% Luck. Model the temporary Fountain boost separately
   // from potion power; its server stacking implementation is unavailable.
   if(b.fountain)row('Fountain boost',{}, {},{Luck:1.25});
