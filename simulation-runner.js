@@ -1,7 +1,7 @@
-import {aggregateSessions} from './simulation.js?v=9';
+import {aggregateSessions} from './simulation.js?v=9.1';
 
 // Runs retain their seeds and counter phase regardless of worker count.
-export function runSimulations(config,{workerCount=1,onProgress=()=>{},workerFactory=()=>new Worker('./sim-worker.js?v=9',{type:'module'})}={}){
+export function runSimulations(config,{workerCount=1,onProgress=()=>{},workerFactory=()=>new Worker('./sim-worker.js?v=9.1',{type:'module'})}={}){
   const runs=Math.max(1,Math.min(1000,Math.floor(config.runs))),count=Math.min(runs,Math.max(1,Math.min(8,Math.floor(workerCount)))),workers=[],completed=new Array(runs),cycles=new Array(count).fill(0);let settled=false,finish,reject;
   const promise=new Promise((resolve,fail)=>{finish=resolve;reject=fail});
   const stop=()=>{for(const worker of workers)worker.terminate()};

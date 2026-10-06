@@ -1,15 +1,19 @@
-import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9';
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9';
-import {periodicGroups} from './roll-timing.js?v=9';
+import {matchesBorderTarget} from './rarity-results.js?v=9.1';
+import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.1';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.1';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.1';
+import {periodicGroups} from './roll-timing.js?v=9.1';
 
 const clone=x=>structuredClone(x),STEP=.125;
-const searchScore=(result,settings)=>settings.objective==='hits'?Math.log(Math.max(Number.MIN_VALUE,result.score)):result.score;
+const pullGoal=settings=>['hits','borders'].includes(settings.objective);
+const searchScore=(result,settings)=>pullGoal(settings)?Math.log(Math.max(Number.MIN_VALUE,result.score)):result.score;
 export const COMPONENTS={points:'Stat points',skills:'Skill tree & constellations',artifact:'Personal Artifact',equipment:'Relics',shops:'Shop spending'};
 export function optimizerSettings(s,data){
   const raw=s.optimizer||{},b=s.build||{};
   return{
     objective:['hits','highest','cards','borders'].includes(raw.objective)?raw.objective:'hits',
+    borders:Array.isArray(raw.borders)?BORDERS.filter(k=>raw.borders.includes(k)):['Shiny','Awakened'],
+    match:raw.match==='exact'?'exact':'contains',
     rarity:Math.max(1,Math.min(1e100,Number(raw.rarity)||1e15)),tower:s.simulation?.tower===true,
     seconds:Math.max(60,Math.min(172800,Number(raw.seconds)||28800)),
     components:Object.fromEntries(Object.keys(COMPONENTS).map(k=>[k,raw.components?.[k]!==false])),
@@ -21,12 +25,13 @@ export function optimizerSettings(s,data){
 // 0.125-decade grid. All card/border probabilities and shared batch effects are
 // evaluated; only the integration grid and build search are approximate.
 export function createBuildEvaluator(s,data,settings=optimizerSettings(s,data),{exactTower=false}={}){
+  if(settings.objective==='borders'&&!settings.borders?.length)throw Error('Choose at least one border.');
   const cards=data.cards,cardIndex=new Map(cards.map((c,i)=>[c.name,i])),geometry=[];
   for(let ci=0;ci<cards.length;ci++)for(let mask=0;mask<32;mask++){
     const card=cards[ci];let rarity=card.rarityValue;
     for(let i=0;i<5;i++)if(mask&(1<<i))rarity*=data.borderRarity[BORDERS[i]];
     const boost=card.weatherLock===s.weather?(data.weather[s.weather]?.boostMultiplier||1):1,hp=Math.floor((10+rarity**.35*5)*boost);
-    geometry.push({ci,mask,rarity,score:hp+2*Math.floor(hp/2),bin:Math.floor(Math.log10(Math.max(1,rarity))/STEP+1e-10),multi:mask.toString(2).replace(/0/g,'').length>=2,hit:rarity>=settings.rarity,fabled:card.rarityValue<=s.fabledMax});
+    geometry.push({ci,mask,rarity,score:hp+2*Math.floor(hp/2),bin:Math.floor(Math.log10(Math.max(1,rarity))/STEP+1e-10),multi:mask.toString(2).replace(/0/g,'').length>=2,hit:settings.objective==='borders'?matchesBorderTarget(BORDERS.filter((b,i)=>mask&(1<<i)),settings):rarity>=settings.rarity,fabled:card.rarityValue<=s.fabledMax});
   }
   geometry.sort((a,b)=>a.score-b.score||a.rarity-b.rarity);
   if(settings.objective==='hits'&&settings.rarity>Math.max(...geometry.map(o=>o.rarity)))throw Error('Minimum rarity is above the highest modeled final rarity. Lower it and try again.');
@@ -76,7 +81,7 @@ export function createBuildEvaluator(s,data,settings=optimizerSettings(s,data),{
     let bestLog=0,median=0;const curve=[];
     if(settings.objective==='highest')for(let i=1;i<bins;i++){const chance=-Math.expm1(logMiss[i]);bestLog+=STEP*chance;if(chance>=.5)median=10**(i*STEP);if(i%8===0)curve.push({rarity:10**(i*STEP),chance})}
     const expectedHits=normalHits+towerHits,multiPerHour=multiCards/settings.seconds*3600;
-    const result={score:settings.objective==='hits'?expectedHits:settings.objective==='borders'?multiPerHour:bestLog,expectedHits,normalHits,towerHits,chance:-Math.expm1(hitLogMiss),bestLog,typicalBest:10**bestLog,medianBest:median,cardsPerHour,expectedCards,normalExpectedCards,towerExpectedCards,multiPerHour,curve,stats};
+    const result={score:pullGoal(settings)?expectedHits:bestLog,expectedHits,normalHits,towerHits,chance:-Math.expm1(hitLogMiss),bestLog,typicalBest:10**bestLog,medianBest:median,cardsPerHour,expectedCards,normalExpectedCards,towerExpectedCards,multiPerHour,curve,stats};
     if(cache.size>40000)cache.clear();return remember(profile,key,result);
   }
   return{evaluate,get checked(){return checked},finalists:()=>[...leaders.values()].map(x=>x.profile)};
@@ -233,7 +238,7 @@ export function optimizeBuild(raw,data,progress=()=>{}){
     best=normalize(best,data);best.build.inDungeon=false;
   }
   const result=finalEvaluator.evaluate(best);
-  if(result.score<(settings.objective==='hits'?baseline.score*(1-1e-12):baseline.score-1e-9))throw Error('Search produced an invalid recommendation. Your setup was kept.');
+  if(result.score<(pullGoal(settings)?baseline.score*(1-1e-12):baseline.score-1e-9))throw Error('Search produced an invalid recommendation. Your setup was kept.');
   const invalid=profileWarnings(best,data);if(invalid.length)throw Error(invalid.join(' '));
   best.stats=result.stats;
   const opportunities=nextUpgrades(best,data,settings,evaluator);
@@ -244,7 +249,7 @@ export function optimizeBuild(raw,data,progress=()=>{}){
 
 export function nextUpgrades(profile,data,settings,evaluator=createBuildEvaluator(profile,data,settings)){
   const current=evaluator.evaluate(profile),rows=[];
-  function add(label,requirement,candidate){const result=evaluator.evaluate(normalize(candidate,data));if(result.score>(settings.objective==='hits'?current.score*(1+1e-10):current.score+1e-9))rows.push({label,requirement,score:result.score,gain:settings.objective==='highest'?10**(result.score-current.score):result.score/current.score,typicalBest:result.typicalBest,cardsPerHour:result.cardsPerHour})}
+  function add(label,requirement,candidate){const result=evaluator.evaluate(normalize(candidate,data));if(result.score>(pullGoal(settings)?current.score*(1+1e-10):current.score+1e-9))rows.push({label,requirement,score:result.score,gain:settings.objective==='highest'?10**(result.score-current.score):result.score/current.score,typicalBest:result.typicalBest,cardsPerHour:result.cardsPerHour})}
   for(const shop of ['tower','corrupted','void'])for(const d of shop==='tower'?data.towerShop:shop==='void'?data.voidShop:data.corruptedUpgrades){
     const lv=profile.build[shop][d.id]||0;if(lv>=shopCap(profile.build,d,shop))continue;
     const cost=shop==='corrupted'?corruptedCost(d,lv):d.cost;

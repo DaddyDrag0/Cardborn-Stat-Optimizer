@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.1';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.1';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -31,7 +31,7 @@ export function normalize(raw,data){
   if(s.build){for(const achievement of data.achievements)if(s.build.achievements.includes(achievement.id)&&achievement.badge&&!s.badges.includes(achievement.badge))s.badges.push(achievement.badge);s.unlocks={Awakened:true,Fabled:s.fabledMax>0,Corrupted:true};s.artifact.slots=Array.from({length:artifactSlots(s,data)},(_,i)=>{const slot=a.slots?.[i],def=data.personalArtifact.stats.find(d=>d.id===slot?.id);return def?{id:def.id,value:number(slot.value,def.min,scaledMax(def,artifactLevel(s,data))),locked:slot.locked===true}:{id:'',value:0,locked:false}})}
   s.globalLuck=number(raw.globalLuck??1,.0001,1000);
   s.rollCounter=Math.floor(number(raw.rollCounter??0,0,1e12));
-  s.optimizer={objective:['hits','highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'hits',rarity:number(raw.optimizer?.rarity??1e15,1,1e100),seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
+  s.optimizer={objective:['hits','highest','cards','borders'].includes(raw.optimizer?.objective)?raw.optimizer.objective:'hits',rarity:number(raw.optimizer?.rarity??1e15,1,1e100),borders:Array.isArray(raw.optimizer?.borders)?BORDERS.filter(k=>raw.optimizer.borders.includes(k)):['Shiny','Awakened'],match:raw.optimizer?.match==='exact'?'exact':'contains',seconds:number(raw.optimizer?.seconds??28800,60,172800),components:Object.fromEntries(['points','skills','artifact','equipment','shops'].map(k=>[k,raw.optimizer?.components?.[k]!==false])),relics:Array.isArray(raw.optimizer?.relics)?raw.optimizer.relics.slice(0,96).filter(x=>x&&data.relics[x.id]).map(x=>({id:x.id,border:Math.floor(number(x.border,1,6))})):[]};
   s.simulation={tower:raw.simulation?.tower===true};
   s.minutes=number(raw.minutes??60,.01,1e9);return s;
 }
