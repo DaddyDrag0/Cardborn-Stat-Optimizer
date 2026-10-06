@@ -2,7 +2,7 @@
 export const BUILD_STATS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck','RollSpeed','DoubleRollChance','RollTwiceChance','TripleRollChance','LuckyHandChance','PotionPowerMult','PotionDurationMult'];
 const LUCKS=BUILD_STATS.slice(0,6),CHANCES=BUILD_STATS.slice(7,11);
 const n=(v,lo=0,hi=1e9)=>Math.max(lo,Math.min(hi,Number.isFinite(Number(v))?Number(v):lo));
-export function buildDefaults(){return{index:0,skills:[],sets:[],achievements:[],corrupted:{},crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
+export function buildDefaults(){return{index:0,skills:[],sets:[],achievements:[],corrupted:{},crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],fountain:false,passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
 export function normalizeBuild(raw,data){
   const b=buildDefaults(),known=(values,ids)=>Array.isArray(values)?[...new Set(values.filter(x=>ids.includes(x)))]:[];
   b.skills=known(raw.skills,(data.skillNodes||[]).map(x=>x.id));b.sets=known(raw.sets,data.indexSets.map(x=>x.id));
@@ -18,6 +18,7 @@ export function normalizeBuild(raw,data){
   b.craftedIndexOrder=raw.craftedIndexOrder==='combined'?'combined':'separate';b.craftedIndexSpeed=raw.craftedIndexSpeed===true;
   b.relics=Array.isArray(raw.relics)?raw.relics.slice(0,3).filter(x=>Object.hasOwn(data.relics||{},x?.id)).map(x=>({id:x.id,border:Math.floor(n(x.border,1,6))})):[];
   b.potions=known(raw.potions,Object.keys(data.potions||{}));
+  b.fountain=raw.fountain===true;
   for(const p of data.gamepasses||[])b.passes[p.passKey]=raw.passes?.[p.passKey]===true;
   for(const d of data.towerShop||[])b.tower[d.id]=Math.floor(n(raw.tower?.[d.id]??0,0,shopCap(b,d,'tower')));
   for(const d of data.voidShop||[])b.void[d.id]=Math.floor(n(raw.void?.[d.id]??0,0,d.maxLevel));
@@ -98,6 +99,9 @@ export function calculateBuild(s,data,points,pa){
   for(const id of b.potions){const def=data.potions[id],group=potionGroup(id,data),selected=categories.get(group)||{};for(const[k,v]of Object.entries(def.Boosts))selected[k]=Math.max(selected[k]||0,v);categories.set(group,selected)}
   const finalNames={FinalLuckMult:'Luck',FinalShinyMult:'ShinyLuck',FinalAwakenedMult:'AwakenedLuck',FinalFabledMult:'FabledLuck',FinalCorruptedMult:'CorruptedLuck',FinalVoidMult:'VoidLuck',FinalRollSpeedMult:'RollSpeed'};
   for(const selected of categories.values())for(const[k,v]of Object.entries(selected)){if(finalNames[k])potionMult[finalNames[k]]=(potionMult[finalNames[k]]||1)*(1+v*power);else potionFlat[k]=(potionFlat[k]||0)+v*power}row('Active potions / Parkour Orb',potionFlat,{},potionMult);
+  // User-reported +25% Luck. Model the temporary Fountain boost separately
+  // from potion power; its server stacking implementation is unavailable.
+  if(b.fountain)row('Fountain boost',{}, {},{Luck:1.25});
   const weather=data.weather[s.weather]||{};row('Weather',{Luck:weather.luckBonus||0},{},{Luck:weather.luckMultiplier||1});
   row('Under 10M rolls boost',{}, {},{Luck:b.under10M&&s.rolls<1e7?1.25:1});
   const stats={};for(const k of LUCKS){const paMult=pa.mult[k]||1;let multiplier=finalMult[k]||1;if(b.percentOrder==='combined'){// Keep weather/under-10M and potion multipliers separate; combine tree with artifact.
