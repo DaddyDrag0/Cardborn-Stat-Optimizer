@@ -1,13 +1,26 @@
 // Shared definitions are confirmed; the missing server's aggregation order is modeled.
 export const BUILD_STATS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck','RollSpeed','DoubleRollChance','RollTwiceChance','TripleRollChance','LuckyHandChance','PotionPowerMult','PotionDurationMult'];
+// PvPGUIset's displayed leaderboard bonuses. Apply as final multipliers;
+// their exact server aggregation order is absent from the exported place.
+export const PVP_PLACEMENTS=[
+  {id:'unranked',label:'Unranked',Luck:1,ShinyLuck:1,AwakenedLuck:1},
+  {id:'1',label:'#1',Luck:1.25,ShinyLuck:1.05,AwakenedLuck:1.125},
+  {id:'2-3',label:'#2–3',Luck:1.175,ShinyLuck:1.04,AwakenedLuck:1.09},
+  {id:'4-10',label:'#4–10',Luck:1.125,ShinyLuck:1.03,AwakenedLuck:1.06},
+  {id:'11-20',label:'#11–20',Luck:1.09,ShinyLuck:1.02,AwakenedLuck:1.04},
+  {id:'21-30',label:'#21–30',Luck:1.06,ShinyLuck:1.015,AwakenedLuck:1.025},
+  {id:'31-50',label:'#31–50',Luck:1.04,ShinyLuck:1.01,AwakenedLuck:1.015}
+];
+export function pvpBonuses(placement){const tier=PVP_PLACEMENTS.find(p=>p.id===placement)||PVP_PLACEMENTS[0];return{Luck:tier.Luck,ShinyLuck:tier.ShinyLuck,AwakenedLuck:tier.AwakenedLuck}}
 const LUCKS=BUILD_STATS.slice(0,6),CHANCES=BUILD_STATS.slice(7,11);
 const n=(v,lo=0,hi=1e9)=>Math.max(lo,Math.min(hi,Number.isFinite(Number(v))?Number(v):lo));
-export function buildDefaults(){return{index:0,skills:[],sets:[],achievements:[],corrupted:{},crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],fountain:false,passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
+export function buildDefaults(){return{index:0,pvpPlacement:'unranked',skills:[],sets:[],achievements:[],corrupted:{},crafted:'',craftedTier:'Normal',craftedIndexPoints:0,craftedIndexOrder:'separate',craftedIndexSpeed:false,relics:[],potions:[],fountain:false,passes:{},tower:{},void:{},base:{Luck:1,ShinyLuck:1,AwakenedLuck:1,FabledLuck:2,CorruptedLuck:1,VoidLuck:1},baseInterval:1,under10M:true,inDungeon:false,floor:0,percentOrder:'separate',towerAwakenedGain:.4,extras:[],observed:{}}}
 export function normalizeBuild(raw,data){
   const b=buildDefaults(),known=(values,ids)=>Array.isArray(values)?[...new Set(values.filter(x=>ids.includes(x)))]:[];
   b.skills=known(raw.skills,(data.skillNodes||[]).map(x=>x.id));b.sets=known(raw.sets,data.indexSets.map(x=>x.id));
   const groupCounts={};for(const id of [...b.skills]){const node=data.skillNodes.find(x=>x.id===id);if(node.limitGroup&&(groupCounts[node.limitGroup]=(groupCounts[node.limitGroup]||0)+1)>(node.limitGroup==='star1'?2:1))b.skills=removeSkill(b.skills,id,data)}
   b.index=Math.floor(n(raw.index??0,0,1e9));b.currencies=Object.fromEntries(['tower','void','corrupted'].map(k=>[k,Math.floor(n(raw.currencies?.[k]??0,0,1e15))]));
+  b.pvpPlacement=PVP_PLACEMENTS.some(p=>p.id===raw.pvpPlacement)?raw.pvpPlacement:'unranked';
   for(const id of [...b.skills].reverse())if(skillCost(b.skills,data)>skillBudget(b,data))b.skills=removeSkill(b.skills,id,data);
   b.achievements=known(raw.achievements,data.achievements.map(a=>a.id));
   for(const d of data.corruptedUpgrades)b.corrupted[d.id]=Math.floor(n(raw.corrupted?.[d.id]??0,0,d.maxLevel));
@@ -110,6 +123,7 @@ export function calculateBuild(s,data,points,pa){
   if(b.fountain)row('Fountain boost',{}, {},{Luck:1.25});
   const weather=data.weather[s.weather]||{};row('Weather',{Luck:weather.luckBonus||0},{},{Luck:weather.luckMultiplier||1});
   row('Under 10M rolls boost',{}, {},{Luck:b.under10M&&s.rolls<1e7?1.25:1});
+  row('PvP leaderboard placement',{}, {},pvpBonuses(b.pvpPlacement));
   const stats={};for(const k of LUCKS){const paMult=pa.mult[k]||1;let multiplier=finalMult[k]||1;if(b.percentOrder==='combined'){// Keep weather/under-10M and potion multipliers separate; combine tree with artifact.
     multiplier=multiplier/paMult*(1+(paMult-1)+(percent[k]||0));
   }else multiplier*=1+(percent[k]||0);stats[k]=Math.max(.0001,(flat[k]||0)*multiplier)}
