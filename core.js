@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.10';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.10';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.11';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.11';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -16,6 +16,7 @@ export function normalize(raw,data){
   for(const k of CHANCES)s.stats[k]=number(raw.stats?.[k]??0,0,1);
   s.rolls=Math.floor(number(raw.rolls??s.rolls,0,1e15));
   for(const k of POINTS){s.points[k]=Math.floor(number(raw.points?.[k]??0,0,1000));s.pointScale[k]=number(raw.pointScale?.[k]??1,0,1000)}
+  s.points=normalizeStatPoints(s.points,statPointBudget(s,data),data);
   s.badges=Array.isArray(raw.badges)?[...new Set(raw.badges.filter(x=>data.cards.some(c=>c.badgeRequired===x)))]:[];
   s.weather=Object.hasOwn(data.weather,raw.weather)?raw.weather:'Clear';
   for(const k of Object.keys(s.unlocks))s.unlocks[k]=raw.unlocks?.[k]===true;
@@ -54,6 +55,28 @@ export function effective(s,data,points=s.points,slots=s.artifact.slots){
   return stats;
 }
 export function currentTier(points,data){let tier=0;for(let i=0;i<data.pointCaps.length-1;i++){if(POINTS.every(k=>points[k]>=data.pointCaps[i][k]))tier=i+1;else break}return tier}
+export function statPointBudget(s,data){return Math.floor(number(s.rolls,0,1e15)/data.rollsPerPoint)}
+export function normalizeStatPoints(raw,budget,data){
+  const finalCaps=data.pointCaps.at(-1),requested=Object.fromEntries(POINTS.map(k=>[k,Math.floor(number(raw?.[k],0,finalCaps[k]))]));
+  budget=Math.floor(number(budget,0,1e15));
+  // Preserve in-budget entries so users can fill their four current values in
+  // any order. Existing cap warnings still cover incomplete tier allocations.
+  if(sum(requested)<=budget)return requested;
+  const zero=Object.fromEntries(POINTS.map(k=>[k,0]));let tier=0;
+  // An oversized saved allocation retains the highest affordable cap stage.
+  // Reserve its prerequisites, then retain extras in displayed field order.
+  for(let i=1;i<data.pointCaps.length;i++){const lower=data.pointCaps[i-1];if(sum(lower)<=budget&&POINTS.every(k=>requested[k]>=lower[k]))tier=i;else break}
+  const lower=tier?data.pointCaps[tier-1]:zero,upper=data.pointCaps[tier],points={...lower};let left=budget-sum(lower);
+  for(const k of POINTS){const extra=Math.min(left,Math.max(0,Math.min(requested[k],upper[k])-lower[k]));points[k]+=extra;left-=extra}
+  return points;
+}
+export function setStatPoint(s,key,value,data){
+  const n=Number(value),budget=statPointBudget(s,data),available=Math.max(0,budget-(sum(s.points)-s.points[key]));
+  if(!POINTS.includes(key)||value===''||!Number.isInteger(n)||n<0)return{error:'Enter a whole number of stat points, zero or higher.'};
+  if(n>available)return{error:`You have ${budget} earned stat points. At most ${available} can go into ${key} with your other allocations.`};
+  if(n>data.pointCaps.at(-1)[key])return{error:`${key} has an absolute cap of ${data.pointCaps.at(-1)[key]} points.`};
+  return{points:{...s.points,[key]:n}};
+}
 export function validPoints(points,budget,data){return POINTS.every(k=>Number.isInteger(points[k])&&points[k]>=0&&points[k]<=data.pointCaps[currentTier(points,data)][k])&&sum(points)<=budget}
 export function eligibleCards(s,data){return data.cards.filter(c=>!c.isSecret&&(!c.badgeRequired||s.badges.includes(c.badgeRequired))&&(!c.weatherLock||c.weatherLock===s.weather)).sort((a,b)=>b.rarityValue-a.rarityValue)}
 export function cardDistribution(s,data,luck){
