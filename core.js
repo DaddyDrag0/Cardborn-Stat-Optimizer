@@ -1,5 +1,5 @@
-import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.14';
-import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.14';
+import {normalizeBuild,calculateBuild,buildWarnings,luckVariants} from './build.js?v=9.15';
+import {periodicGroups,sessionChance,chanceByCycles} from './roll-timing.js?v=9.15';
 export const LUCKS=['Luck','ShinyLuck','AwakenedLuck','FabledLuck','CorruptedLuck','VoidLuck'];
 export const POINTS=['Luck','Shiny','Awakened','Void'];
 export const BORDERS=['Shiny','Awakened','Fabled','Corrupted','Void'];
@@ -39,10 +39,17 @@ export function normalize(raw,data){
 export function artifactLevel(s,data){return clamp(Math.floor(100*(s.rolls/data.personalArtifact.rollsForMaxLevel)**data.personalArtifact.levelExponent),0,100)}
 export function artifactSlots(s,data){const n=data.personalArtifact.slotUnlockLevels.filter(l=>l<=artifactLevel(s,data)).length;return n?Math.min(11,n+(s.artifact.gamepass?2:0)+(data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.bonusSlots||0)+s.artifact.voidSlots):0}
 export function scaledMax(def,level){const f=10**def.decimals;return Math.floor((def.min+(def.max-def.min)*level/100)*f+.5)/f}
+export function artifactCopyWeights(slots){
+  const weights=Array(slots.length).fill(0),seen={};
+  for(const {slot,i}of slots.map((slot,i)=>({slot,i})).sort((a,b)=>b.slot.value-a.slot.value||(a.slot.position??a.i)-(b.slot.position??b.i))){
+    if(!slot.id)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1);weights[i]=copy===1?1:copy===2?.5:0;
+  }
+  return weights;
+}
 export function artifactBonuses(s,slots,data){
-  const flat={},mult={},seen={},rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.statMultiplier||1;
+  const flat={},mult={},weights=artifactCopyWeights(slots),rarity=data.personalArtifact.rarities.find(r=>r.id===s.artifact.rarity)?.statMultiplier||1;
   // Rank copies by roll strength without changing physical slots or Keep flags.
-  for(const slot of [...slots].sort((a,b)=>b.value-a.value||(a.position??slots.indexOf(a))-(b.position??slots.indexOf(b)))){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const copy=(seen[slot.id]=(seen[slot.id]||0)+1),scale=(copy===1?1:copy===2?.5:0)*rarity*(1+s.artifact.strength);
+  for(const [i,slot]of slots.entries()){const def=data.personalArtifact.stats.find(d=>d.id===slot.id);if(!def)continue;const scale=weights[i]*rarity*(1+s.artifact.strength);
     if(def.kind==='mult')mult[slot.id.slice(0,-4)]=(mult[slot.id.slice(0,-4)]||1)*(1+(slot.value-1)*scale);
     else flat[slot.id]=(flat[slot.id]||0)+slot.value*scale;
   }return{flat,mult};

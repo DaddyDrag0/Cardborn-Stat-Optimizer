@@ -1,8 +1,8 @@
-import {matchesBorderTarget} from './rarity-results.js?v=9.14';
-import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.14';
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.14';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.14';
-import {periodicGroups} from './roll-timing.js?v=9.14';
+import {matchesBorderTarget} from './rarity-results.js?v=9.15';
+import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.15';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.15';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.15';
+import {periodicGroups} from './roll-timing.js?v=9.15';
 
 const clone=x=>structuredClone(x),STEP=.125;
 const pullGoal=settings=>['hits','borders'].includes(settings.objective);
@@ -169,13 +169,17 @@ export function reuseOwnedPARolls(profile,origin,data){
 function paSearch(profile,data,score,origin=profile){
   const length=artifactSlots(profile,data);if(!length)return profile;
   const candidates=data.personalArtifact.stats.filter(d=>d.id!=='PotionDurationMult').map(d=>({id:d.id,value:plannedPAValue(d,profile,data),locked:false}));
-  const reuse=p=>reuseOwnedPARolls(p,origin,data),reusedScore=p=>score(reuse(p));
+  const reuse=p=>reuseOwnedPARolls(p,origin,data);
   const starting=Array.from({length},(_,i)=>profile.artifact.slots[i]?.locked?clone(profile.artifact.slots[i]):{id:'',value:0,locked:false});
   let beam=[{...profile,artifact:{...profile.artifact,slots:starting}}];
   for(let i=0;i<length;i++){
     if(starting[i].locked)continue;const next=[];
     for(const p of beam)for(const slot of candidates){if(p.artifact.slots.filter(x=>x.id===slot.id).length>=2)continue;const slots=p.artifact.slots.slice();slots[i]=slot;next.push({...p,artifact:{...p.artifact,slots}})}
-    next.sort((a,b)=>reusedScore(b)-reusedScore(a));beam=next.slice(0,6);
+    // Slot permutations are the same PA build. Let the beam explore distinct
+    // stat combinations rather than filling its width with duplicate layouts.
+    const distinct=new Map();
+    for(const p of next){const reused=reuse(p),key=reused.artifact.slots.map(x=>`${x.id}:${x.value}`).sort().join('|');if(!distinct.has(key))distinct.set(key,reused)}
+    beam=[...distinct.values()].sort((a,b)=>score(b)-score(a)).slice(0,12);
   }
   let best=bestOf([profile,...beam.map(reuse)],score);
   for(let pass=0;pass<3;pass++){
@@ -188,14 +192,17 @@ function paSearch(profile,data,score,origin=profile){
   return best;
 }
 
-function equipmentSearch(profile,data,settings,score){
+function equipmentCandidates(profile,data,settings){
   const slots=1+(profile.build.passes.TwoRelic?1:0)+(profile.build.tower.ThirdRelicSlot||0),combos=[[]];
   function enumerate(start,items){if(items.length===slots)return;for(let i=start;i<settings.relics.length;i++){const item=settings.relics[i];if(items.some(x=>x.id===item.id))continue;const list=[...items,item];if(list.filter(x=>data.relics[x.id].Tier==='Legendary').length>2)continue;combos.push(list);enumerate(i+1,list)}}
   enumerate(0,[]);
+  return combos.map(relics=>({...profile,build:{...profile.build,relics}}));
+}
+function equipmentSearch(profile,data,settings,score){
   // Exact enumeration of the permitted owned equipment combinations for the
   // current point/tree/PA allocation. Revisiting it after those searches matters.
   let best=profile;
-  for(const relics of combos){const p={...profile,build:{...profile.build,relics}};if(score(p)>score(best)+1e-10)best=p}
+  for(const p of equipmentCandidates(profile,data,settings)){if(score(p)>score(best)+1e-10)best=p}
   return best;
 }
 function shopSearch(profile,data,settings,score,origin=profile){
@@ -248,22 +255,38 @@ export function optimizeBuild(raw,data,progress=()=>{}){
     progress({phase:COMPONENTS[key],value:done++/15,checked:evaluator.checked});if(!settings.components[key])continue;
     const candidate=operations[key](best);if(score(candidate)>=score(best)-1e-10)best=candidate;
   }
+  const relicKey=p=>p.build.relics.map(x=>`${x.id}:${x.border}`).sort().join('|'),relicProfiles=[];
+  if(settings.components.equipment){
+    const originals={...best,build:{...best.build,relics:clone(s.build.relics)}},seen=new Set([relicKey(best)]);
+    const candidates=[originals,...equipmentCandidates(best,data,settings).sort((a,b)=>score(b)-score(a))];
+    for(const seed of candidates){
+      const key=relicKey(seed);if(seen.has(key))continue;seen.add(key);
+      // Retain a comparison using the original gear, plus two competitive
+      // alternatives. Refit allocations while keeping each loadout fixed.
+      let candidate=seed;progress({phase:'Refining relic loadouts',value:.94+relicProfiles.length*.005,checked:evaluator.checked});
+      for(const component of ['points','artifact','skills','points'])if(settings.components[component])candidate=operations[component](candidate);
+      candidate=normalize(candidate,data);
+      if(!profileWarnings(candidate,data).length){relicProfiles.push(candidate);if(score(candidate)>score(best)+1e-10)best=candidate}
+      if(relicProfiles.length>=3)break;
+    }
+  }
   best=normalize(best,data);
   let finalEvaluator=evaluator,baseline=current;
   if(settings.tower){
-    progress({phase:'Checking every Tower floor',value:.96,checked:evaluator.checked});
+    progress({phase:'Checking every Tower floor',value:.98,checked:evaluator.checked});
     finalEvaluator=createBuildEvaluator(s,data,settings,{exactTower:true});baseline=finalEvaluator.evaluate(s);
-    best=bestOf([s,best,...evaluator.finalists().map(p=>normalize(p,data)).filter(p=>!profileWarnings(p,data).length)],p=>searchScore(finalEvaluator.evaluate(p),settings));
+    best=bestOf([s,best,...relicProfiles,...evaluator.finalists().map(p=>normalize(p,data)).filter(p=>!profileWarnings(p,data).length)],p=>searchScore(finalEvaluator.evaluate(p),settings));
     best=normalize(best,data);best.build.inDungeon=false;
   }
   const result=finalEvaluator.evaluate(best);
   if(result.score<(pullGoal(settings)?baseline.score*(1-1e-12):baseline.score-1e-9))throw Error('Search produced an invalid recommendation. Your setup was kept.');
   const invalid=profileWarnings(best,data);if(invalid.length)throw Error(invalid.join(' '));
   best.stats=result.stats;
+  const relicAlternatives=[...new Map([best,...relicProfiles].map(p=>[relicKey(p),p])).values()].map(profile=>({profile,result:finalEvaluator.evaluate(profile),originalGear:relicKey(profile)===relicKey(s)})).sort((a,b)=>b.result.score-a.result.score);
   const opportunities=nextUpgrades(best,data,settings,evaluator);
   const priceEstimates=data.corruptedUpgrades.filter(d=>{for(let lv=s.build.corrupted[d.id]||0;lv<(best.build.corrupted[d.id]||0);lv++)if(d.knownNextCosts[lv]==null)return true;return false}).map(d=>d.name);
   progress({phase:'Complete',value:1,checked:evaluator.checked});
-  return{type:'build',original:clone(s),profile:best,current:baseline,result,settings,opportunities,priceEstimates,checked:evaluator.checked+(settings.tower?finalEvaluator.checked:0),method:(settings.tower?'Search uses weighted Tower floor samples; final comparison checks every cleared floor. ':'')+'Equipment enumeration, prerequisite packages, beam search and repeated group refinement. Approximate search.'};
+  return{type:'build',original:clone(s),profile:best,current:baseline,result,settings,opportunities,priceEstimates,relicAlternatives,checked:evaluator.checked+(settings.tower?finalEvaluator.checked:0),method:(settings.tower?'Search uses weighted Tower floor samples; final comparison checks every cleared floor. ':'')+'Equipment enumeration, distinct PA combinations, fixed-loadout allocation refinement and repeated group search. Approximate search.'};
 }
 
 export function nextUpgrades(profile,data,settings,evaluator=createBuildEvaluator(profile,data,settings)){

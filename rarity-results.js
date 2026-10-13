@@ -16,5 +16,7 @@ export function pairedSimulationSummary(current,optimized,settings){
   if(current.length!==optimized.length||!current.length)throw Error('Simulation comparison needs matching nonempty runs.');
   const a=current.map(run=>simulationMetric(run,settings)),b=optimized.map(run=>simulationMetric(run,settings)),mean=values=>values.reduce((n,v)=>n+v,0)/values.length;
   const summary=values=>{const average=mean(values),variance=values.length>1?values.reduce((n,v)=>n+(v-average)**2,0)/(values.length-1):0;return{mean:average,error95:1.96*Math.sqrt(variance/values.length)}};
-  return{runs:current.length,current:summary(a),optimized:summary(b),difference:summary(a.map((v,i)=>b[i]-v))};
+  const difference=summary(a.map((v,i)=>b[i]-v)),events=mean(a)*a.length+mean(b)*b.length;
+  const evidence=['hits','borders'].includes(settings.objective)&&events<30?'insufficient':difference.mean-difference.error95>0?'improved':difference.mean+difference.error95<0?'worse':'overlap';
+  return{runs:current.length,current:summary(a),optimized:summary(b),difference,events,evidence};
 }
