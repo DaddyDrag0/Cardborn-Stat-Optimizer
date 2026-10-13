@@ -1,6 +1,6 @@
-import {evaluate} from './core.js?v=9.12';
-import {createBuildEvaluator} from './optimizer.js?v=9.12';
-import {towerSessionPlan} from './tower-simulation.js?v=9.12';
+import {evaluate} from './core.js?v=9.13';
+import {createBuildEvaluator} from './optimizer.js?v=9.13';
+import {towerSessionPlan} from './tower-simulation.js?v=9.13';
 const cache=new Map();
 export function evaluateTarget(s,data){
   const key=JSON.stringify(s);let byProfile=cache.get(data);if(!byProfile){byProfile=new Map();cache.set(data,byProfile)}
