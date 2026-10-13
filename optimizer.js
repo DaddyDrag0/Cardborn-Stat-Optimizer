@@ -1,8 +1,8 @@
-import {matchesBorderTarget} from './rarity-results.js?v=9.13';
-import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.13';
-import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.13';
-import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.13';
-import {periodicGroups} from './roll-timing.js?v=9.13';
+import {matchesBorderTarget} from './rarity-results.js?v=9.14';
+import {towerSessionPlan,towerTotalCards,towerBonuses} from './tower-simulation.js?v=9.14';
+import {normalize,effective,POINTS,BORDERS,CHANCES,LUCKS,sum,validPoints,currentTier,artifactSlots,artifactLevel,scaledMax,cardDistribution,borderProbabilities,profileWarnings} from './core.js?v=9.14';
+import {skillCost,skillBudget,skillClosure,removeSkill,skillSelection,corruptedCost,shopCap} from './build.js?v=9.14';
+import {periodicGroups} from './roll-timing.js?v=9.14';
 
 const clone=x=>structuredClone(x),STEP=.125;
 const pullGoal=settings=>['hits','borders'].includes(settings.objective);
