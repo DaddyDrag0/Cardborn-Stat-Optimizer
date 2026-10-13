@@ -1,6 +1,6 @@
-import {rollRandom,prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=9.11';
-import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=9.11';
-import {periodicGroups} from './roll-timing.js?v=9.11';
+import {rollRandom,prepareExactRolls,simulateExactSession} from './exact-rolls.js?v=9.12';
+import {BORDERS,effective,rollOutcomes,batchDistribution} from './core.js?v=9.12';
+import {periodicGroups} from './roll-timing.js?v=9.12';
 export {periodicGroups};
 
 // Count sampling adapted from Hit Calculator's roll-sim-worker-v39.js.

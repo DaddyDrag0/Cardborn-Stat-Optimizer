@@ -52,6 +52,14 @@ export function skillSelection(b,id,on,data){
 export function shopCap(b,d,shop){return d.maxLevel}
 export function corruptedCost(d,level){return level>=d.maxLevel?null:d.knownNextCosts[level]??Math.round(d.costFormula.base*d.costFormula.growth**level)}
 export function corruptedRefund(d,level){let total=0;for(let i=0;i<level;i++)total+=corruptedCost(d,i);return total}
+export function refundAllShop(b,shop,data){
+  if(!['tower','corrupted'].includes(shop))return{error:'Refund all is available for Tower and Corrupted upgrades.'};
+  const defs=shop==='tower'?data.towerShop:data.corruptedUpgrades;
+  const refund=defs.reduce((total,d)=>total+(shop==='tower'?(b.tower[d.id]||0)*d.cost:corruptedRefund(d,b.corrupted[d.id]||0)),0);
+  const result={levels:Object.fromEntries(defs.map(d=>[d.id,0])),refund,balance:(b.currencies?.[shop]||0)+refund};
+  if(shop==='tower'){const slots=1+(b.passes.TwoRelic?1:0);result.relics=b.relics.slice(0,slots);result.unequippedRelics=b.relics.slice(slots)}
+  return result;
+}
 export function setCorruptedLevel(b,id,value,data){
   const d=data.corruptedUpgrades.find(d=>d.id===id);if(!d)return{error:'Unknown upgrade.'};
   const level=Number(value);if(!Number.isInteger(level)||level<0||level>d.maxLevel)return{error:`Enter a whole level from 0 to ${d.maxLevel}.`};
