@@ -129,6 +129,8 @@ export function calculateBuild(s,data,points,pa){
   // from potion power; its server stacking implementation is unavailable.
   if(b.fountain)row('Fountain boost',{}, {},{Luck:1.25});
   const weather=data.weather[s.weather]||{};row('Weather',{Luck:weather.luckBonus||0},{},{Luck:weather.luckMultiplier||1});
+  row('Hollow Rider badge',{Luck:s.hollowRiderBadge?3:0});
+  row('Great Pumpkin finale',{}, {},{Luck:s.hollowHarvestFinale?2.5:1});
   row('Under 10M rolls boost',{}, {},{Luck:b.under10M&&s.rolls<1e7?1.25:1});
   row('PvP leaderboard placement',{}, {},pvpBonuses(b.pvpPlacement));
   const stats={};for(const k of LUCKS){const paMult=pa.mult[k]||1;let multiplier=finalMult[k]||1;if(b.percentOrder==='combined'){// Keep weather/under-10M and potion multipliers separate; combine tree with artifact.
