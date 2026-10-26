@@ -1,4 +1,4 @@
-import {skillCost,skillBudget} from './build.js?v=9.15';
+import {skillCost,skillBudget} from './build.js?v=9.17';
 
 export const SKILL_BRANCHES=['Fortune','Velocity','Radiance','Mythos','Corrupted','Alchemy'];
 export function skillTreePositions(data){
