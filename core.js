@@ -7,7 +7,7 @@ export const CHANCES=['DoubleRollChance','RollTwiceChance','TripleRollChance','L
 export const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
 export const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const number=(n,a=0,b=1e100)=>clamp(Number.isFinite(Number(n))?Number(n):a,a,b);
-export function defaults(data){return{version:1,globalLuck:2.25,globalLuckEdited:false,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',hollowHarvestActive:true,hollowHarvestNight:false,holidayRiftActive:false,shinyLuckUsed:0,unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.95,qualityEdited:false,slots:[]},minutes:60}}
+export function defaults(data){return{version:1,globalLuck:2.25,globalLuckEdited:false,rollCounter:0,stats:{Luck:25,ShinyLuck:1,AwakenedLuck:1,FabledLuck:1,CorruptedLuck:1,VoidLuck:1,RollInterval:1,...Object.fromEntries(CHANCES.map(k=>[k,0]))},rolls:10000000,points:{Luck:0,Shiny:0,Awakened:0,Void:0},pointScale:{Luck:1,Shiny:1,Awakened:1,Void:1},badges:[],weather:'Clear',hollowHarvestActive:true,hollowHarvestNight:false,hollowHarvestFinale:false,hollowRiderBadge:false,holidayRiftActive:false,shinyLuckUsed:0,unlocks:{Awakened:false,Fabled:false,Corrupted:false},goal:{kind:'rarity',rarity:1000000,card:'Nihilus, the Final Horizon',borders:['Shiny']},odds:{...data.borderOdds},artifact:{rarity:'Common',gamepass:false,voidSlots:0,strength:0,quality:.95,qualityEdited:false,slots:[]},minutes:60}}
 export function normalize(raw,data){
   if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Choose a valid Cardborn profile JSON file.');
   const s=defaults(data);
@@ -21,6 +21,8 @@ export function normalize(raw,data){
   s.weather=Object.hasOwn(data.weather,raw.weather)?raw.weather:'Clear';
   s.hollowHarvestActive=raw.hollowHarvestActive!==false;
   s.hollowHarvestNight=raw.hollowHarvestNight===true;
+  s.hollowHarvestFinale=raw.hollowHarvestFinale===true;
+  s.hollowRiderBadge=raw.hollowRiderBadge===true;
   s.holidayRiftActive=raw.holidayRiftActive===true;
   s.shinyLuckUsed=number(raw.shinyLuckUsed??0,0,1e30);
   for(const k of Object.keys(s.unlocks))s.unlocks[k]=raw.unlocks?.[k]===true;
@@ -90,7 +92,7 @@ export function setStatPoint(s,key,value,data){
   return{points:{...s.points,[key]:n}};
 }
 export function validPoints(points,budget,data){return POINTS.every(k=>Number.isInteger(points[k])&&points[k]>=0&&points[k]<=data.pointCaps[currentTier(points,data)][k])&&sum(points)<=budget}
-export function eligibleCards(s,data){return data.cards.filter(c=>!c.isSecret&&(!c.eventLock||s.hollowHarvestActive!==false)&&(!c.badgeRequired||s.badges.includes(c.badgeRequired))&&(!c.weatherLock||c.weatherLock===s.weather||(s.holidayRiftActive&&c.weatherLock==='Event'))).sort((a,b)=>b.rarityValue-a.rarityValue)}
+export function eligibleCards(s,data){return data.cards.filter(c=>!c.isSecret&&(!c.eventLock||s.hollowHarvestActive!==false)&&(!c.badgeRequired||s.badges.includes(c.badgeRequired))&&(!c.weatherLock||c.weatherLock===s.weather||((s.holidayRiftActive||s.build?.potions?.includes('HolidayRiftPotion'))&&c.weatherLock==='Event'))).sort((a,b)=>b.rarityValue-a.rarityValue)}
 export function cardDistribution(s,data,luck){
   luck*=s.globalLuck??1;
   const cards=eligibleCards(s,data),selected=[],by=new Map(data.cards.map(c=>[c.name,c]));let remain=1;
