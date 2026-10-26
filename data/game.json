@@ -1,9 +1,8 @@
 {
   "source": {
-    "file": "225x Luck Cardborn RNG.rbxl",
-    "placeVersion": 3786,
-    "sha256": "ba7ad2c92039807c5e3220df79b83c717f3c399496b11aa27c751ce8040ad66d",
-    "date": "2026-10-05",
+    "file": "HALLOWEEN Cardborn RNG.rbxl",
+    "sha256": "af3f73fb8796ee0c7700fee50fc672d475f0b405e3777cb6f2dd9ef0ffba79ad",
+    "date": "2026-10-26",
     "serverScriptsIncluded": false
   },
   "cards": [
@@ -259,6 +258,18 @@
       "thumbnail": "https://tr.rbxcdn.com/180DAY-444e332b8642127c679b28f790f0f611/420/420/Image/Png/noFilter"
     },
     {
+      "name": "Jack-o'-Lantern(Will-o'-Wisp)",
+      "rarityValue": 8880000000,
+      "imageId": "rbxassetid://96490945353736",
+      "croppedImageId": "rbxassetid://120059093371874",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Candlelit Grin",
+        "desc": "For its first 3 turns, burn every enemy for 6% of their max health at the start of the turn"
+      },
+      "isSecret": true
+    },
+    {
       "name": "Frosted Sentinel",
       "rarityValue": 8500000000,
       "imageId": "rbxassetid://125066120294133",
@@ -288,6 +299,19 @@
       "thumbnail": "https://tr.rbxcdn.com/180DAY-4e503d2791d6cf7ed59c5f72869688f4/420/420/Image/Png/noFilter"
     },
     {
+      "name": "Samhain, Lord of the Last Harvest",
+      "rarityValue": 6200000000,
+      "imageId": "rbxassetid://129242276775231",
+      "croppedImageId": "rbxassetid://103273751015406",
+      "weatherLock": "HollowHarvest",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Veil Between Worlds",
+        "desc": "While Samhain is alive, the first time each ally dies it returns with 35% health. At the start of its turns, all enemies lose 5% of their max health"
+      },
+      "isSecret": false
+    },
+    {
       "name": "King of Yellow",
       "rarityValue": 5000000000,
       "imageId": "rbxassetid://118578475078435",
@@ -295,6 +319,30 @@
       "isSecret": false,
       "weatherLock": null,
       "thumbnail": "https://tr.rbxcdn.com/180DAY-f0c6f6659032bc830dc73502f19e5ca6/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Vampire(The Count)",
+      "rarityValue": 5000000000,
+      "imageId": "rbxassetid://127611232019789",
+      "croppedImageId": "rbxassetid://110584399862751",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Vampiric Drain",
+        "desc": "Heal for 50% of your damage after every attack"
+      },
+      "isSecret": true
+    },
+    {
+      "name": "Werewolf(Blood Moon)",
+      "rarityValue": 2250000000,
+      "imageId": "rbxassetid://92014913355469",
+      "croppedImageId": "rbxassetid://136828914326412",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Full Moon Transformation",
+        "desc": "On death, revive and increase max health and damage by 15%"
+      },
+      "isSecret": true
     },
     {
       "name": "Prism Serpent(Celestial)",
@@ -378,6 +426,19 @@
       "isSecret": false,
       "weatherLock": null,
       "thumbnail": "https://tr.rbxcdn.com/180DAY-7b37a85b44e5e0b95fca5e8e82290a33/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "The Pumpkin King",
+      "rarityValue": 820000000,
+      "imageId": "rbxassetid://100140596357433",
+      "croppedImageId": "rbxassetid://102312351729432",
+      "weatherLock": "HollowHarvest",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Harvest of Souls",
+        "desc": "On entry, Hollow Harvest allies gain 15% stats. Every 3rd turn, add a Jack-o'-Lantern to the end of your team (max 2)"
+      },
+      "isSecret": false
     },
     {
       "name": "Abyssal Maw",
@@ -520,6 +581,19 @@
       "thumbnail": "https://tr.rbxcdn.com/180DAY-5dc599fd740331afa554c658a344c89f/420/420/Image/Png/noFilter"
     },
     {
+      "name": "Headless Horseman",
+      "rarityValue": 133200000,
+      "imageId": "rbxassetid://81580156426762",
+      "croppedImageId": "rbxassetid://109206187148060",
+      "weatherLock": "HollowHarvest",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Reaping Ride",
+        "desc": "On its first attack, also strike the last enemy for 150% damage. Each enemy it defeats grants 12% stats (max 3 stacks)"
+      },
+      "isSecret": false
+    },
+    {
       "name": "Umbral",
       "rarityValue": 132000000,
       "imageId": "rbxassetid://104053594836404",
@@ -638,6 +712,18 @@
       "weatherLock": "WarriorsPath",
       "isSecret": false,
       "thumbnail": "https://tr.rbxcdn.com/180DAY-a8180c00847ad2d0af53c033abd620df/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Banshee",
+      "rarityValue": 54000000,
+      "imageId": "rbxassetid://139387773234957",
+      "croppedImageId": "rbxassetid://75553713607776",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Wail",
+        "desc": "Every other turn, 40% chance to stun the enemy for 1 turn. Deals 30% more damage to stunned enemies"
+      },
+      "isSecret": false
     },
     {
       "name": "Iron Juggernaut",
@@ -925,6 +1011,18 @@
       "thumbnail": "https://tr.rbxcdn.com/180DAY-6ec7bc3ce1d8f18b40ab1f76fedc21b9/420/420/Image/Png/noFilter"
     },
     {
+      "name": "Candy Golem",
+      "rarityValue": 6200000,
+      "imageId": "rbxassetid://134086767539958",
+      "croppedImageId": "rbxassetid://136388244139267",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Sugar Rush",
+        "desc": "On death, heal all allies for 15% of their max health and give the next ally 20% more damage"
+      },
+      "isSecret": false
+    },
+    {
       "name": "Janus, God of Beginnings",
       "rarityValue": 6000000,
       "imageId": "rbxassetid://121041133314942",
@@ -968,6 +1066,18 @@
       "weatherLock": "Event",
       "isSecret": false,
       "thumbnail": "https://tr.rbxcdn.com/180DAY-a9cc331e1174a5ba475adb7f6c3429bc/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Witch(Hag of Hallows)",
+      "rarityValue": 3000000,
+      "imageId": "rbxassetid://123220118484415",
+      "croppedImageId": "rbxassetid://76690168839882",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Dark Pact",
+        "desc": "Every Turn, Sacrifice 10% of the Witch's health to increase your damage by 10%"
+      },
+      "isSecret": true
     },
     {
       "name": "Sun Sprite",
@@ -1069,6 +1179,18 @@
       "isSecret": false,
       "weatherLock": null,
       "thumbnail": "https://tr.rbxcdn.com/180DAY-ae56734d83cb4cfeb2f00986e035dc57/420/420/Image/Png/noFilter"
+    },
+    {
+      "name": "Jack-o'-Lantern",
+      "rarityValue": 888000,
+      "imageId": "rbxassetid://71529257256645",
+      "croppedImageId": "rbxassetid://136167764660997",
+      "eventLock": "HollowHarvest",
+      "ability": {
+        "name": "Candlelit Grin",
+        "desc": "For its first 3 turns, burn every enemy for 6% of their max health at the start of the turn"
+      },
+      "isSecret": false
     },
     {
       "name": "Gnomelord Technician",
@@ -1574,6 +1696,34 @@
         "to": "Eternal Beast(Holy Beast)",
         "chanceDenom": 7000
       }
+    ],
+    "Witch": [
+      {
+        "to": "Witch(Hag of Hallows)",
+        "chanceDenom": 9000,
+        "activeFlag": "HollowHarvest"
+      }
+    ],
+    "Werewolf": [
+      {
+        "to": "Werewolf(Blood Moon)",
+        "chanceDenom": 9000,
+        "activeFlag": "HollowHarvest"
+      }
+    ],
+    "Vampire": [
+      {
+        "to": "Vampire(The Count)",
+        "chanceDenom": 9000,
+        "activeFlag": "HollowHarvest"
+      }
+    ],
+    "Jack-o'-Lantern": [
+      {
+        "to": "Jack-o'-Lantern(Will-o'-Wisp)",
+        "chanceDenom": 7500,
+        "activeFlag": "HollowHarvest"
+      }
     ]
   },
   "weather": {
@@ -1696,6 +1846,16 @@
         "The Last Mammoth": true,
         "Theodora, Empress of Resolve": true,
         "Caesar, Eternal Conqueror": true
+      }
+    },
+    "HollowHarvest": {
+      "boostMultiplier": 2.6,
+      "luckBonus": 8,
+      "luckMultiplier": 1.1,
+      "eligibleCards": {
+        "Headless Horseman": true,
+        "The Pumpkin King": true,
+        "Samhain, Lord of the Last Harvest": true
       }
     }
   },
@@ -4462,7 +4622,8 @@
       "shiny": false,
       "awakened": false,
       "fabled": false,
-      "corrupted": false
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "Shiny",
@@ -4471,115 +4632,198 @@
       "shiny": true,
       "awakened": false,
       "fabled": false,
-      "corrupted": false
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "Fabled",
       "label": "Fabled",
-      "boost": 110,
+      "boost": 200,
       "shiny": false,
       "awakened": false,
       "fabled": true,
-      "corrupted": false
-    },
-    {
-      "id": "Awakened",
-      "label": "Awakened",
-      "boost": 175,
-      "shiny": false,
-      "awakened": true,
-      "fabled": false,
-      "corrupted": false
-    },
-    {
-      "id": "ShinyFabled",
-      "label": "Shiny Fabled",
-      "boost": 230,
-      "shiny": true,
-      "awakened": false,
-      "fabled": true,
-      "corrupted": false
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "Corrupted",
       "label": "Corrupted",
-      "boost": 350,
+      "boost": 295,
       "shiny": false,
       "awakened": false,
       "fabled": false,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "ShinyFabled",
+      "label": "Shiny Fabled",
+      "boost": 405,
+      "shiny": true,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": false,
+      "void": false
+    },
+    {
+      "id": "Awakened",
+      "label": "Awakened",
+      "boost": 405,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "ShinyCorrupted",
       "label": "Shiny Corrupted",
-      "boost": 500,
+      "boost": 530,
       "shiny": true,
       "awakened": false,
       "fabled": false,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "Void",
+      "label": "Void",
+      "boost": 530,
+      "shiny": false,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": false,
+      "void": true
     },
     {
       "id": "ShinyAwakened",
       "label": "Shiny Awakened",
-      "boost": 750,
+      "boost": 670,
       "shiny": true,
       "awakened": true,
       "fabled": false,
-      "corrupted": false
-    },
-    {
-      "id": "AwakenedFabled",
-      "label": "Awakened Fabled",
-      "boost": 800,
-      "shiny": false,
-      "awakened": true,
-      "fabled": true,
-      "corrupted": false
-    },
-    {
-      "id": "ShinyAwakenedFabled",
-      "label": "Shiny Awak. Fabled",
-      "boost": 900,
-      "shiny": true,
-      "awakened": true,
-      "fabled": true,
-      "corrupted": false
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "FabledCorrupted",
       "label": "Fabled Corrupted",
-      "boost": 1000,
+      "boost": 825,
       "shiny": false,
       "awakened": false,
       "fabled": true,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
     },
     {
-      "id": "AwakenedCorrupted",
-      "label": "Awakened Corrupted",
-      "boost": 1200,
+      "id": "ShinyVoid",
+      "label": "Shiny Void",
+      "boost": 825,
+      "shiny": true,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "AwakenedFabled",
+      "label": "Awakened Fabled",
+      "boost": 990,
       "shiny": false,
       "awakened": true,
-      "fabled": false,
-      "corrupted": true
+      "fabled": true,
+      "corrupted": false,
+      "void": false
     },
     {
       "id": "ShinyFabledCorrupted",
       "label": "Shiny Fabled Corr.",
-      "boost": 1400,
+      "boost": 1150,
       "shiny": true,
       "awakened": false,
       "fabled": true,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "AwakenedCorrupted",
+      "label": "Awakened Corrupted",
+      "boost": 1150,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "FabledVoid",
+      "label": "Fabled Void",
+      "boost": 1150,
+      "shiny": false,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "ShinyAwakenedFabled",
+      "label": "Shiny Awak. Fabled",
+      "boost": 1350,
+      "shiny": true,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": false,
+      "void": false
+    },
+    {
+      "id": "CorruptedVoid",
+      "label": "Corrupted Void",
+      "boost": 1350,
+      "shiny": false,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": true,
+      "void": true
     },
     {
       "id": "ShinyAwakenedCorrupted",
       "label": "Shiny Awak. Corr.",
-      "boost": 1600,
+      "boost": 1550,
       "shiny": true,
       "awakened": true,
       "fabled": false,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "ShinyFabledVoid",
+      "label": "Shiny Fabled Void",
+      "boost": 1550,
+      "shiny": true,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "AwakenedVoid",
+      "label": "Awakened Void",
+      "boost": 1550,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "ShinyCorruptedVoid",
+      "label": "Shiny Corr. Void",
+      "boost": 1800,
+      "shiny": true,
+      "awakened": false,
+      "fabled": false,
+      "corrupted": true,
+      "void": true
     },
     {
       "id": "AwakenedFabledCorrupted",
@@ -4588,7 +4832,28 @@
       "shiny": false,
       "awakened": true,
       "fabled": true,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "ShinyAwakenedVoid",
+      "label": "Shiny Awak. Void",
+      "boost": 2000,
+      "shiny": true,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "FabledCorruptedVoid",
+      "label": "Fabled Corr. Void",
+      "boost": 2250,
+      "shiny": false,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": true,
+      "void": true
     },
     {
       "id": "ShinyAwakenedFabledCorrupted",
@@ -4597,7 +4862,78 @@
       "shiny": true,
       "awakened": true,
       "fabled": true,
-      "corrupted": true
+      "corrupted": true,
+      "void": false
+    },
+    {
+      "id": "AwakenedFabledVoid",
+      "label": "Awakened Fabled Void",
+      "boost": 2500,
+      "shiny": false,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "ShinyFabledCorruptedVoid",
+      "label": "Shiny Fabled Corr. Void",
+      "boost": 2750,
+      "shiny": true,
+      "awakened": false,
+      "fabled": true,
+      "corrupted": true,
+      "void": true
+    },
+    {
+      "id": "AwakenedCorruptedVoid",
+      "label": "Awak. Corr. Void",
+      "boost": 2750,
+      "shiny": false,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": true,
+      "void": true
+    },
+    {
+      "id": "ShinyAwakenedFabledVoid",
+      "label": "Shiny Awak. Fabled Void",
+      "boost": 3000,
+      "shiny": true,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": false,
+      "void": true
+    },
+    {
+      "id": "ShinyAwakenedCorruptedVoid",
+      "label": "Shiny Awak. Corr. Void",
+      "boost": 3300,
+      "shiny": true,
+      "awakened": true,
+      "fabled": false,
+      "corrupted": true,
+      "void": true
+    },
+    {
+      "id": "AwakenedFabledCorruptedVoid",
+      "label": "Awak. Fabled Corr. Void",
+      "boost": 3900,
+      "shiny": false,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": true,
+      "void": true
+    },
+    {
+      "id": "ShinyAwakenedFabledCorruptedVoid",
+      "label": "Perfect Void",
+      "boost": 4550,
+      "shiny": true,
+      "awakened": true,
+      "fabled": true,
+      "corrupted": true,
+      "void": true
     }
   ],
   "relics": {
@@ -5089,6 +5425,51 @@
       "Duration": 0,
       "Image": "rbxassetid://97727902573597",
       "Boosts": []
+    },
+    "PumpkinPotion": {
+      "Name": "Pumpkin Potion",
+      "Description": "Increases luck by +4 for 3 minutes. Stacks with every other potion!",
+      "StatCategory": "PumpkinLuck",
+      "Duration": 180,
+      "Image": "rbxassetid://128892369043850",
+      "Boosts": {
+        "Luck": 4
+      }
+    },
+    "GhostlyShinyPotion": {
+      "Name": "Ghostly Shiny Potion",
+      "Description": "Increases shiny chance by +0.8 for 3 minutes. Stacks with every other potion!",
+      "StatCategory": "GhostlyShinyLuck",
+      "Duration": 180,
+      "Image": "rbxassetid://139867626483696",
+      "Boosts": {
+        "ShinyLuck": 0.8
+      }
+    },
+    "WitchsBrew": {
+      "Name": "Witch's Brew",
+      "Description": "Starts Hollow Harvest weather! Only works during the Hollow Harvest event.",
+      "StatCategory": "EventRoll",
+      "Duration": 0,
+      "Image": "rbxassetid://136941526956827",
+      "Boosts": {}
+    },
+    "HolidayRiftPotion": {
+      "Name": "Holiday Rift Potion",
+      "Description": "Lets you roll holiday Event cards for 5 minutes, in any weather. Stacks with every other potion!",
+      "Category": "Event Rolls",
+      "StatCategory": "HolidayRift",
+      "Duration": 300,
+      "Image": "rbxassetid://93494556086758",
+      "Boosts": {}
+    },
+    "FountainHourPotion": {
+      "Name": "Fountain Hourglass",
+      "Description": "Adds 1 hour and +5% to this server's Luck Fountain (up to 12 hours and the max level). Saved if the server closes.",
+      "StatCategory": "Fountain",
+      "Duration": 0,
+      "Image": "rbxassetid://116970988665648",
+      "Boosts": {}
     }
   },
   "towerShop": [
@@ -5584,5 +5965,13 @@
         "source": "Fitted to all supplied upgrade and cumulative-refund screenshots; level 9 to 10 extrapolated where not shown."
       }
     }
-  ]
+  ],
+  "eventConfig": {
+    "HollowHarvest": {
+      "active": true,
+      "halloweenNightMultiplier": 2,
+      "finaleLuckMultiplier": 2.5,
+      "weeklyTower": true
+    }
+  }
 }
